@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوحدة ٤ – الأدلة العلمية والأبحاث السريرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0A2342; --teal:#0D7377; --teal-light:#14A085; --gold:#F0A500; --white:#FFFFFF; --off-white:#F5F7FA; --light-gray:#E8EDF2; --text-dark:#1A2B3C; --text-mid:#4A6080; --text-light:#8A9BB0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Cairo',sans-serif; background:var(--off-white); color:var(--text-dark); direction:rtl; line-height:1.7; }
+  .progress-bar { background:var(--teal); height:5px; }
+  .progress-fill { height:100%; background:var(--gold); width:66.5%; }
+  .hero { background:var(--navy); padding:60px 40px 50px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; bottom:-60px; right:-60px; width:280px; height:280px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { color:var(--white); font-size:clamp(24px,5vw,40px); font-weight:900; margin-bottom:12px; }
+  .hero h1 span { color:var(--gold); }
+  .hero-accent { width:60px; height:4px; background:var(--teal); border-radius:2px; margin:16px 0; }
+  .hero p { color:#8A9BB0; font-size:16px; max-width:640px; }
+  .section { padding:50px 40px; max-width:900px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .section-label .dot { width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:12px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:26px; font-weight:800; color:var(--navy); margin-bottom:24px; }
+  h3 { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  p { color:var(--text-mid); margin-bottom:16px; font-size:15.5px; }
+  .divider { height:1px; background:var(--light-gray); margin:40px 0; }
+
+  /* Evidence pyramid */
+  .ev-pyramid { display:flex; flex-direction:column; align-items:center; gap:6px; margin:24px 0; }
+  .ev-level { border-radius:10px; padding:16px 20px; color:var(--white); text-align:center; width:100%; max-width:800px; transition:all 0.2s; cursor:default; }
+  .ev-level:hover { filter:brightness(1.1); transform:scale(1.01); }
+  .ev-level:nth-child(1) { background:var(--navy); max-width:100%; }
+  .ev-level:nth-child(2) { background:var(--teal); max-width:88%; }
+  .ev-level:nth-child(3) { background:var(--teal-light); max-width:76%; }
+  .ev-level:nth-child(4) { background:#5BA3A0; max-width:64%; }
+  .ev-level:nth-child(5) { background:var(--text-mid); max-width:52%; }
+  .ev-level h4 { font-size:14px; font-weight:800; margin-bottom:3px; }
+  .ev-level p { font-size:12px; color:rgba(255,255,255,0.85); margin:0; }
+  .ev-note { display:flex; justify-content:space-between; max-width:800px; width:100%; margin-top:8px; }
+  .ev-note span { font-size:11px; color:var(--text-light); font-weight:600; }
+
+  /* PICO cards */
+  .pico-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:24px 0; }
+  .pico-card { background:var(--white); border-radius:12px; padding:22px; border:1px solid var(--light-gray); box-shadow:0 2px 10px rgba(10,35,66,0.06); }
+  .pico-letter { font-size:36px; font-weight:900; line-height:1; margin-bottom:8px; }
+  .pico-card h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .pico-card p { font-size:13px; color:var(--text-mid); margin:0; }
+  .pico-example { background:#F0FDF4; border-radius:8px; padding:8px 12px; margin-top:10px; font-size:12px; color:#166534; font-weight:600; }
+
+  /* Stats explainer */
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin:24px 0; }
+  .stat-card { background:var(--white); border-radius:12px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); text-align:center; }
+  .stat-term { font-size:20px; font-weight:900; color:var(--teal); margin-bottom:6px; }
+  .stat-full { font-size:11px; color:var(--text-light); margin-bottom:8px; font-weight:600; }
+  .stat-def { font-size:13px; color:var(--text-mid); }
+  .stat-rule { font-size:12px; font-weight:700; padding:4px 10px; border-radius:8px; margin-top:8px; display:inline-block; }
+  .rule-green { background:#D1FAE5; color:#065F46; }
+  .rule-gold { background:#FEF3C7; color:#92400E; }
+  .rule-red { background:#FEE2E2; color:#991B1B; }
+
+  /* Checklist */
+  .checklist { background:var(--white); border-radius:14px; padding:28px; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); margin:24px 0; }
+  .checklist h3 { color:var(--teal); margin-bottom:16px; }
+  .check-item { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--light-gray); }
+  .check-item:last-child { border-bottom:none; }
+  .check-box { width:22px; height:22px; border:2px solid var(--teal); border-radius:5px; flex-shrink:0; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; margin-top:2px; }
+  .check-box.checked { background:var(--teal); border-color:var(--teal); color:var(--white); font-size:13px; }
+  .check-text h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+  .check-text p { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:32px 36px; margin:30px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold); font-size:19px; margin-bottom:12px; }
+  .highlight p { color:#C8D8E8; font-size:15px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:32px; border:2px solid var(--light-gray); margin:30px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:20px; font-size:20px; }
+  .quiz-q { margin-bottom:24px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:12px; }
+  .quiz-option { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:8px; cursor:pointer; transition:all .2s; font-size:14px; }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+
+  .lesson-nav { display:flex; justify-content:space-between; align-items:center; padding:28px 40px; background:var(--white); border-top:1px solid var(--light-gray); max-width:900px; margin:0 auto; flex-wrap:wrap; gap:16px; }
+  .nav-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:all .2s; }
+  .btn-primary { background:var(--teal); color:var(--white); }
+  .btn-primary:hover { background:var(--teal-light); }
+  .btn-secondary { background:var(--light-gray); color:var(--text-dark); }
+
+  @media(max-width:600px) { .pico-grid{grid-template-columns:1fr;} .hero,.section{padding:32px 20px;} .lesson-nav{padding:20px;} }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
+<div class="hero">
+  <div class="hero-badge">الوحدة الرابعة · Module 4</div>
+  <h1>الأدلة العلمية و<span>الأبحاث السريرية</span></h1>
+  <div class="hero-accent"></div>
+  <p>قراءة الدراسات وتقييم الأدلة — المهارة التي تميّز MSL المتميز</p>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>هرم الأدلة</span></div>
+  <h2>أنواع الأبحاث ومستوياتها</h2>
+  <p>ليست كل الدراسات متساوية. يوجد هرم واضح لمستوى الدليل العلمي، وعلى MSL أن يعرفه جيداً ليستطيع تقييم أي ورقة بحثية بسرعة.</p>
+
+  <div class="ev-pyramid">
+    <div class="ev-level">
+      <h4>🥇 Meta-Analysis & Systematic Review — التحليل التلوي</h4>
+      <p>يجمع نتائج دراسات متعددة ويحللها إحصائياً — أعلى مستوى دليل</p>
+    </div>
+    <div class="ev-level">
+      <h4>RCT — Randomized Controlled Trial</h4>
+      <p>التجارب العشوائية المضبوطة — المعيار الذهبي للفعالية</p>
+    </div>
+    <div class="ev-level">
+      <h4>Cohort & Case-Control Studies</h4>
+      <p>دراسات تتبعية تراقب المجموعات عبر الزمن</p>
+    </div>
+    <div class="ev-level">
+      <h4>Case Reports & Series — تقارير الحالات</h4>
+      <p>مفيدة للأحداث النادرة لكن قوة الدليل محدودة</p>
+    </div>
+    <div class="ev-level">
+      <h4>Expert Opinion — آراء الخبراء</h4>
+      <p>أدنى مستوى من الأدلة الرسمية</p>
+    </div>
+    <div class="ev-note">
+      <span>← أدنى مستوى دليل</span>
+      <span>أعلى مستوى دليل →</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>أداة PICO</span></div>
+  <h2>كيف تقرأ ورقة بحثية؟ — إطار PICO</h2>
+  <p>PICO هو إطار عالمي يساعد على قراءة أي دراسة سريرية بشكل منهجي خلال دقائق.</p>
+
+  <div class="pico-grid">
+    <div class="pico-card">
+      <div class="pico-letter" style="color:var(--gold);">P</div>
+      <h4>Population — المجموعة السكانية</h4>
+      <p>من هم المرضى المشمولون في الدراسة؟ معايير الإدراج والإقصاء؟</p>
+      <div class="pico-example">مثال: مرضى سكري النوع الثاني بعمر 40-70، HbA1c بين 7-10%</div>
+    </div>
+    <div class="pico-card">
+      <div class="pico-letter" style="color:var(--teal);">I</div>
+      <h4>Intervention — التدخل</h4>
+      <p>ما الدواء أو العلاج المدروس؟ ما الجرعة؟ ما مدة العلاج؟</p>
+      <div class="pico-example">مثال: دواء X بجرعة 10mg يومياً لمدة 52 أسبوع</div>
+    </div>
+    <div class="pico-card">
+      <div class="pico-letter" style="color:var(--navy);">C</div>
+      <h4>Comparison — المقارنة</h4>
+      <p>ما هو الدواء المقارن أو الوهمي (Placebo)؟ هل المقارنة عادلة؟</p>
+      <div class="pico-example">مثال: مقارنة بـ Metformin 1000mg أو Placebo</div>
+    </div>
+    <div class="pico-card">
+      <div class="pico-letter" style="color:#6B5B95;">O</div>
+      <h4>Outcome — النتيجة</h4>
+      <p>ما نقطة النهاية الأولية؟ هل هي سريرية ذات معنى أم إحصائية فقط؟</p>
+      <div class="pico-example">مثال: خفض HbA1c، تقليل حوادث القلب والأوعية، معدل الوفيات</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>الإحصاء السريري</span></div>
+  <h2>مصطلحات إحصائية يجب أن تعرفها</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-term">P-value</div>
+      <div class="stat-full">Probability Value</div>
+      <div class="stat-def">احتمال أن تكون النتيجة صدفة</div>
+      <span class="stat-rule rule-green">p &lt; 0.05 = دلالة إحصائية</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term">95% CI</div>
+      <div class="stat-full">Confidence Interval</div>
+      <div class="stat-def">النطاق الذي تقع فيه القيمة الحقيقية في 95% من الوقت</div>
+      <span class="stat-rule rule-gold">CI يمر بـ 1 = غير دال للـ RR</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term">NNT</div>
+      <div class="stat-full">Number Needed to Treat</div>
+      <div class="stat-def">عدد المرضى الذين يجب علاجهم لإنقاذ حالة واحدة</div>
+      <span class="stat-rule rule-green">NNT أصغر = فعالية أكبر</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term">ARR / RRR</div>
+      <div class="stat-full">Absolute / Relative Risk Reduction</div>
+      <div class="stat-def">خفض الخطر المطلق مقابل النسبي</div>
+      <span class="stat-rule rule-red">RRR مضلل بدون ARR</span>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>⚠️ تحذير: الأهمية الإحصائية ≠ الأهمية السريرية</h3>
+    <p>دراسة بـ 50,000 مريض قد تُظهر فرقاً «دالاً إحصائياً» غير ذي قيمة سريرية. MSL الجيد يسأل دائماً: «هل هذا الفرق يهم مريضي فعلاً؟» — وليس فقط «هل p &lt; 0.05؟»</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>قائمة تدقيق</span></div>
+  <h2>قائمة تدقيق قراءة الورقة البحثية</h2>
+  <p>استخدم هذه القائمة في كل مرة تقرأ دراسة جديدة:</p>
+
+  <div class="checklist">
+    <h3>📋 قائمة تدقيق MSL</h3>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>هل طبّقت إطار PICO؟</h4><p>حددت المجموعة، التدخل، المقارنة والنتيجة</p></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>ما تصميم الدراسة؟</h4><p>RCT؟ مفتوحة؟ مضبوطة؟ عشوائية؟ حجم العينة مناسب؟</p></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>ما مصدر التمويل؟</h4><p>هل موّلتها الشركة المصنّعة؟ هل يوجد تضارب مصالح؟</p></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>هل النتيجة ذات دلالة إكلينيكية؟</h4><p>ما الـ ARR؟ ما الـ NNT؟ وليس فقط P-value</p></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>ما القيود (Limitations)؟</h4><p>هل ذكرها الباحثون؟ هل هناك تحيزات محتملة؟</p></div></div>
+    <div class="check-item"><div class="check-box" onclick="toggleCheck(this)"></div><div class="check-text"><h4>هل النتائج قابلة للتعميم؟</h4><p>هل مرضى الدراسة يشبهون مرضى طبيبك في سياقك المحلي؟</p></div></div>
+  </div>
+
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+    <div class="quiz-q">
+      <p>١. ما أعلى مستوى في هرم الأدلة العلمية؟</p>
+      <label class="quiz-option"><input type="radio" name="q1" value="a"> آراء الخبراء لأنهم الأكثر خبرة</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="b"> التجارب العشوائية المضبوطة (RCT)</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="c"> التحليل التلوي والمراجعات المنهجية</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="d"> تقارير الحالات السريرية النادرة</label>
+    </div>
+    <div class="quiz-q">
+      <p>٢. دراسة أظهرت «خفضاً نسبياً (RRR) بنسبة 50% في خطر الإصابة» — ماذا يجب أن تسأل أيضاً؟</p>
+      <label class="quiz-option"><input type="radio" name="q2" value="a"> كيف نشرت هذه النتيجة في المجلة الطبية؟</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="b"> ما الخفض المطلق في الخطر (ARR) وما الـ NNT؟</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="c"> هل الدراسة نشرت في مجلة ذات عامل تأثير عالٍ؟</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="d"> هل مديري موافق على استخدام هذه البيانات؟</label>
+    </div>
+  </div>
+
+</div>
+
+<div class="lesson-nav">
+  <a class="nav-btn btn-secondary" href="module3.html">→ الوحدة السابقة</a>
+  <div style="color:var(--text-light); font-size:14px;">الوحدة ٤ من ٦</div>
+  <a class="nav-btn btn-primary" href="module5.html">الوحدة التالية: الامتثال ←</a>
+</div>
+
+<script>
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  el.innerHTML = el.classList.contains('checked') ? '✓' : '';
+}
+const correct = {q1:'c', q2:'b'};
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const radio = this.querySelector('input[type=radio]');
+    const name = radio.name;
+    document.querySelectorAll(`input[name=${name}]`).forEach(inp => inp.closest('.quiz-option').classList.remove('correct','wrong'));
+    this.classList.add(radio.value === correct[name] ? 'correct' : 'wrong');
+  });
+});
+</script>
+</body>
+</html>

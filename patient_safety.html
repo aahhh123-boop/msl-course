@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أهمية سلامة المريض في الشؤون الطبية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red: #C0392B;
+    --red-bg: #FEE2E2;
+    --red-dark: #991B1B;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #7D3C98;
+    --purple-bg: #EDE9FE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0A2342 0%, #1A0A0A 100%);
+    padding: 52px 36px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-60px; left:-60px; width:300px; height:300px; border-radius:50%; background:var(--red); opacity:0.08; }
+  .hero::after { content:''; position:absolute; bottom:-50px; right:-40px; width:200px; height:200px; border-radius:50%; background:var(--teal); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--red); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; position:relative; line-height:1.3; }
+  .hero h1 span { color:#FCA5A5; }
+  .hero-accent { width:56px; height:4px; background:var(--red); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  /* Section */
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--red); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--red); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Stat cards */
+  .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin:24px 0; }
+  .stat-card { background:var(--white); border-radius:14px; padding:22px 18px; text-align:center; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); }
+  .stat-num { font-size:32px; font-weight:900; line-height:1; margin-bottom:6px; }
+  .stat-label { font-size:12px; color:var(--text-mid); font-weight:600; }
+  .stat-source { font-size:10px; color:var(--text-light); margin-top:4px; }
+
+  /* Alert box */
+  .alert-box { border-radius:14px; padding:22px 24px; margin:20px 0; display:flex; gap:16px; align-items:flex-start; }
+  .alert-box .ab-icon { font-size:26px; flex-shrink:0; }
+  .alert-box h4 { font-size:15px; font-weight:800; margin-bottom:6px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-red { background:var(--red-bg); border:1px solid #FCA5A5; }
+  .alert-red h4 { color:var(--red-dark); }
+  .alert-red p { color:#7F1D1D; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); }
+  .alert-teal p { color:#065F46; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); }
+  .alert-gold p { color:#78350F; }
+  .alert-navy { background:#E8EDF2; border:1px solid #93C5FD; }
+  .alert-navy h4 { color:var(--navy); }
+  .alert-navy p { color:var(--text-mid); }
+
+  /* Pillar cards */
+  .pillars { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin:24px 0; }
+  .pillar { background:var(--white); border-radius:14px; overflow:hidden; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); transition:transform 0.2s; }
+  .pillar:hover { transform:translateY(-3px); }
+  .pillar-top { padding:18px 20px 14px; }
+  .pillar-icon { font-size:28px; margin-bottom:10px; }
+  .pillar h3 { font-size:15px; margin-bottom:6px; }
+  .pillar p { font-size:13px; margin:0; }
+  .pillar-bar { height:5px; }
+
+  /* Process steps */
+  .process { display:flex; flex-direction:column; gap:0; margin:20px 0; position:relative; }
+  .process::before { content:''; position:absolute; top:28px; right:23px; bottom:28px; width:2px; background:var(--light-gray); z-index:0; }
+  .proc-item { display:flex; gap:18px; padding-bottom:18px; position:relative; z-index:1; }
+  .proc-item:last-child { padding-bottom:0; }
+  .proc-num { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:var(--white); }
+  .proc-body { background:var(--white); border-radius:12px; padding:16px 20px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .proc-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:5px; }
+  .proc-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .proc-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:7px; }
+
+  /* MSL role in safety */
+  .msl-actions { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .msl-action { display:flex; align-items:flex-start; gap:14px; background:var(--white); border-radius:12px; padding:16px 20px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .ma-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .ma-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .ma-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .ma-required { font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; display:inline-block; }
+
+  /* Scenario */
+  .scenario { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); overflow:hidden; margin:20px 0; box-shadow:0 4px 16px rgba(10,35,66,0.07); }
+  .scenario-header { background:var(--navy); padding:14px 20px; color:var(--white); font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px; }
+  .scenario-body { padding:20px; }
+  .scenario-step { display:flex; gap:12px; margin-bottom:14px; align-items:flex-start; }
+  .scenario-step:last-child { margin-bottom:0; }
+  .ss-badge { font-size:11px; font-weight:800; padding:3px 10px; border-radius:8px; flex-shrink:0; margin-top:2px; }
+  .ss-wrong { background:var(--red-bg); color:var(--red-dark); }
+  .ss-right { background:var(--green-bg); color:var(--green); }
+  .ss-neutral { background:var(--light-gray); color:var(--text-mid); }
+  .scenario-step p { font-size:13.5px; color:var(--text-dark); margin:0; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,#3D0000,#1A0A0A); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); position:relative; overflow:hidden; }
+  .highlight::after { content:'🛡️'; position:absolute; bottom:-10px; left:16px; font-size:100px; opacity:0.06; }
+  .highlight h3 { color:#FCA5A5; font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  .highlight-teal { background:linear-gradient(135deg,var(--navy),#1A3A5C); }
+  .highlight-teal h3 { color:var(--gold-light); }
+
+  /* Do / Don't */
+  .do-dont { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0; }
+  .do-box { background:var(--green-bg); border:1px solid #86EFAC; border-radius:12px; padding:18px 20px; }
+  .dont-box { background:var(--red-bg); border:1px solid #FCA5A5; border-radius:12px; padding:18px 20px; }
+  .do-box h4 { color:var(--green); font-size:14px; margin-bottom:10px; }
+  .dont-box h4 { color:var(--red-dark); font-size:14px; margin-bottom:10px; }
+  .do-box li, .dont-box li { font-size:13px; padding:5px 0; border-bottom:1px solid rgba(0,0,0,0.06); color:var(--text-dark); list-style:none; display:flex; gap:7px; }
+  .do-box li:last-child, .dont-box li:last-child { border-bottom:none; }
+  .do-box li::before { content:'✓'; color:var(--green); font-weight:800; flex-shrink:0; }
+  .dont-box li::before { content:'✗'; color:var(--red-dark); font-weight:800; flex-shrink:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section { padding:28px 18px; }
+    .do-dont { grid-template-columns:1fr; }
+    .stats-row { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🛡️ سلامة المريض</div>
+  <h1>أهمية <span>سلامة المريض</span><br>في الشؤون الطبية</h1>
+  <div class="hero-accent"></div>
+  <p>سلامة المريض ليست مجرد التزام قانوني — هي المحور الأخلاقي والعلمي الذي يبنى عليه دور كل متخصص في الشؤون الطبية</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>40 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>مبتدئ</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- WHY IT MATTERS -->
+  <div class="section-label"><div class="dot"></div><span>لماذا تهم؟</span></div>
+  <h2>لماذا سلامة المريض أولوية قصوى؟</h2>
+  <p>كل قرار يتخذه متخصص الشؤون الطبية — من مشاركة بيانات دواء إلى التوثيق في CRM — قد يؤثر مباشرة على حياة مريض حقيقي. هذه المسؤولية هي ما يجعل دور MSL ثقيلاً ونبيلاً في آنٍ واحد.</p>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--red);">2.6م</div>
+      <div class="stat-label">وفاة سنوياً بسبب أخطاء دوائية</div>
+      <div class="stat-source">WHO 2023</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--orange);">42%</div>
+      <div class="stat-label">من الأحداث الضائرة قابلة للوقاية</div>
+      <div class="stat-source">NEJM 2022</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--teal);">$42م</div>
+      <div class="stat-label">تكلفة الغرامات الدوائية سنوياً</div>
+      <div class="stat-source">FDA Reports</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" style="color:var(--navy);">1:7</div>
+      <div class="stat-label">مريض من كل 7 يتعرض لحدث ضار في المستشفى</div>
+      <div class="stat-source">WHO</div>
+    </div>
+  </div>
+
+  <div class="alert-red">
+    <span class="ab-icon">⚠️</span>
+    <div>
+      <h4>الحقيقة الصعبة</h4>
+      <p>الأخطاء الدوائية هي السبب الثالث للوفاة في دول كثيرة — بعد أمراض القلب والسرطان. دور الشؤون الطبية في منع هذه الأخطاء حيوي ولا يُستهان به.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PILLARS -->
+  <div class="section-label"><div class="dot"></div><span>ركائز سلامة المريض</span></div>
+  <h2>الركائز الخمس لسلامة المريض</h2>
+
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-bar" style="background:var(--red);"></div>
+      <div class="pillar-top">
+        <div class="pillar-icon">🔬</div>
+        <h3>دقة المعلومات العلمية</h3>
+        <p>تقديم بيانات صحيحة وكاملة وغير مضللة. معلومة واحدة ناقصة قد تغير قرار وصف وتضر المريض.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-bar" style="background:var(--orange);"></div>
+      <div class="pillar-top">
+        <div class="pillar-icon">📋</div>
+        <h3>الإبلاغ عن الآثار الجانبية</h3>
+        <p>كل حدث ضار يُذكر لـ MSL يجب الإبلاغ عنه فوراً لفريق Pharmacovigilance. هذا التزام قانوني وأخلاقي.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-bar" style="background:var(--teal);"></div>
+      <div class="pillar-top">
+        <div class="pillar-icon">⚖️</div>
+        <h3>الامتثال التنظيمي</h3>
+        <p>اتباع اشتراطات هيئات التسجيل (SFDA, FDA, EMA) يضمن أن المعلومات المقدمة للأطباء آمنة وموثوقة.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-bar" style="background:var(--purple);"></div>
+      <div class="pillar-top">
+        <div class="pillar-icon">🤝</div>
+        <h3>الشفافية مع الأطباء</h3>
+        <p>تقديم البيانات بشكل متوازن — بما فيها القيود والمخاطر — يمكّن الطبيب من اتخاذ قرارات علاجية مستنيرة.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-bar" style="background:var(--navy);"></div>
+      <div class="pillar-top">
+        <div class="pillar-icon">📝</div>
+        <h3>التوثيق الدقيق</h3>
+        <p>كل معلومة موثقة في CRM قد تُستخدم في تحليل الأنماط الأمنية. التوثيق ليس روتيناً — هو درع حماية للمريض.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PHARMACOVIGILANCE -->
+  <div class="section-label"><div class="dot"></div><span>اليقظة الدوائية</span></div>
+  <h2>Pharmacovigilance — اليقظة الدوائية</h2>
+  <p>Pharmacovigilance هو العلم المعني بالكشف والتقييم والفهم والوقاية من الآثار الضارة للأدوية. وهو ركيزة أساسية في منظومة سلامة المريض.</p>
+
+  <div class="process">
+    <div class="proc-item">
+      <div class="proc-num" style="background:var(--red);">١</div>
+      <div class="proc-body">
+        <h4>الكشف (Detection)</h4>
+        <p>يسمع MSL من الطبيب عن حدث ضار — سواء في الزيارة أو عبر الهاتف أو في المؤتمر. هذا يُطلق سلسلة الإبلاغ.</p>
+        <span class="proc-tag" style="background:var(--red-bg);color:var(--red-dark);">يبدأ مع MSL غالباً</span>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-num" style="background:var(--orange);">٢</div>
+      <div class="proc-body">
+        <h4>الإبلاغ الفوري (Reporting)</h4>
+        <p>يجب على MSL إبلاغ فريق Pharmacovigilance خلال 24 ساعة من سماع الحدث — حتى لو لم يتأكد من الصلة بالدواء. الشك كافٍ للإبلاغ.</p>
+        <span class="proc-tag" style="background:var(--orange-bg);color:var(--orange);">إلزامي قانونياً — 24 ساعة</span>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-num" style="background:var(--teal);">٣</div>
+      <div class="proc-body">
+        <h4>التقييم (Assessment)</h4>
+        <p>يحلل فريق Pharmacovigilance الحدث: هل هو مرتبط بالدواء؟ ما شدته؟ هل هو جديد أم معروف؟ هل يستدعي تحديث بيانات الأمان؟</p>
+        <span class="proc-tag" style="background:#E8F5F3;color:var(--teal);">دور فريق متخصص</span>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-num" style="background:var(--purple);">٤</div>
+      <div class="proc-body">
+        <h4>الإبلاغ للجهات التنظيمية</h4>
+        <p>يُرسل التقرير لهيئة الدواء المحلية (SFDA في السعودية) والدولية (EMA/FDA) وفق مواعيد محددة: 7 أيام للأحداث الخطرة، 15 يوماً للأحداث الأخرى.</p>
+        <span class="proc-tag" style="background:var(--purple-bg);color:var(--purple);">7-15 يوم حسب الخطورة</span>
+      </div>
+    </div>
+    <div class="proc-item">
+      <div class="proc-num" style="background:var(--navy);">٥</div>
+      <div class="proc-body">
+        <h4>الإجراء الوقائي (Action)</h4>
+        <p>قد يؤدي الحدث إلى: تحديث نشرة الدواء، إصدار تحذيرات للأطباء، تقييد الاستخدام، أو في الحالات الشديدة سحب الدواء من السوق.</p>
+        <span class="proc-tag" style="background:var(--light-gray);color:var(--navy);">يحمي ملايين المرضى</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>قاعدة ذهبية: الشك يكفي للإبلاغ</h4>
+      <p>لا تنتظر التأكد من أن الحدث سببه الدواء. إذا ذكر الطبيب أي حدث ضار بالقرب من استخدام الدواء — أبلغ فوراً. الإبلاغ الزائد أفضل من عدم الإبلاغ في سلامة المريض.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL ROLE IN SAFETY -->
+  <div class="section-label"><div class="dot"></div><span>دور MSL</span></div>
+  <h2>دور MSL في حماية سلامة المريض</h2>
+  <p>الـ MSL هو الحلقة الأولى في سلسلة سلامة المريض داخل الشركة — لأنه الأقرب إلى الممارسة السريرية الفعلية.</p>
+
+  <div class="msl-actions">
+    <div class="msl-action">
+      <span class="ma-icon">👂</span>
+      <div class="ma-body">
+        <h4>الاستماع النشط لتقارير الآثار الجانبية</h4>
+        <p>في كل زيارة، يُنصت MSL بعناية لأي إشارة تدل على حدث ضار — حتى لو ذكرها الطبيب عابراً أو بصورة غير رسمية.</p>
+        <span class="ma-required" style="background:var(--red-bg);color:var(--red-dark);">⛔ إلزامي — لا استثناء</span>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">📲</span>
+      <div class="ma-body">
+        <h4>الإبلاغ الفوري لـ Pharmacovigilance</h4>
+        <p>فور سماع أي حدث ضار، يتصل MSL أو يرسل نموذجاً داخلياً لفريق السلامة الدوائية — خلال 24 ساعة كحد أقصى.</p>
+        <span class="ma-required" style="background:var(--orange-bg);color:var(--orange);">⏰ خلال 24 ساعة</span>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">📊</span>
+      <div class="ma-body">
+        <h4>تقديم بيانات متوازنة وكاملة</h4>
+        <p>لا يحق لـ MSL تقديم فوائد الدواء فقط مع تجاهل المخاطر. التوازن في عرض البيانات مسؤولية أخلاقية وقانونية.</p>
+        <span class="ma-required" style="background:var(--green-bg);color:var(--green);">✅ أخلاقي وقانوني</span>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">🚫</span>
+      <div class="ma-body">
+        <h4>عدم تجاوز المعلومات المعتمدة</h4>
+        <p>يلتزم MSL بمناقشة الدواء ضمن الدواعي والجرعات المعتمدة إلا في حالة الطلب الصريح Off-Label — لأن تجاوز ذلك قد يعرض المريض للخطر.</p>
+        <span class="ma-required" style="background:var(--red-bg);color:var(--red-dark);">⛔ خط أحمر</span>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">📝</span>
+      <div class="ma-body">
+        <h4>التوثيق الدقيق لكل تفاعل</h4>
+        <p>التوثيق في CRM لا يحمي MSL فقط — بل يُغذّي قاعدة بيانات السلامة التي تُستخدم في تحليل الأنماط والكشف المبكر عن المشاكل.</p>
+        <span class="ma-required" style="background:#DBEAFE;color:#1E40AF;">🔵 يحمي الجميع</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SCENARIO -->
+  <div class="section-label"><div class="dot"></div><span>سيناريو عملي</span></div>
+  <h2>سيناريو: كيف يتعامل MSL مع تقرير حدث ضار؟</h2>
+
+  <div class="scenario">
+    <div class="scenario-header">
+      <span>📋</span> سيناريو واقعي — اختر التصرف الصحيح
+    </div>
+    <div class="scenario-body">
+      <p style="font-size:14px; color:var(--text-dark); margin-bottom:16px; font-weight:600;">أثناء زيارة علمية، ذكر الطبيب عابراً: «بالمناسبة، لاحظت أن اثنين من مرضاي أصيبا بطفح جلدي شديد بعد أسبوع من بدء دواء X — ربما صدفة»</p>
+
+      <div class="scenario-step">
+        <span class="ss-badge ss-wrong">❌ خطأ</span>
+        <p>تقول: «أكيد صدفة، الدراسات لم تُظهر ارتباطاً. سنكمل موضوعنا العلمي»</p>
+      </div>
+      <div class="scenario-step">
+        <span class="ss-badge ss-wrong">❌ خطأ</span>
+        <p>تتجاهل الملاحظة وتواصل تقديم البيانات الإيجابية للدواء</p>
+      </div>
+      <div class="scenario-step">
+        <span class="ss-badge ss-right">✅ صحيح</span>
+        <p>تستمع بعناية، تجمع التفاصيل (عمر المريض، الجرعة، مدة العلاج، شدة الطفح)، تُخبر الطبيب أنك ستُبلّغ فريق السلامة الدوائية، ثم تُبلّغ Pharmacovigilance خلال 24 ساعة وتوثق كل شيء في CRM</p>
+      </div>
+      <div class="alert-teal" style="margin-top:14px; margin-bottom:0;">
+        <span class="ab-icon">💡</span>
+        <div><h4>لماذا؟</h4><p>الشك يكفي. حتى لو كانت «صدفة» — الإبلاغ يحمي المرضى القادمين ويحميك قانونياً. عدم الإبلاغ جريمة تنظيمية في معظم الدول.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DO / DON'T -->
+  <div class="section-label"><div class="dot"></div><span>الممارسات الصحيحة</span></div>
+  <h2>افعل ولا تفعل — MSL وسلامة المريض</h2>
+
+  <div class="do-dont">
+    <div class="do-box">
+      <h4>✅ افعل دائماً</h4>
+      <ul>
+        <li>أبلغ عن أي حدث ضار خلال 24 ساعة</li>
+        <li>قدّم بيانات الفوائد والمخاطر معاً</li>
+        <li>وثّق كل تفاعل في CRM بدقة</li>
+        <li>اسأل عن تفاصيل الحدث الضار</li>
+        <li>أحِل أسئلة الأمان لـ Medical Information</li>
+        <li>اعترف بحدود بيانات شركتك</li>
+      </ul>
+    </div>
+    <div class="dont-box">
+      <h4>❌ لا تفعل أبداً</h4>
+      <ul>
+        <li>تتجاهل تقارير الآثار الجانبية</li>
+        <li>تُقلّل من شأن الحدث الضار</li>
+        <li>تؤخر الإبلاغ لأيام</li>
+        <li>تُقدّم الفوائد دون ذكر المخاطر</li>
+        <li>تُفسّر بيانات الأمان لصالح المنتج</li>
+        <li>تتحدث عن Off-Label بدون طلب</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- REGULATORY FRAMEWORK -->
+  <div class="section-label"><div class="dot"></div><span>الإطار التنظيمي</span></div>
+  <h2>الإطار التنظيمي لسلامة المريض</h2>
+
+  <div class="msl-actions">
+    <div class="msl-action">
+      <span class="ma-icon">🏛️</span>
+      <div class="ma-body">
+        <h4>SFDA — هيئة الغذاء والدواء السعودية</h4>
+        <p>الجهة التنظيمية المحلية في المملكة. تشترط الإبلاغ الفوري عن الأحداث الضارة الخطرة خلال 7 أيام وغير الخطرة خلال 15 يوماً.</p>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">🌍</span>
+      <div class="ma-body">
+        <h4>ICH E2A — المعيار الدولي للإبلاغ</h4>
+        <p>المعيار الدولي الذي يحدد تعريفات وإجراءات الإبلاغ عن الأحداث الضارة. تتبعه معظم شركات الأدوية الكبرى حول العالم.</p>
+      </div>
+    </div>
+    <div class="msl-action">
+      <span class="ma-icon">📄</span>
+      <div class="ma-body">
+        <h4>PSUR — تقرير الأمان الدوري</h4>
+        <p>Periodic Safety Update Report — تقرير شامل تقدمه الشركة للجهات التنظيمية بصفة دورية يجمع كل بيانات الأمان من مختلف المصادر بما فيها تقارير MSL.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-teal">
+    <h3>🌟 سلامة المريض = مصداقية MSL</h3>
+    <p>الأطباء يحترمون ويثقون بـ MSL الذي يتحدث بصدق عن مخاطر الدواء بقدر ما يتحدث عن فوائده. هذه الشفافية هي أساس العلاقة العلمية طويلة الأمد — وهي في النهاية ما يخدم المريض أولاً.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. ذكر طبيب لـ MSL خلال الزيارة أن مريضاً أصيب بارتفاع حاد في ضغط الدم بعد بدء دواء الشركة. ما الإجراء الصحيح فوراً؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. تجاهل الأمر لأن ارتفاع الضغط شائع ومستقل عن الدواء</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. الانتظار لرؤية ما إذا كان يتكرر مع مرضى آخرين</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. جمع تفاصيل الحدث وإبلاغ فريق Pharmacovigilance خلال 24 ساعة</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. إخبار مدير المبيعات لأن الأمر يخص سمعة المنتج</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! حتى لو بدا الأمر غير مرتبط — الشك كافٍ للإبلاغ الفوري. MSL يجمع التفاصيل ويُبلّغ Pharmacovigilance خلال 24 ساعة.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ هذا خطأ خطير. أي حدث ضار يُذكر بالقرب من استخدام الدواء يجب الإبلاغ عنه لـ Pharmacovigilance خلال 24 ساعة — بغض النظر عن احتمالية الارتباط.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. ما تعريف Pharmacovigilance؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. قسم يختص بتسويق الأدوية الآمنة</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. علم الكشف والتقييم والفهم والوقاية من الآثار الضارة للأدوية</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. عملية الحصول على موافقة هيئة الدواء على دواء جديد</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. فريق يراجع الدراسات السريرية قبل النشر</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! Pharmacovigilance هو العلم المعني بالكشف والتقييم والفهم والوقاية من الآثار الضارة — وهو ركيزة أمان المريض بعد تسويق الدواء.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ Pharmacovigilance هو علم سلامة الدواء بعد التسويق — يهتم بالكشف والتقييم والوقاية من الآثار الضارة.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. ما الذي يميز MSL الموثوق في عيون الأطباء فيما يخص سلامة المريض؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','b')">أ. يقدم فوائد الدواء بحماس دون الحديث عن المخاطر</div>
+      <div class="quiz-option" onclick="answer('q3','b','b')">ب. يتحدث بشفافية عن الفوائد والمخاطر معاً ويعترف بحدود البيانات</div>
+      <div class="quiz-option" onclick="answer('q3','c','b')">ج. يتجنب الحديث عن الآثار الجانبية لأنها تضر بصورة المنتج</div>
+      <div class="quiz-option" onclick="answer('q3','d','b')">د. يحيل الطبيب لفريق المبيعات عند أي سؤال عن مخاطر الدواء</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ تماماً! الشفافية في تقديم الفوائد والمخاطر هي ما يبني مصداقية MSL العلمية مع الأطباء — وهي في جوهرها حماية للمريض.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ الشفافية الكاملة — بما فيها المخاطر والحدود — هي ما يميز MSL الموثوق. الطبيب يحتاج كل المعلومات ليحمي مريضه.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. ما الجهة التنظيمية المسؤولة عن سلامة الدواء في المملكة العربية السعودية؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','c')">أ. FDA — إدارة الغذاء والدواء الأمريكية</div>
+      <div class="quiz-option" onclick="answer('q4','b','c')">ب. EMA — وكالة الدواء الأوروبية</div>
+      <div class="quiz-option" onclick="answer('q4','c','c')">ج. SFDA — هيئة الغذاء والدواء السعودية</div>
+      <div class="quiz-option" onclick="answer('q4','d','c')">د. WHO — منظمة الصحة العالمية</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ صحيح! SFDA هي الجهة التنظيمية في المملكة العربية السعودية. تعمل بالتنسيق مع FDA وEMA وفق معايير دولية.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ في المملكة العربية السعودية، الجهة التنظيمية هي SFDA — هيئة الغذاء والدواء السعودية.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="highlight">
+    <h3>🛡️ الخلاصة: المريض في قلب كل قرار</h3>
+    <p>كل مرة تُقرر فيها ماذا تشارك وكيف تُبلّغ وكم تُوثّق — تذكر أن في نهاية هذه القرارات مريضاً حقيقياً. سلامة المريض ليست إجراءً بيروقراطياً — هي السبب الأعمق لوجود الشؤون الطبية.</p>
+  </div>
+
+</div>
+
+<script>
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fbKey = chosen === correct ? 'c' : 'w';
+  const fb = document.getElementById(`fb-${qId}-${fbKey}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

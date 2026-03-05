@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دور التكنولوجيا في الرعاية الصحية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+    --pink: #9D174D;
+    --pink-bg: #FCE7F3;
+    --cyan: #0E7490;
+    --cyan-bg: #CFFAFE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #040C1A 0%, #071E3D 45%, #041A2A 100%);
+    padding: 52px 36px 44px; position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-90px; right:-70px; width:380px; height:380px; border-radius:50%; background:var(--cyan); opacity:0.07; }
+  .hero::after  { content:''; position:absolute; bottom:-50px; left:-40px; width:240px; height:240px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .hero-badge { display:inline-block; background:linear-gradient(90deg,var(--cyan),var(--teal)); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,40px); font-weight:900; margin-bottom:10px; line-height:1.25; position:relative; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:linear-gradient(90deg,var(--cyan),var(--teal)); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:640px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  /* ── Layout ── */
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p  { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* ── Stat row ── */
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:20px 0; }
+  .stat-box { background:var(--white); border-radius:14px; padding:20px 16px; text-align:center; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .stat-num { font-size:28px; font-weight:900; line-height:1; margin-bottom:5px; }
+  .stat-label { font-size:12px; color:var(--text-mid); font-weight:600; }
+  .stat-sub { font-size:10px; color:var(--text-light); margin-top:3px; }
+
+  /* ── Technology domain cards (clickable) ── */
+  .domain-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin:24px 0; }
+  .domain-card {
+    border-radius:16px; padding:22px 18px; cursor:pointer;
+    border:2px solid var(--light-gray); background:var(--white);
+    box-shadow:0 4px 14px rgba(10,35,66,0.07);
+    transition:all 0.2s; position:relative; overflow:hidden;
+  }
+  .domain-card::after { content:attr(data-icon); position:absolute; bottom:-8px; left:8px; font-size:70px; opacity:0.06; pointer-events:none; }
+  .domain-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(10,35,66,0.12); }
+  .domain-card.active { border-color:var(--teal); box-shadow:0 0 0 3px rgba(13,115,119,0.15); }
+  .dc-icon { font-size:30px; margin-bottom:10px; }
+  .domain-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:5px; }
+  .domain-card p  { font-size:12.5px; color:var(--text-mid); margin:0; }
+  .dc-badge { display:inline-block; font-size:10px; font-weight:700; padding:2px 9px; border-radius:10px; margin-top:8px; }
+
+  /* ── Detail panel ── */
+  .detail-panel {
+    background:var(--white); border-radius:16px; border:2px solid var(--teal);
+    padding:26px; margin:4px 0 20px; display:none;
+    box-shadow:0 8px 28px rgba(10,35,66,0.1);
+    animation: popIn 0.22s ease;
+  }
+  .detail-panel.open { display:block; }
+  @keyframes popIn { from{opacity:0;transform:scale(0.97)} to{opacity:1;transform:scale(1)} }
+  .dp-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .dp-header .dp-icon { font-size:32px; }
+  .dp-header h3 { font-size:18px; font-weight:900; color:var(--navy); margin:0; }
+  .dp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; margin:14px 0; }
+  .dp-item { background:var(--off-white); border-radius:10px; padding:13px; }
+  .dp-item .dpi-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.7px; margin-bottom:4px; }
+  .dp-item .dpi-val   { font-size:13px; font-weight:600; color:var(--text-dark); }
+  .dp-example { background:var(--off-white); border-radius:10px; padding:14px 16px; font-size:13.5px; color:var(--text-mid); border-right:3px solid var(--teal); margin:12px 0; }
+  .dp-example strong { color:var(--navy); }
+  .dp-tags { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+  .dp-tag { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+  .dp-list { list-style:none; }
+  .dp-list li { font-size:13.5px; color:var(--text-mid); padding:7px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:8px; align-items:flex-start; }
+  .dp-list li:last-child { border-bottom:none; }
+  .dp-list li::before { content:'◆'; font-size:7px; color:var(--teal); margin-top:7px; flex-shrink:0; }
+
+  /* ── EHR journey ── */
+  .journey { display:flex; flex-direction:column; gap:0; position:relative; margin:20px 0; }
+  .journey::before { content:''; position:absolute; top:24px; bottom:24px; right:23px; width:2px; background:var(--light-gray); }
+  .j-step { display:flex; gap:16px; padding-bottom:16px; position:relative; z-index:1; }
+  .j-step:last-child { padding-bottom:0; }
+  .j-dot { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--white); font-weight:900; }
+  .j-body { background:var(--white); border-radius:12px; padding:14px 18px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .j-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .j-body p  { font-size:13px; color:var(--text-mid); margin:0; }
+  .j-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* ── Interoperability visual ── */
+  .interop-wrap { background:var(--white); border-radius:16px; padding:24px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); margin:20px 0; }
+  .interop-center { text-align:center; padding:14px 0 6px; }
+  .interop-hub { display:inline-block; background:var(--navy); color:var(--gold-light); font-weight:900; font-size:14px; padding:14px 24px; border-radius:50px; margin-bottom:12px; }
+  .interop-spokes { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+  .spoke { background:var(--off-white); border:2px solid var(--light-gray); border-radius:10px; padding:8px 14px; font-size:12px; font-weight:700; color:var(--text-dark); display:flex; align-items:center; gap:6px; }
+  .spoke-icon { font-size:16px; }
+
+  /* ── Pros / Cons ── */
+  .pro-con { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+  .pc-card { border-radius:14px; padding:20px; border:2px solid; }
+  .pc-card h4 { font-size:14px; font-weight:800; margin-bottom:10px; }
+  .pc-card ul { list-style:none; }
+  .pc-card li { font-size:13px; padding:5px 0; border-bottom:1px solid rgba(0,0,0,0.05); display:flex; gap:7px; }
+  .pc-card li:last-child { border-bottom:none; }
+
+  /* ── Comparison table ── */
+  .comp-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); margin:20px 0; font-size:13.5px; }
+  .comp-table th { padding:12px 16px; font-weight:800; text-align:center; }
+  .comp-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:28%; }
+  .comp-table th:not(:first-child) { background:var(--teal); color:var(--white); }
+  .comp-table th:nth-child(3) { background:#1E3A5C; }
+  .comp-table td { padding:10px 16px; border-bottom:1px solid var(--light-gray); text-align:center; vertical-align:middle; }
+  .comp-table td:first-child { background:#F8FAFC; font-weight:700; color:var(--navy); text-align:right; font-size:12px; }
+  .comp-table tr:nth-child(even) td { background:#F3F4F6; }
+  .comp-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .comp-table tr:last-child td { border-bottom:none; }
+
+  /* ── MSL toolkit ── */
+  .toolkit { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:20px 0; }
+  .tool-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); border-top:4px solid; }
+  .tool-card .tc-icon2 { font-size:26px; margin-bottom:10px; }
+  .tool-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .tool-card p  { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* ── Alert ── */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p  { font-size:13.5px; margin:0; }
+  .alert-teal   { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); }   .alert-teal p { color:#065F46; }
+  .alert-gold   { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); }  .alert-gold p { color:#78350F; }
+  .alert-red    { background:var(--red-bg); border:1px solid #FCA5A5; }
+  .alert-red h4  { color:var(--red-dark); } .alert-red p { color:#7F1D1D; }
+  .alert-blue   { background:var(--blue-bg); border:1px solid #93C5FD; }
+  .alert-blue h4 { color:var(--blue); }    .alert-blue p { color:#1E3A8A; }
+
+  /* ── Highlight ── */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p  { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* ── Quiz ── */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover  { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong   { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb   { background:var(--red-bg);   color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section { padding:28px 18px; }
+    .pro-con { grid-template-columns:1fr; }
+    .domain-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-badge">💻 التكنولوجيا والرعاية</div>
+  <h1>دور <span>التكنولوجيا</span> في الرعاية الصحية</h1>
+  <div class="hero-accent"></div>
+  <p>كيف تُحوّل التكنولوجيا كل جانب من جوانب الرعاية الصحية — من السجلات الإلكترونية إلى الذكاء الاصطناعي — وما الذي يجب أن يفهمه MSL ليكون شريكاً حقيقياً في هذا التحول؟</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- ── Intro ── -->
+  <div class="section-label"><div class="dot"></div><span>السياق العام</span></div>
+  <h2>التكنولوجيا تُعيد رسم خريطة الرعاية الصحية</h2>
+  <p>لم تعد التكنولوجيا مجرد أداة مساعدة — أصبحت العمود الفقري للرعاية الصحية الحديثة. من السجل الطبي الرقمي الذي يحمله الطبيب على جهازه اللوحي، إلى خوارزمية تُنذر بسكتة دماغية قبل حدوثها — التكنولوجيا تُغيّر كيف نُشخّص، نُعالج، ونتابع المرضى.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--teal);">96%</div>
+      <div class="stat-label">من المستشفيات الأمريكية تعتمد السجلات الصحية الإلكترونية</div>
+      <div class="stat-sub">ONC 2023</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--navy);">$660B</div>
+      <div class="stat-label">حجم سوق التكنولوجيا الصحية العالمي المتوقع 2025</div>
+      <div class="stat-sub">Grand View Research</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--purple);">38%</div>
+      <div class="stat-label">خفض في أخطاء الدواء بعد تبني التكنولوجيا الصحية</div>
+      <div class="stat-sub">WHO 2022</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--gold);">5x</div>
+      <div class="stat-label">تسارع اكتشاف الأدوية باستخدام الذكاء الاصطناعي مقارنة بالطرق التقليدية</div>
+      <div class="stat-sub">McKinsey 2024</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Technology Domains ── -->
+  <div class="section-label"><div class="dot"></div><span>مجالات التكنولوجيا</span></div>
+  <h2>المجالات التكنولوجية الرئيسية — اضغط لعرض التفاصيل</h2>
+
+  <!-- Row 1 -->
+  <div class="domain-grid">
+    <div class="domain-card" data-icon="🏥" onclick="showDomain('d1',this)">
+      <div class="dc-icon">🏥</div>
+      <h4>السجلات الصحية الإلكترونية (EHR)</h4>
+      <p>الأساس الرقمي لكل بيانات المريض عبر رحلته العلاجية كاملة</p>
+      <span class="dc-badge" style="background:var(--blue-bg);color:var(--blue);">البنية التحتية</span>
+    </div>
+    <div class="domain-card" data-icon="🤖" onclick="showDomain('d2',this)">
+      <div class="dc-icon">🤖</div>
+      <h4>الذكاء الاصطناعي والتشخيص</h4>
+      <p>خوارزميات تُحلّل الأشعة والبيانات وتتنبأ بالمخاطر قبل حدوثها</p>
+      <span class="dc-badge" style="background:var(--purple-bg);color:var(--purple);">تشخيص وتنبؤ</span>
+    </div>
+    <div class="domain-card" data-icon="⌚" onclick="showDomain('d3',this)">
+      <div class="dc-icon">⌚</div>
+      <h4>الأجهزة القابلة للارتداء والـ IoMT</h4>
+      <p>مراقبة مستمرة للمرضى خارج جدران المستشفى في حياتهم اليومية</p>
+      <span class="dc-badge" style="background:var(--green-bg);color:var(--green);">مراقبة مستمرة</span>
+    </div>
+  </div>
+
+  <!-- Detail panel 1 -->
+  <div class="detail-panel" id="d1">
+    <div class="dp-header"><span class="dp-icon">🏥</span><h3>السجلات الصحية الإلكترونية — EHR / EMR</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">EHR (Electronic Health Record) هو السجل الرقمي الشامل للمريض — يتضمن تاريخه المرضي، الأدوية، نتائج المختبر، الأشعة، والزيارات. يُشارَك عبر مزودي الرعاية المختلفين.</p>
+    <div class="dp-grid">
+      <div class="dp-item"><div class="dpi-label">الفرق عن EMR</div><div class="dpi-val">EMR بيانات مؤسسة واحدة — EHR يُشارَك عبر مؤسسات متعددة</div></div>
+      <div class="dp-item"><div class="dpi-label">أبرز الأنظمة</div><div class="dpi-val">Epic, Cerner, MEDITECH, Oracle Health</div></div>
+      <div class="dp-item"><div class="dpi-label">القيمة المضافة</div><div class="dpi-val">يُقلل الأخطاء، يُتيح الاستمرارية، يُولّد بيانات RWE ضخمة</div></div>
+      <div class="dp-item"><div class="dpi-label">التحدي الأكبر</div><div class="dpi-val">Interoperability — التكامل بين أنظمة مختلفة من شركات مختلفة</div></div>
+    </div>
+
+    <div style="margin:16px 0;">
+      <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:10px;">رحلة بيانات المريض في EHR:</div>
+      <div class="journey">
+        <div class="j-step">
+          <div class="j-dot" style="background:var(--navy);">📋</div>
+          <div class="j-body"><h4>التسجيل والزيارة الأولى</h4><p>التاريخ المرضي، الأمراض المزمنة، الأدوية الحالية، الحساسية — تُدخَل مرة واحدة وتُتاح للجميع.</p><span class="j-tag" style="background:var(--blue-bg);color:var(--blue);">Input</span></div>
+        </div>
+        <div class="j-step">
+          <div class="j-dot" style="background:var(--teal);">🔬</div>
+          <div class="j-body"><h4>نتائج المختبر والأشعة</h4><p>تُضاف تلقائياً للسجل وتُتاح للطبيب فور صدورها — حتى من مستشفى آخر.</p><span class="j-tag" style="background:#E8F5F3;color:var(--teal);">Auto-sync</span></div>
+        </div>
+        <div class="j-step">
+          <div class="j-dot" style="background:var(--purple);">💊</div>
+          <div class="j-body"><h4>الوصفات الطبية والتنبيهات</h4><p>نظام يُنبّه تلقائياً لتعارضات الدواء، الجرعات الخاطئة، أو الحساسيات المسجلة.</p><span class="j-tag" style="background:var(--purple-bg);color:var(--purple);">Drug Safety Alert</span></div>
+        </div>
+        <div class="j-step">
+          <div class="j-dot" style="background:var(--gold);color:var(--navy);">📊</div>
+          <div class="j-body"><h4>التحليل وRWE</h4><p>البيانات المتراكمة تُصبح مصدراً لأبحاث Real-World Evidence وتحسين بروتوكولات العلاج.</p><span class="j-tag" style="background:var(--orange-bg);color:var(--orange);">RWE Source</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-teal">
+      <span class="ab-icon">💡</span>
+      <div><h4>MSL وبيانات EHR</h4><p>MSL يستخدم بيانات EHR المجمّعة (المُجهَّلة) لفهم أنماط الوصف في منطقته — من يصف؟ لمن؟ ما الخط العلاجي الأكثر استخداماً؟ هذه البيانات تُشكّل استراتيجية زياراته وتساعده في تحديد الفجوات العلاجية الحقيقية.</p></div>
+    </div>
+  </div>
+
+  <!-- Detail panel 2 -->
+  <div class="detail-panel" id="d2">
+    <div class="dp-header"><span class="dp-icon">🤖</span><h3>الذكاء الاصطناعي في التشخيص والرعاية</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">الذكاء الاصطناعي في الرعاية الصحية ليس مستقبلاً — هو حاضر. من تحليل الأشعة إلى توقع انتكاسة المريض، AI يعمل بصمت في الخلفية لتحسين كل قرار طبي.</p>
+    <div class="dp-grid">
+      <div class="dp-item"><div class="dpi-label">تشخيص الأشعة</div><div class="dpi-val">FDA وافق على 500+ جهاز AI للأشعة — يكشف السرطان والجلطات والنزيف</div></div>
+      <div class="dp-item"><div class="dpi-label">التنبؤ بالمخاطر</div><div class="dpi-val">يُحدد المرضى المعرضين للانتكاسة أو الاستشفاء قبل حدوثه بأيام</div></div>
+      <div class="dp-item"><div class="dpi-label">اكتشاف الأدوية</div><div class="dpi-val">يُقلّص دورة اكتشاف الدواء من 12 سنة إلى 3-4 سنوات</div></div>
+      <div class="dp-item"><div class="dpi-label">تحسين سير العمل</div><div class="dpi-val">يُرتّب قوائم الانتظار، يُحسّن الجداول الزمنية، يُقلّل الأعباء الإدارية</div></div>
+    </div>
+
+    <table class="comp-table" style="margin-top:14px;">
+      <thead><tr>
+        <th>التطبيق</th><th>ما يفعله AI</th><th>النتيجة</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>قراءة الأشعة</td><td>يُحلّل آلاف الصور في ثوانٍ</td><td>دقة 94-98% في بعض الأورام</td></tr>
+        <tr><td>Sepsis Detection</td><td>يرصد تغيرات خفية في العلامات الحيوية</td><td>إنذار مبكر بـ 6 ساعات</td></tr>
+        <tr><td>Pathology</td><td>يُصنّف شرائح الأنسجة تلقائياً</td><td>يُقلّص وقت التشخيص 40%</td></tr>
+        <tr><td>Genomics</td><td>يُحلّل التسلسل الجيني ويُوصي بالعلاج</td><td>Precision Medicine في دقائق</td></tr>
+      </tbody>
+    </table>
+
+    <div class="alert-gold">
+      <span class="ab-icon">⚠️</span>
+      <div><h4>حدود AI في الطب — ما يجب أن يعرفه MSL</h4><p>AI مُصمَّم لمساعدة الطبيب لا لاستبداله. التحيز في بيانات التدريب (مثلاً أقل تنوعاً عرقياً) قد يُؤثر على دقته. و«الصندوق الأسود» — عدم قدرة AI على شرح قراره — يُقلّل من ثقة الأطباء ويطرح تساؤلات أخلاقية حقيقية.</p></div>
+    </div>
+  </div>
+
+  <!-- Detail panel 3 -->
+  <div class="detail-panel" id="d3">
+    <div class="dp-header"><span class="dp-icon">⌚</span><h3>الأجهزة القابلة للارتداء و Internet of Medical Things</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">IoMT (Internet of Medical Things) هو شبكة من الأجهزة الطبية المتصلة بالإنترنت التي تُولّد بيانات صحية مستمرة — من ساعة ذكية على معصم المريض إلى مستشعرات في غرفة العناية المركزة.</p>
+    <div class="dp-grid">
+      <div class="dp-item"><div class="dpi-label">CGM</div><div class="dpi-val">مراقبة السكر كل دقيقة — ثورة في إدارة السكري</div></div>
+      <div class="dp-item"><div class="dpi-label">Cardiac Monitors</div><div class="dpi-val">رصد الرجفان الأذيني عن بُعد — Apple Watch يكشف 300,000+ حالة سنوياً</div></div>
+      <div class="dp-item"><div class="dpi-label">Smart Inhalers</div><div class="dpi-val">يُسجّل وقت وطريقة الاستخدام — يكشف مشاكل الالتزام بالعلاج</div></div>
+      <div class="dp-item"><div class="dpi-label">Remote ICU</div><div class="dpi-val">مراقبة مرضى العناية المركزة عن بُعد من مركز متخصص</div></div>
+    </div>
+    <div class="dp-example"><strong>أهمية لـ MSL:</strong> الأطباء الذين يستخدمون CGM مع مرضاهم يريدون فهم كيفية دمج هذه البيانات مع خطط العلاج الدوائي. MSL الذي يفهم IoMT يُساعد الطبيب على تفسير البيانات واتخاذ قرارات علاجية أفضل.</div>
+    <div class="alert-blue">
+      <span class="ab-icon">🔒</span>
+      <div><h4>تحدي الأمان والخصوصية</h4><p>كل جهاز متصل هو نقطة ضعف محتملة. خروقات بيانات المرضى في ازدياد — وLGPD وGDPR والأنظمة المحلية تفرض متطلبات صارمة لحماية بيانات IoMT.</p></div>
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="domain-grid" style="margin-top:14px;">
+    <div class="domain-card" data-icon="📱" onclick="showDomain('d4',this)">
+      <div class="dc-icon">📱</div>
+      <h4>التطبيقات الصحية والعلاجات الرقمية</h4>
+      <p>تطبيقات معتمدة طبياً تُستخدم كعلاج فعلي — Digital Therapeutics وإدارة الأمراض المزمنة</p>
+      <span class="dc-badge" style="background:var(--orange-bg);color:var(--orange);">DTx</span>
+    </div>
+    <div class="domain-card" data-icon="🧬" onclick="showDomain('d5',this)">
+      <div class="dc-icon">🧬</div>
+      <h4>التكنولوجيا في البحث السريري</h4>
+      <p>Decentralized Trials، eClinical Tools، Real-World Data Platforms</p>
+      <span class="dc-badge" style="background:var(--purple-bg);color:var(--purple);">البحث العلمي</span>
+    </div>
+    <div class="domain-card" data-icon="🔗" onclick="showDomain('d6',this)">
+      <div class="dc-icon">🔗</div>
+      <h4>التكامل والبنية التحتية الرقمية</h4>
+      <p>Interoperability، Cloud Health، Blockchain في الصحة، الأمن السيبراني</p>
+      <span class="dc-badge" style="background:var(--blue-bg);color:var(--blue);">البنية التحتية</span>
+    </div>
+  </div>
+
+  <!-- Detail panel 4 -->
+  <div class="detail-panel" id="d4">
+    <div class="dp-header"><span class="dp-icon">📱</span><h3>التطبيقات الصحية والعلاجات الرقمية (DTx)</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">Digital Therapeutics (DTx) هي تطبيقات أو برامج تحصل على موافقة تنظيمية كعلاج طبي فعلي — ليس مجرد أدوات دعم، بل علاجات قائمة بذاتها أو مكملة للدواء.</p>
+    <div class="pro-con">
+      <div class="pc-card" style="border-color:var(--teal);background:#F0FAFA;">
+        <h4 style="color:var(--teal);">✅ مزايا DTx</h4>
+        <ul>
+          <li style="color:var(--green);">✓ <span>متاحة 24/7 للمريض في أي مكان</span></li>
+          <li style="color:var(--green);">✓ <span>تُولّد بيانات استخدام حقيقية</span></li>
+          <li style="color:var(--green);">✓ <span>تُحسّن الالتزام العلاجي</span></li>
+          <li style="color:var(--green);">✓ <span>قابلة للتخصيص لكل مريض</span></li>
+          <li style="color:var(--green);">✓ <span>لا آثار جانبية دوائية</span></li>
+        </ul>
+      </div>
+      <div class="pc-card" style="border-color:var(--red-dark);background:#FFF5F5;">
+        <h4 style="color:var(--red-dark);">⚠️ تحديات DTx</h4>
+        <ul>
+          <li style="color:var(--red-dark);">✗ <span>تنظيم وموافقات معقدة</span></li>
+          <li style="color:var(--red-dark);">✗ <span>الفجوة الرقمية تحرم بعض المرضى</span></li>
+          <li style="color:var(--red-dark);">✗ <span>التأمين لا يغطي معظمها بعد</span></li>
+          <li style="color:var(--red-dark);">✗ <span>الالتزام بالاستخدام يتراجع مع الوقت</span></li>
+          <li style="color:var(--red-dark);">✗ <span>أدلة طويلة الأمد محدودة</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="dp-example"><strong>مثال — Somryst (FDA-cleared):</strong> أول DTx معتمد لعلاج الأرق المزمن. يُقدّم العلاج المعرفي السلوكي للأرق (CBT-I) عبر تطبيق لمدة 9 أسابيع. أثبت فعاليةً مساوية للعلاج مع معالج متخصص.</div>
+  </div>
+
+  <!-- Detail panel 5 -->
+  <div class="detail-panel" id="d5">
+    <div class="dp-header"><span class="dp-icon">🧬</span><h3>التكنولوجيا في البحث السريري</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">التكنولوجيا تُحوّل كيف تُصمَّم وتُنفَّذ وتُحلَّل التجارب السريرية — من جمع البيانات إلى تجنيد المرضى وتحليل النتائج.</p>
+    <ul class="dp-list">
+      <li><strong>Decentralized Clinical Trials (DCT):</strong> المريض يشارك من بيته — تُوسّع الوصول وتُقلّص التكاليف 30-40%</li>
+      <li><strong>eCRF وEDC:</strong> جمع البيانات إلكترونياً في الوقت الحقيقي — تُقلّص أخطاء الإدخال اليدوي بشكل كبير</li>
+      <li><strong>Real-World Data Platforms:</strong> منصات مثل Flatiron وTriNetX تُتيح تحليل ملايين السجلات الطبية الحقيقية</li>
+      <li><strong>AI-Powered Patient Matching:</strong> خوارزميات تجد المرضى المناسبين للتجارب في قواعد البيانات — تُسرّع التجنيد</li>
+      <li><strong>Adaptive Trial Design:</strong> يُعدّل التجربة تلقائياً بناءً على البيانات الواردة — أسرع وأكثر كفاءة</li>
+      <li><strong>Wearables في التجارب:</strong> تُجمع بيانات مستمرة بدلاً من زيارات متقطعة — صورة أكمل عن المريض</li>
+    </ul>
+    <div class="alert-teal">
+      <span class="ab-icon">🎯</span>
+      <div><h4>صلة مباشرة بـ MSL</h4><p>MSL يناقش هذه التقنيات مع الباحثين الأكاديميين — خاصةً في سياق دراسات ISS. فهمه لـ DCT وRWD platforms يُمكّنه من تقديم دعم علمي ذا قيمة حقيقية للباحثين.</p></div>
+    </div>
+  </div>
+
+  <!-- Detail panel 6 -->
+  <div class="detail-panel" id="d6">
+    <div class="dp-header"><span class="dp-icon">🔗</span><h3>التكامل والبنية التحتية الرقمية</h3></div>
+    <p style="font-size:14px;color:var(--text-mid);">القيمة الحقيقية للتكنولوجيا الصحية تظهر حين تتكامل الأنظمة وتتحدث لغة واحدة — وهذا هو التحدي الأصعب في الرعاية الصحية الرقمية.</p>
+
+    <div style="margin:16px 0;">
+      <div class="interop-wrap">
+        <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:14px;">نموذج التكامل المثالي (FHIR Standard):</div>
+        <div class="interop-center">
+          <div class="interop-hub">🔗 FHIR Data Exchange Hub</div>
+          <div class="interop-spokes">
+            <div class="spoke"><span class="spoke-icon">🏥</span>EHR System</div>
+            <div class="spoke"><span class="spoke-icon">🧪</span>Lab Results</div>
+            <div class="spoke"><span class="spoke-icon">💊</span>Pharmacy</div>
+            <div class="spoke"><span class="spoke-icon">📱</span>Patient App</div>
+            <div class="spoke"><span class="spoke-icon">⌚</span>Wearables</div>
+            <div class="spoke"><span class="spoke-icon">🤖</span>AI Tools</div>
+            <div class="spoke"><span class="spoke-icon">🔬</span>Clinical Trials</div>
+            <div class="spoke"><span class="spoke-icon">🏛️</span>Regulatory</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dp-grid">
+      <div class="dp-item"><div class="dpi-label">FHIR Standard</div><div class="dpi-val">معيار HL7 FHIR للتبادل الآمن للبيانات الصحية بين الأنظمة المختلفة</div></div>
+      <div class="dp-item"><div class="dpi-label">Cloud Health</div><div class="dpi-val">AWS Health، Google Cloud Healthcare، Microsoft Azure — تُوفّر بنية تحتية مرنة وآمنة</div></div>
+      <div class="dp-item"><div class="dpi-label">Cybersecurity</div><div class="dpi-val">هجمات Ransomware على المستشفيات تضاعفت — الأمن السيبراني أصبح أولوية قصوى</div></div>
+      <div class="dp-item"><div class="dpi-label">Blockchain</div><div class="dpi-val">يُتيح تتبع سلسلة توريد الأدوية ومشاركة بيانات المرضى بأمان دون وسيط</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── MSL Toolkit ── -->
+  <div class="section-label"><div class="dot"></div><span>MSL والتكنولوجيا</span></div>
+  <h2>أدوات التكنولوجيا في يد MSL اليوم</h2>
+
+  <div class="toolkit">
+    <div class="tool-card" style="border-top-color:var(--navy);">
+      <div class="tc-icon2">📊</div>
+      <h4>منصات CRM المتخصصة</h4>
+      <p>Veeva CRM، Salesforce Health Cloud — تُنظّم زيارات MSL، تُوثّق التفاعلات، وتُحلّل أنماط التواصل مع KOL بدقة.</p>
+    </div>
+    <div class="tool-card" style="border-top-color:var(--teal);">
+      <div class="tc-icon2">📚</div>
+      <h4>منصات الأدبيات العلمية</h4>
+      <p>PubMed، Embase، Epistemonikos — بحث علمي فوري. بعض الشركات توفّر منصات AI تُلخّص الأوراق البحثية تلقائياً.</p>
+    </div>
+    <div class="tool-card" style="border-top-color:var(--purple);">
+      <div class="tc-icon2">🤖</div>
+      <h4>أدوات الذكاء الاصطناعي</h4>
+      <p>تُساعد في تلخيص الأدبيات، إعداد المواد العلمية، وتحليل أسئلة الأطباء للكشف عن الفجوات المعرفية.</p>
+    </div>
+    <div class="tool-card" style="border-top-color:var(--gold);">
+      <div class="tc-icon2">📱</div>
+      <h4>منصات التواصل الرقمي</h4>
+      <p>اجتماعات افتراضية، عروض تقديمية تفاعلية، المواد العلمية الرقمية — خاصةً أهمية بعد تسارع الرقمنة.</p>
+    </div>
+    <div class="tool-card" style="border-top-color:var(--red-dark);">
+      <div class="tc-icon2">🗺️</div>
+      <h4>تحليلات الخريطة الطبية</h4>
+      <p>أدوات تُحلّل بيانات وصف الأطباء في منطقة MSL — تُحدّد KOLs الناشئين والفجوات العلاجية الجغرافية.</p>
+    </div>
+    <div class="tool-card" style="border-top-color:var(--blue);">
+      <div class="tc-icon2">🔐</div>
+      <h4>الامتثال الرقمي</h4>
+      <p>أدوات لضمان أن كل تواصل رقمي ملتزم بلوائح الصناعة — تسجيل آلي، موافقات رقمية، مسار تدقيق كامل.</p>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>المعادلة الذهبية للـ MSL الرقمي</h4>
+      <p>التكنولوجيا تُعطي MSL وقتاً أكثر للعلاقة الإنسانية — بدلاً من قضاء ساعات في توثيق الزيارات، يُوثّق بنقرات ويُركّز على العمق العلمي. الأداة الأفضل هي التي تجعل MSL أكثر إنسانية لا أقل.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Challenges ── -->
+  <div class="section-label"><div class="dot"></div><span>التحديات</span></div>
+  <h2>تحديات التكنولوجيا في الرعاية الصحية</h2>
+
+  <div class="domain-grid">
+    <div class="domain-card" style="cursor:default;" data-icon="🔒">
+      <div class="dc-icon">🔒</div>
+      <h4>الأمان والخصوصية</h4>
+      <p>بيانات المرضى هي الأكثر حساسية — خروقات البيانات الصحية هي الأغلى تكلفةً في أي صناعة ($10.9M متوسط تكلفة الاختراق).</p>
+      <span class="dc-badge" style="background:var(--red-bg);color:var(--red-dark);">تحدي حرج</span>
+    </div>
+    <div class="domain-card" style="cursor:default;" data-icon="🌐">
+      <div class="dc-icon">🌐</div>
+      <h4>الفجوة الرقمية</h4>
+      <p>ليس كل المرضى قادرين على استخدام التكنولوجيا — كبار السن، المناطق النائية، محدودو الدخل. التكنولوجيا قد تُعمّق التفاوت الصحي.</p>
+      <span class="dc-badge" style="background:var(--orange-bg);color:var(--orange);">عدالة صحية</span>
+    </div>
+    <div class="domain-card" style="cursor:default;" data-icon="⚖️">
+      <div class="dc-icon">⚖️</div>
+      <h4>التنظيم والموافقات</h4>
+      <p>وتيرة الابتكار أسرع من وتيرة التنظيم — FDA وEMA يعملان على أطر جديدة لموافقة AI والـ DTx لكن الفجوة لا تزال واسعة.</p>
+      <span class="dc-badge" style="background:var(--blue-bg);color:var(--blue);">تحدٍّ تنظيمي</span>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 MSL — الجسر بين التكنولوجيا والطبيب</h3>
+    <p>الأطباء يواجهون كماً هائلاً من التكنولوجيا الجديدة كل يوم — ولا يملكون وقتاً لفهم كلها. MSL الذي يفهم EHR وAI وWearables وDTx يستطيع مساعدة الطبيب على تقييم هذه الأدوات، فهم قيودها، ودمجها في ممارسته السريرية بثقة. هذا هو دور المستشار العلمي الحقيقي في عصر البيانات.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── Quiz ── -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. ما الفرق الجوهري بين EMR وEHR؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. EMR للمستشفيات فقط وEHR للعيادات</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. EHR أقدم وأكثر أماناً من EMR</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. EMR بيانات مؤسسة واحدة — EHR يُشارَك عبر مزودين متعددين ليعكس صورة صحية أشمل للمريض</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. لا فرق — المصطلحان مترادفان تماماً</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! EMR = سجل داخل مؤسسة واحدة. EHR = سجل يُشارَك عبر مزودين متعددين — أشمل وأكثر قيمةً في استمرارية الرعاية.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ الفرق الجوهري: EMR سجل داخل مؤسسة واحدة، بينما EHR يُشارَك عبر مزودين متعددين ويعكس الصورة الصحية الكاملة للمريض.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. طبيب يقول: «لا أثق بتشخيص AI لأنه لا يشرح كيف وصل لهذه النتيجة». ما هذه المشكلة؟ وكيف يتعامل معها MSL؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. خطأ في برمجة النظام يمكن إصلاحه بتحديث</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. هذه مشكلة «الصندوق الأسود» (Black Box) — تحدٍّ حقيقي في AI. MSL يعترف بها صراحة ويناقش متى يكون AI داعماً ومتى يكون المسؤول النهائي دائماً الطبيب</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. المشكلة في الطبيب وليس AI — يحتاج تدريباً تقنياً أكثر</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. يطمئن الطبيب بأن AI دقته 99% ولا داعي للقلق</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! «الصندوق الأسود» تحدٍّ حقيقي ومشروع. MSL لا يُقلّل من مخاوف الطبيب — بل يناقشها بصدق: AI أداة داعمة والقرار النهائي دائماً للطبيب.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ هذا تحدي «الصندوق الأسود» في AI — مشكلة حقيقية يُقرّ بها حتى المطوّرون. MSL يتعامل معها بصدق: AI داعم وليس بديلاً عن الحكم السريري للطبيب.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. ما الفرق بين تطبيق صحي عادي وDigital Therapeutic (DTx) معتمد؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. DTx يعمل على أجهزة Apple فقط بينما التطبيق العادي على جميع الأجهزة</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. لا فرق — كلاهما تطبيقات صحية على الهاتف</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. DTx يحصل على موافقة تنظيمية كعلاج طبي مُثبتة فعاليته بأدلة سريرية — بينما التطبيق العادي أداة دعم دون معايير علاجية رسمية</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. DTx مخصص للمستشفيات فقط والتطبيق العادي للأفراد</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ صحيح! DTx = علاج رقمي معتمد تنظيمياً بأدلة سريرية. التطبيق الصحي العادي = أداة مساعدة دون معايير تنظيمية علاجية. الفرق جوهري وهام سريرياً.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ DTx تختلف جوهرياً — تمر بعملية موافقة تنظيمية (FDA/CE) وتُثبت فعاليتها بتجارب سريرية كالدواء تماماً. التطبيق العادي لا يخضع لهذه المتطلبات.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. ما أبرز تحدٍّ يواجه تطبيق التكنولوجيا الصحية من منظور عدالة الرعاية؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','b')">أ. التكنولوجيا مكلفة جداً للشركات الصغيرة</div>
+      <div class="quiz-option" onclick="answer('q4','b','b')">ب. الفجوة الرقمية — كبار السن والمناطق النائية ومحدودو الدخل قد يُحرمون من فوائد التكنولوجيا وتتعمق الفوارق الصحية</div>
+      <div class="quiz-option" onclick="answer('q4','c','b')">ج. صعوبة تدريب الأطباء على الأنظمة الجديدة</div>
+      <div class="quiz-option" onclick="answer('q4','d','b')">د. التكنولوجيا لا تعمل بشكل موثوق في المناطق ذات اتصال إنترنت ضعيف</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! الفجوة الرقمية تحدٍّ عدالة حقيقي — التكنولوجيا التي تفترض إمكانية الوصول الرقمي قد تُعمّق الفوارق الصحية بدلاً من تقليصها. MSL الواعي يُدرك هذا ويطرحه في نقاشاته.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ الفجوة الرقمية هي التحدي الأبرز من منظور عدالة الرعاية — حين تفترض التكنولوجيا الوصول الرقمي، قد تُقصي الفئات الأكثر احتياجاً للرعاية.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>تعلمت المجالات التكنولوجية الرئيسية في الرعاية الصحية — من EHR وAI إلى IoMT وDTx والبنية التحتية الرقمية. فهمت أدوات MSL التكنولوجية وكيف تُعزّز عمله. وأدركت أن التكنولوجيا ليست غاية في حد ذاتها — بل أداة لتحسين رعاية المريض، ودور MSL هو مساعدة الأطباء على توظيفها بحكمة وبصيرة علمية.</p>
+  </div>
+
+</div>
+
+<script>
+function showDomain(id, card) {
+  const panel = document.getElementById(id);
+  const isOpen = panel.classList.contains('open');
+  // close all panels and deactivate all cards
+  ['d1','d2','d3','d4','d5','d6'].forEach(did => {
+    document.getElementById(did).classList.remove('open');
+  });
+  document.querySelectorAll('.domain-card').forEach(c => c.classList.remove('active'));
+  if (!isOpen) {
+    panel.classList.add('open');
+    card.classList.add('active');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+  }
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const idx = ['a','b','c','d'].indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => {
+    f.classList.remove('show','correct-fb','wrong-fb'); f.style.display = 'none';
+  });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display = 'block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

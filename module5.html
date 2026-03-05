@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوحدة ٥ – الامتثال واللوائح التنظيمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0A2342; --teal:#0D7377; --teal-light:#14A085; --gold:#F0A500; --red:#C0392B; --white:#FFFFFF; --off-white:#F5F7FA; --light-gray:#E8EDF2; --text-dark:#1A2B3C; --text-mid:#4A6080; --text-light:#8A9BB0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Cairo',sans-serif; background:var(--off-white); color:var(--text-dark); direction:rtl; line-height:1.7; }
+  .progress-bar { background:var(--teal); height:5px; }
+  .progress-fill { height:100%; background:var(--gold); width:83%; }
+  .hero { background:var(--navy); padding:60px 40px 50px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; left:-60px; width:300px; height:300px; border-radius:50%; background:var(--red); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { color:var(--white); font-size:clamp(24px,5vw,40px); font-weight:900; margin-bottom:12px; }
+  .hero h1 span { color:var(--gold); }
+  .hero-accent { width:60px; height:4px; background:var(--teal); border-radius:2px; margin:16px 0; }
+  .hero p { color:#8A9BB0; font-size:16px; max-width:640px; }
+  .section { padding:50px 40px; max-width:900px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .section-label .dot { width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:12px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:26px; font-weight:800; color:var(--navy); margin-bottom:24px; }
+  h3 { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  p { color:var(--text-mid); margin-bottom:16px; font-size:15.5px; }
+  .divider { height:1px; background:var(--light-gray); margin:40px 0; }
+
+  /* Principle cards */
+  .principle { background:var(--white); border-radius:14px; padding:24px; margin:16px 0; border:1px solid var(--light-gray); box-shadow:0 2px 12px rgba(10,35,66,0.06); display:flex; gap:16px; align-items:flex-start; position:relative; overflow:hidden; }
+  .principle::before { content:''; position:absolute; top:0; right:0; width:5px; height:100%; border-radius:0 14px 14px 0; }
+  .principle.p-red::before { background:var(--red); }
+  .principle.p-teal::before { background:var(--teal); }
+  .principle.p-navy::before { background:var(--navy); }
+  .principle.p-purple::before { background:#7D3C98; }
+  .principle-icon { font-size:28px; flex-shrink:0; }
+  .principle-body h4 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .principle-body p { font-size:14px; color:var(--text-mid); margin:0; }
+  .principle-tag { display:inline-block; font-size:11px; font-weight:700; padding:2px 10px; border-radius:8px; margin-top:8px; }
+  .tag-danger { background:#FEE2E2; color:#991B1B; }
+  .tag-required { background:#DBEAFE; color:#1E40AF; }
+  .tag-important { background:#FEF3C7; color:#92400E; }
+
+  /* Off-label explainer */
+  .offlabel-box { background:var(--white); border-radius:16px; padding:28px; border:2px solid #FEE2E2; margin:24px 0; }
+  .offlabel-box h3 { color:var(--red); margin-bottom:16px; }
+  .ol-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .ol-item { border-radius:10px; padding:16px; }
+  .ol-allowed { background:#F0FDF4; border:1px solid #86EFAC; }
+  .ol-forbidden { background:#FEF2F2; border:1px solid #FCA5A5; }
+  .ol-item h5 { font-size:13px; font-weight:800; margin-bottom:8px; }
+  .ol-allowed h5 { color:#166534; }
+  .ol-forbidden h5 { color:#991B1B; }
+  .ol-item ul { list-style:none; }
+  .ol-item li { font-size:13px; color:var(--text-mid); padding:4px 0; display:flex; gap:6px; align-items:flex-start; }
+  .ol-item li::before { content:''; font-size:12px; }
+  .ol-allowed li::before { content:'✓'; color:#166534; font-weight:700; }
+  .ol-forbidden li::before { content:'✗'; color:#991B1B; font-weight:700; }
+
+  /* CRM flow */
+  .crm-flow { display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center; margin:24px 0; }
+  .crm-step { background:var(--white); border:1px solid var(--light-gray); border-radius:10px; padding:14px 16px; text-align:center; min-width:130px; box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .crm-step .crm-icon { font-size:22px; margin-bottom:4px; }
+  .crm-step p { font-size:12px; color:var(--text-mid); margin:0; }
+  .crm-step h5 { font-size:13px; font-weight:700; color:var(--navy); }
+  .crm-arrow { color:var(--teal); font-size:20px; font-weight:700; }
+
+  /* Red lines */
+  .red-lines { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin:24px 0; }
+  .red-line-card { background:#FEF2F2; border-radius:12px; padding:20px; border:1px solid #FCA5A5; }
+  .red-line-card h4 { font-size:14px; font-weight:800; color:#991B1B; margin-bottom:6px; }
+  .red-line-card p { font-size:13px; color:#7F1D1D; margin:0; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:32px 36px; margin:30px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold); font-size:19px; margin-bottom:12px; }
+  .highlight p { color:#C8D8E8; font-size:15px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:32px; border:2px solid var(--light-gray); margin:30px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:20px; font-size:20px; }
+  .quiz-q { margin-bottom:24px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:12px; }
+  .quiz-option { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:8px; cursor:pointer; transition:all .2s; font-size:14px; }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+
+  .lesson-nav { display:flex; justify-content:space-between; align-items:center; padding:28px 40px; background:var(--white); border-top:1px solid var(--light-gray); max-width:900px; margin:0 auto; flex-wrap:wrap; gap:16px; }
+  .nav-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:all .2s; }
+  .btn-primary { background:var(--teal); color:var(--white); }
+  .btn-primary:hover { background:var(--teal-light); }
+  .btn-secondary { background:var(--light-gray); color:var(--text-dark); }
+
+  @media(max-width:600px) { .ol-grid{grid-template-columns:1fr;} .hero,.section{padding:32px 20px;} .lesson-nav{padding:20px;} .crm-arrow{display:none;} }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
+<div class="hero">
+  <div class="hero-badge">الوحدة الخامسة · Module 5</div>
+  <h1>الامتثال <span>واللوائح التنظيمية</span></h1>
+  <div class="hero-accent"></div>
+  <p>الإطار الأخلاقي والقانوني الذي يحكم عمل MSL — معرفته تحميك وتحمي شركتك</p>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>المبادئ الأخلاقية</span></div>
+  <h2>المبادئ الأساسية لعمل MSL</h2>
+
+  <div class="principle p-red">
+    <div class="principle-icon">🚫</div>
+    <div class="principle-body">
+      <h4>الفصل الكامل بين العلمي والتجاري</h4>
+      <p>يجب أن تكون محادثات الـ MSL مستقلة تماماً عن الأهداف البيعية. لا يجوز له تنسيق زياراته مع فريق المبيعات أو مناقشة أهداف بيعية مع الأطباء. هذا خط أحمر لا يُتجاوز تحت أي ظرف.</p>
+      <span class="principle-tag tag-danger">⛔ خط أحمر</span>
+    </div>
+  </div>
+
+  <div class="principle p-teal">
+    <div class="principle-icon">📋</div>
+    <div class="principle-body">
+      <h4>توثيق كل تفاعل في CRM خلال 24 ساعة</h4>
+      <p>كل زيارة، مكالمة، بريد إلكتروني، أو تبادل علمي يجب توثيقه في نظام CRM (مثل Veeva) خلال 24 ساعة من حدوثه. التوثيق يحمي الـ MSL قانونياً ويبني سجلاً احترافياً.</p>
+      <span class="principle-tag tag-required">🔵 إلزامي</span>
+    </div>
+  </div>
+
+  <div class="principle p-navy">
+    <div class="principle-icon">🎁</div>
+    <div class="principle-body">
+      <h4>قوانين التقديم والمكافآت (HCP Transfers of Value)</h4>
+      <p>أي منحة أو هدية أو رسوم تحكيم أو دعم لسفر الطبيب يجب أن يمر عبر القنوات الرسمية المعتمدة في الشركة وأن يكون موثقاً وفق قوانين Sunshine Act ومعادلاتها المحلية.</p>
+      <span class="principle-tag tag-required">🔵 إلزامي</span>
+    </div>
+  </div>
+
+  <div class="principle p-purple">
+    <div class="principle-icon">⚖️</div>
+    <div class="principle-body">
+      <h4>الشفافية في تضارب المصالح</h4>
+      <p>يجب على الـ MSL الإفصاح دائماً عن انتمائه للشركة عند تعريف نفسه للأطباء، وعدم تقديم نفسه كباحث مستقل أو أكاديمي محايد.</p>
+      <span class="principle-tag tag-important">🟡 مهم</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>Off-Label</span></div>
+  <h2>الاستخدام خارج التسجيل (Off-Label)</h2>
+  <p>هذا من أكثر المواضيع حساسية في عمل MSL. Off-Label يعني تقديم معلومات عن استخدامات الدواء غير المعتمدة رسمياً من هيئة التسجيل (مثل FDA أو SFDA).</p>
+
+  <div class="offlabel-box">
+    <h3>⚖️ متى يُسمح ومتى يُمنع؟</h3>
+    <div class="ol-grid">
+      <div class="ol-item ol-allowed">
+        <h5>✅ مسموح به</h5>
+        <ul>
+          <li>بناءً على طلب صريح وغير محرَّض من الطبيب</li>
+          <li>تقديم بيانات علمية موضوعية ومتوازنة</li>
+          <li>ذكر الحدود والمخاطر بصراحة</li>
+          <li>توثيق الطلب في CRM فوراً</li>
+          <li>إشراك فريق Medical Information عند الحاجة</li>
+        </ul>
+      </div>
+      <div class="ol-item ol-forbidden">
+        <h5>❌ ممنوع تماماً</h5>
+        <ul>
+          <li>بدء الحديث عن Off-Label من تلقاء نفسك</li>
+          <li>استخدام Off-Label كأداة ترويجية</li>
+          <li>تشجيع الطبيب على طرح سؤال Off-Label</li>
+          <li>عدم توثيق الطلب والحوار</li>
+          <li>تقديم بيانات Off-Label غير متوازنة</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>التوثيق</span></div>
+  <h2>سير عمل التوثيق في CRM</h2>
+
+  <div class="crm-flow">
+    <div class="crm-step"><div class="crm-icon">🤝</div><h5>التفاعل</h5><p>زيارة / مكالمة / مؤتمر</p></div>
+    <div class="crm-arrow">←</div>
+    <div class="crm-step"><div class="crm-icon">⏱️</div><h5>خلال 24 ساعة</h5><p>توثيق في Veeva CRM</p></div>
+    <div class="crm-arrow">←</div>
+    <div class="crm-step"><div class="crm-icon">📝</div><h5>ما تسجّله</h5><p>ملخص، استفسارات، متابعات</p></div>
+    <div class="crm-arrow">←</div>
+    <div class="crm-step"><div class="crm-icon">✅</div><h5>المراجعة</h5><p>Medical Manager يراجع دورياً</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>الخطوط الحمراء</span></div>
+  <h2>الخطوط الحمراء المطلقة</h2>
+
+  <div class="red-lines">
+    <div class="red-line-card"><h4>❌ مشاركة أهداف بيعية مع الأطباء</h4><p>أي محادثة تربط زيارة MSL بهدف مبيعات تُعرّضه للإنهاء الفوري</p></div>
+    <div class="red-line-card"><h4>❌ تقديم هدايا شخصية للأطباء</h4><p>أي هدية خارج الإطار الرسمي المعتمد مهما كانت قيمتها</p></div>
+    <div class="red-line-card"><h4>❌ الترويج للاستخدام Off-Label</h4><p>مبادرة الـ MSL بتقديم معلومات غير مسجّلة بدون طلب صريح</p></div>
+    <div class="red-line-card"><h4>❌ عدم التوثيق أو توثيق خاطئ</h4><p>حذف معلومات حساسة من التوثيق أو تزوير سجلات CRM</p></div>
+  </div>
+
+  <div class="highlight">
+    <h3>🛡️ الامتثال يحميك أنت أولاً</h3>
+    <p>قواعد الامتثال ليست عقبة — هي درع يحمي الـ MSL من المساءلة القانونية. الشركات الدوائية الكبرى تدفع غرامات بالمليارات بسبب انتهاكات الامتثال. الـ MSL الملتزم يبني مسيرة مهنية طويلة وموثوقة.</p>
+  </div>
+
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+    <div class="quiz-q">
+      <p>١. متى يستطيع MSL تقديم معلومات Off-Label؟</p>
+      <label class="quiz-option"><input type="radio" name="q1" value="a"> في أي وقت إذا كانت البيانات علمية دقيقة</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="b"> فقط بناءً على طلب صريح وغير محرَّض من الطبيب مع التوثيق الفوري</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="c"> فقط في المؤتمرات الطبية</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="d"> إذا وافق مدير المبيعات على ذلك</label>
+    </div>
+    <div class="quiz-q">
+      <p>٢. ما الإجراء الصحيح بعد أي زيارة طبية؟</p>
+      <label class="quiz-option"><input type="radio" name="q1" value="a"> إرسال تقرير للمبيعات لتحديثهم بما قاله الطبيب</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="b"> توثيق ملخص التفاعل في نظام CRM خلال 24 ساعة</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="c"> الانتظار حتى نهاية الأسبوع لتوثيق جميع الزيارات مرة واحدة</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="d"> إخبار زملاء الفريق شفهياً بما جرى</label>
+    </div>
+  </div>
+
+</div>
+
+<div class="lesson-nav">
+  <a class="nav-btn btn-secondary" href="module4.html">→ الوحدة السابقة</a>
+  <div style="color:var(--text-light); font-size:14px;">الوحدة ٥ من ٦</div>
+  <a class="nav-btn btn-primary" href="module6.html">الوحدة الأخيرة: مسيرتك المهنية ←</a>
+</div>
+
+<script>
+const correct = {q1:'b'};
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const radio = this.querySelector('input[type=radio]');
+    const name = radio.name;
+    document.querySelectorAll(`input[name=${name}]`).forEach(inp => inp.closest('.quiz-option').classList.remove('correct','wrong'));
+    this.classList.add(radio.value === correct[name] ? 'correct' : 'wrong');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوحدة ٣ – التفاعل مع قادة الرأي الطبي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0A2342; --teal:#0D7377; --teal-light:#14A085; --gold:#F0A500; --white:#FFFFFF; --off-white:#F5F7FA; --light-gray:#E8EDF2; --text-dark:#1A2B3C; --text-mid:#4A6080; --text-light:#8A9BB0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Cairo',sans-serif; background:var(--off-white); color:var(--text-dark); direction:rtl; line-height:1.7; }
+  .progress-bar { background:var(--teal); height:5px; }
+  .progress-fill { height:100%; background:var(--gold); width:50%; }
+  .hero { background:var(--navy); padding:60px 40px 50px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-80px; left:-60px; width:320px; height:320px; border-radius:50%; background:var(--teal); opacity:0.1; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { color:var(--white); font-size:clamp(24px,5vw,40px); font-weight:900; margin-bottom:12px; }
+  .hero h1 span { color:var(--gold); }
+  .hero-accent { width:60px; height:4px; background:var(--teal); border-radius:2px; margin:16px 0; }
+  .hero p { color:#8A9BB0; font-size:16px; max-width:640px; }
+  .section { padding:50px 40px; max-width:900px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .section-label .dot { width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:12px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:26px; font-weight:800; color:var(--navy); margin-bottom:24px; }
+  h3 { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  p { color:var(--text-mid); margin-bottom:16px; font-size:15.5px; }
+  .divider { height:1px; background:var(--light-gray); margin:40px 0; }
+
+  /* KOL Pyramid */
+  .pyramid-container { display:flex; flex-direction:column; align-items:center; gap:8px; margin:30px 0; }
+  .pyramid-level { border-radius:10px; padding:18px 24px; color:var(--white); text-align:center; transition:transform 0.2s; cursor:default; }
+  .pyramid-level:hover { transform:scale(1.02); }
+  .pyramid-level h4 { font-size:14px; font-weight:800; margin-bottom:4px; }
+  .pyramid-level p { font-size:13px; opacity:0.88; margin:0; color:inherit; }
+  .pl-1 { background:var(--navy); width:100%; }
+  .pl-2 { background:var(--teal); width:85%; }
+  .pl-3 { background:var(--teal-light); width:70%; }
+  .pyramid-label { font-size:11px; color:var(--text-light); text-align:center; margin-top:6px; }
+
+  /* Steps */
+  .steps { display:flex; flex-direction:column; gap:0; margin:24px 0; position:relative; }
+  .steps::before { content:''; position:absolute; top:0; right:23px; bottom:0; width:2px; background:var(--light-gray); z-index:0; }
+  .step { display:flex; gap:20px; align-items:flex-start; padding:0 0 28px 0; position:relative; z-index:1; }
+  .step:last-child { padding-bottom:0; }
+  .step-num { width:48px; height:48px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:var(--white); }
+  .step-body { background:var(--white); border-radius:12px; padding:20px 22px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 10px rgba(10,35,66,0.05); }
+  .step-body h4 { font-size:15px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .step-body p { font-size:14px; color:var(--text-mid); margin:0; }
+  .step-tip { display:inline-block; background:#FEF3C7; color:#92400E; font-size:12px; font-weight:600; padding:3px 10px; border-radius:8px; margin-top:8px; }
+
+  /* Conversation guide */
+  .convo-guide { background:var(--white); border-radius:14px; padding:28px; margin:24px 0; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); }
+  .convo-guide h3 { font-size:17px; color:var(--teal); margin-bottom:16px; }
+  .convo-item { margin-bottom:18px; }
+  .convo-item:last-child { margin-bottom:0; }
+  .convo-label { font-size:11px; font-weight:800; padding:2px 10px; border-radius:8px; margin-bottom:6px; display:inline-block; }
+  .label-do { background:#D1FAE5; color:#065F46; }
+  .label-dont { background:#FEE2E2; color:#991B1B; }
+  .convo-text { font-size:14px; color:var(--text-mid); padding:10px 14px; border-radius:8px; border-right:3px solid; }
+  .convo-text.do { border-color:#22c55e; background:#f0fdf4; }
+  .convo-text.dont { border-color:#ef4444; background:#fef2f2; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:32px 36px; margin:30px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold); font-size:19px; margin-bottom:12px; }
+  .highlight p { color:#C8D8E8; font-size:15px; margin:0; }
+
+  /* Tools grid */
+  .tools-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin:20px 0; }
+  .tool-card { background:var(--white); border-radius:12px; padding:18px 16px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .tool-card .tool-icon { font-size:24px; margin-bottom:8px; }
+  .tool-card h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .tool-card p { font-size:12.5px; color:var(--text-mid); margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:32px; border:2px solid var(--light-gray); margin:30px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:20px; font-size:20px; }
+  .quiz-q { margin-bottom:24px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:12px; }
+  .quiz-option { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:8px; cursor:pointer; transition:all .2s; font-size:14px; }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+
+  .lesson-nav { display:flex; justify-content:space-between; align-items:center; padding:28px 40px; background:var(--white); border-top:1px solid var(--light-gray); max-width:900px; margin:0 auto; flex-wrap:wrap; gap:16px; }
+  .nav-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:all .2s; }
+  .btn-primary { background:var(--teal); color:var(--white); }
+  .btn-primary:hover { background:var(--teal-light); }
+  .btn-secondary { background:var(--light-gray); color:var(--text-dark); }
+
+  @media(max-width:600px) { .hero,.section{padding:32px 20px;} .lesson-nav{padding:20px;} .pl-2{width:92%;} .pl-3{width:84%;} }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
+<div class="hero">
+  <div class="hero-badge">الوحدة الثالثة · Module 3</div>
+  <h1>التفاعل مع <span>قادة الرأي الطبي</span></h1>
+  <div class="hero-accent"></div>
+  <p>بناء علاقات KOL علمية وأخلاقية — الكفاءة الأهم في دور MSL الناجح</p>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>التعريف</span></div>
+  <h2>من هو قائد الرأي الطبي (KOL)؟</h2>
+  <p>KOL — Key Opinion Leader — هو متخصص في الرعاية الصحية يتمتع بمصداقية علمية عالية في مجاله وتأثير على قرارات ممارسيه الطبية. يؤثر تبنيه لمنهج علاجي معين على المئات من الأطباء الآخرين.</p>
+
+  <div class="pyramid-container">
+    <div class="pyramid-level pl-1">
+      <h4>🏆 KOL وطني / دولي</h4>
+      <p>أستاذ جامعي، رئيس جمعية طبية، ينشر في مجلات مرموقة كـ NEJM، يحاضر في مؤتمرات دولية</p>
+    </div>
+    <div class="pyramid-level pl-2">
+      <h4>🌟 KOL إقليمي</h4>
+      <p>استشاري رائد، مدير قسم في مستشفى كبير، مؤثر على مستوى المنطقة الجغرافية</p>
+    </div>
+    <div class="pyramid-level pl-3">
+      <h4>⭐ KOL محلي</h4>
+      <p>طبيب مؤثر في مستشفاه أو عيادته، يؤثر على قرارات زملائه المباشرين</p>
+    </div>
+    <div class="pyramid-label">يبدأ MSL الجديد عادةً بـ KOL المحلي والإقليمي</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>الاستراتيجية</span></div>
+  <h2>خطوات بناء علاقة KOL فعّالة</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:var(--gold); color:var(--navy);">١</div>
+      <div class="step-body">
+        <h4>التعريف والتقييم (Identification & Mapping)</h4>
+        <p>استخدم أدوات تحليل المنشورات العلمية مثل Veeva Link أو IQVIA لتحديد من هم أكثر الأطباء نشراً وتأثيراً في تخصصك. ابنِ خارطة KOL لمنطقتك.</p>
+        <span class="step-tip">💡 ابدأ بـ PubMed: ابحث عن تخصصك + بلدك لمعرفة من ينشر</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--teal);">٢</div>
+      <div class="step-body">
+        <h4>الاستعداد المعرفي (Scientific Preparation)</h4>
+        <p>قبل أي لقاء مع KOL، اقرأ آخر 3-5 أوراق بحثية له، تعرّف على توجهاته العلمية، وجهّز أسئلة مبنية على بحثه — لا على منتجك.</p>
+        <span class="step-tip">🎯 القاعدة الذهبية: اسأل عن بحثه قبل أن تتحدث عن منتجك</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--navy);">٣</div>
+      <div class="step-body">
+        <h4>التواصل الأول (First Engagement)</h4>
+        <p>أفضل وسيلة للتواصل الأول هي المؤتمرات الطبية أو البوساطة عبر زميل مشترك. تجنب المكالمات الباردة مع كبار الأطباء — فهي نادراً ما تنجح.</p>
+        <span class="step-tip">📌 المؤتمرات هي أفضل بيئة للتواصل العلمي الطبيعي</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--teal-light);">٤</div>
+      <div class="step-body">
+        <h4>التبادل العلمي المتوازن (Scientific Exchange)</h4>
+        <p>الهدف ليس العرض بل الحوار. قدّم بيانات ذات قيمة، استمع لآراءه، ناقش الخلافات بموضوعية. الطبيب الكبير يقدّر من يختلف معه بأدلة.</p>
+        <span class="step-tip">🔄 النسبة المثالية: 40% تقديم، 60% استماع وحوار</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#6B5B95; color:white;">٥</div>
+      <div class="step-body">
+        <h4>استمرارية العلاقة (Relationship Maintenance)</h4>
+        <p>تابع دورياً بمحتوى علمي ذي قيمة: مقالة جديدة تخص توجهاته البحثية، نتيجة مؤتمر، أو دراسة طلبها في لقاء سابق. الثبات يبني الثقة.</p>
+        <span class="step-tip">📅 التردد المثالي: 4-6 تفاعلات سنوياً لكل KOL رئيسي</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>المحادثة العلمية</span></div>
+  <h2>ماذا تقول وما تتجنب؟</h2>
+
+  <div class="convo-guide">
+    <h3>🗣️ دليل المحادثة مع KOL</h3>
+
+    <div class="convo-item">
+      <span class="convo-label label-do">✅ قل هذا</span>
+      <div class="convo-text do">«قرأت دراستك الأخيرة عن [الموضوع] — لاحظت أنك توصلت إلى [نتيجة]. هل تعتقد أن هذا ينطبق على مرضى [الفئة الكذا]؟»</div>
+    </div>
+
+    <div class="convo-item">
+      <span class="convo-label label-dont">❌ تجنب هذا</span>
+      <div class="convo-text dont">«دواؤنا الجديد هو الأفضل في السوق وأرقام مبيعاتنا تثبت ذلك — هل يمكنك توصيته لمرضاك؟»</div>
+    </div>
+
+    <div class="convo-item">
+      <span class="convo-label label-do">✅ قل هذا</span>
+      <div class="convo-text do">«لدينا بيانات من دراسة Phase III حول هذا السؤال تحديداً، أود مشاركتها معك والحصول على رأيك العلمي»</div>
+    </div>
+
+    <div class="convo-item">
+      <span class="convo-label label-dont">❌ تجنب هذا</span>
+      <div class="convo-text dont">«مديري يريد منك أن تكتب مزيداً من وصفات دواء X لنحقق الهدف هذا الشهر»</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 قاعدة الـ MSL الذهبية</h3>
+    <p>الـ KOL الذي يثق بك علمياً سيطلب منك هو المعلومات، وسيكون أكثر انفتاحاً للتعاون في الأبحاث والمؤتمرات. هذه الثقة تُبنى بالصدق العلمي — بما فيه الاعتراف بحدود بيانات شركتك.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>الأدوات</span></div>
+  <h2>أدوات تحديد وإدارة KOL</h2>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tool-icon">🔍</div><h4>PubMed</h4><p>مجاني — ابحث عن أكثر الأطباء نشراً في تخصصك</p></div>
+    <div class="tool-card"><div class="tool-icon">📊</div><h4>Veeva Link (OpenData)</h4><p>منصة تحليل KOL متخصصة للصناعة الدوائية</p></div>
+    <div class="tool-card"><div class="tool-icon">💼</div><h4>LinkedIn</h4><p>تابع نشاطات KOL وآخر توجهاتهم المهنية</p></div>
+    <div class="tool-card"><div class="tool-icon">📋</div><h4>Veeva CRM</h4><p>سجّل كل تفاعل مع KOL وخطط للزيارات القادمة</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+    <div class="quiz-q">
+      <p>١. ما أفضل طريقة للتواصل الأول مع KOL كبير؟</p>
+      <label class="quiz-option"><input type="radio" name="q1" value="a"> الاتصال المباشر به وتعريف نفسك بشركتك</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="b"> اللقاء به في مؤتمر طبي وبدء حوار علمي حول بحثه</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="c"> إرسال بريد إلكتروني برفقة مواد تعريفية عن منتجك</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="d"> طلب موعد عبر زيارة مباشرة لعيادته دون ترتيب مسبق</label>
+    </div>
+    <div class="quiz-q">
+      <p>٢. ما النسبة المثالية في محادثة التبادل العلمي مع KOL؟</p>
+      <label class="quiz-option"><input type="radio" name="q2" value="a"> 80% تقديم من MSL، 20% كلام من الطبيب</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="b"> 40% تقديم، 60% استماع وحوار</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="c"> 50% لكل طرف بالتساوي دائماً</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="d"> يعتمد على ما يريد MSL تقديمه</label>
+    </div>
+  </div>
+
+</div>
+
+<div class="lesson-nav">
+  <a class="nav-btn btn-secondary" href="module2.html">→ الوحدة السابقة</a>
+  <div style="color:var(--text-light); font-size:14px;">الوحدة ٣ من ٦</div>
+  <a class="nav-btn btn-primary" href="module4.html">الوحدة التالية: الأدلة العلمية ←</a>
+</div>
+
+<script>
+const correct = {q1:'b', q2:'b'};
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const radio = this.querySelector('input[type=radio]');
+    const name = radio.name;
+    document.querySelectorAll(`input[name=${name}]`).forEach(inp => inp.closest('.quiz-option').classList.remove('correct','wrong'));
+    this.classList.add(radio.value === correct[name] ? 'correct' : 'wrong');
+  });
+});
+</script>
+</body>
+</html>

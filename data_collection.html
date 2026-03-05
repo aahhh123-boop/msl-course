@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جمع البيانات وتحليلها</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  .hero {
+    background: linear-gradient(135deg, #0A1A2E 0%, #0A2342 50%, #051A1F 100%);
+    padding: 52px 36px 44px; position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-80px; right:-60px; width:340px; height:340px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .hero::after { content:''; position:absolute; bottom:-40px; left:-40px; width:200px; height:200px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--teal); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; line-height:1.3; position:relative; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:var(--teal); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Data sources grid */
+  .sources-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:24px 0; }
+  .source-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); border-top:4px solid; transition:transform 0.2s; }
+  .source-card:hover { transform:translateY(-2px); }
+  .sc-icon { font-size:28px; margin-bottom:10px; }
+  .source-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .source-card p { font-size:13px; color:var(--text-mid); margin-bottom:8px; }
+  .sc-tag { font-size:10px; font-weight:700; padding:2px 9px; border-radius:8px; display:inline-block; }
+
+  /* Data quality pillars */
+  .quality-wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:20px 0; }
+  .quality-card { background:var(--white); border-radius:12px; padding:18px 14px; text-align:center; border:2px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); transition:all 0.2s; cursor:default; }
+  .quality-card:hover { border-color:var(--teal); transform:translateY(-2px); }
+  .qc-icon { font-size:30px; margin-bottom:8px; }
+  .qc-term { font-size:14px; font-weight:900; color:var(--navy); margin-bottom:4px; }
+  .qc-ar { font-size:12px; color:var(--teal); font-weight:700; margin-bottom:6px; }
+  .qc-def { font-size:12px; color:var(--text-mid); }
+
+  /* Interactive analysis tabs */
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+  .tab-btn { padding:8px 18px; border-radius:20px; font-size:13px; font-weight:700; cursor:pointer; border:2px solid var(--light-gray); background:var(--white); color:var(--text-mid); transition:all 0.2s; font-family:'Cairo',sans-serif; }
+  .tab-btn:hover { border-color:var(--teal); color:var(--teal); }
+  .tab-btn.active { background:var(--navy); border-color:var(--navy); color:var(--white); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* Stat concept cards */
+  .stat-concept { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); overflow:hidden; margin-bottom:14px; box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .sc-header { padding:16px 20px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:background 0.2s; }
+  .sc-header:hover { background:var(--off-white); }
+  .sc-badge { font-size:22px; }
+  .sc-title { flex:1; }
+  .sc-title h4 { font-size:15px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .sc-title span { font-size:12px; color:var(--text-light); }
+  .sc-arrow { font-size:14px; color:var(--text-light); transition:transform 0.2s; }
+  .sc-body { padding:0 20px 18px; display:none; border-top:1px solid var(--light-gray); }
+  .sc-body.open { display:block; }
+  .sc-explain { font-size:14px; color:var(--text-mid); padding-top:14px; margin-bottom:10px; }
+  .sc-formula { background:var(--navy); color:var(--gold-light); padding:10px 16px; border-radius:8px; font-size:13px; font-weight:700; text-align:center; margin:10px 0; font-family:'Tajawal',sans-serif; }
+  .sc-example { background:var(--off-white); border-radius:8px; padding:12px 14px; font-size:13px; color:var(--text-dark); border-right:3px solid var(--teal); }
+  .sc-rule { display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:8px; margin-top:8px; }
+
+  /* Visual chart mockup */
+  .chart-mock { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); padding:22px; margin:20px 0; box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .chart-title { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:16px; }
+  .bar-chart { display:flex; flex-direction:column; gap:10px; }
+  .bar-row { display:flex; align-items:center; gap:12px; }
+  .bar-label { font-size:12px; color:var(--text-mid); min-width:100px; text-align:left; font-weight:600; }
+  .bar-wrap { flex:1; background:var(--light-gray); border-radius:20px; height:22px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:20px; display:flex; align-items:center; justify-content:flex-end; padding-left:8px; transition:width 0.8s ease; }
+  .bar-val { font-size:11px; font-weight:800; color:var(--white); padding-left:6px; white-space:nowrap; }
+
+  /* KM curve mockup */
+  .km-mock { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); padding:22px; margin:20px 0; }
+  .km-title { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:14px; }
+  .km-svg-wrap { position:relative; width:100%; padding-bottom:55%; }
+  .km-svg-wrap svg { position:absolute; top:0; left:0; width:100%; height:100%; }
+
+  /* Data pipeline */
+  .pipeline { display:flex; flex-direction:column; gap:0; margin:20px 0; position:relative; }
+  .pipeline::before { content:''; position:absolute; top:24px; right:23px; bottom:24px; width:2px; background:var(--light-gray); }
+  .pipe-item { display:flex; gap:16px; padding-bottom:16px; position:relative; z-index:1; }
+  .pipe-item:last-child { padding-bottom:0; }
+  .pipe-dot { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:var(--white); }
+  .pipe-body { background:var(--white); border-radius:12px; padding:15px 18px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .pipe-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .pipe-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .pipe-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* GCP principles */
+  .gcp-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:20px 0; }
+  .gcp-card { background:var(--white); border-radius:12px; padding:18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); display:flex; gap:12px; align-items:flex-start; }
+  .gcp-icon { font-size:22px; flex-shrink:0; }
+  .gcp-body h4 { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .gcp-body p { font-size:12px; color:var(--text-mid); margin:0; }
+
+  /* ITT vs PP */
+  .analysis-compare { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+  .ac-card { border-radius:14px; padding:20px; border:2px solid; }
+  .ac-card h4 { font-size:14px; font-weight:800; margin-bottom:8px; }
+  .ac-card p { font-size:13px; margin-bottom:10px; }
+  .ac-card ul { list-style:none; }
+  .ac-card li { font-size:12.5px; padding:4px 0; border-bottom:1px solid rgba(0,0,0,0.06); display:flex; gap:7px; }
+  .ac-card li:last-child { border-bottom:none; }
+
+  /* MSL cards */
+  .msl-cards { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .msl-card { display:flex; gap:14px; background:var(--white); border-radius:12px; padding:16px 18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .mc-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .mc-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .mc-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .mc-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* Alert */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); } .alert-teal p { color:#065F46; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); } .alert-gold p { color:#78350F; }
+  .alert-red { background:var(--red-bg); border:1px solid #FCA5A5; }
+  .alert-red h4 { color:var(--red-dark); } .alert-red p { color:#7F1D1D; }
+
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section{padding:28px 18px;}
+    .analysis-compare{grid-template-columns:1fr;}
+    .quality-wrap{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">📊 البيانات والتحليل</div>
+  <h1>جمع البيانات <span>وتحليلها</span></h1>
+  <div class="hero-accent"></div>
+  <p>كيف تُجمع البيانات في التجارب السريرية؟ وما الأدوات الإحصائية التي يحتاج MSL فهمها لتقييم النتائج بدقة؟</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>المقدمة</span></div>
+  <h2>لماذا يفهم MSL جمع البيانات وتحليلها؟</h2>
+  <p>الأطباء الأكاديميون والباحثون يسألون أسئلة عميقة: «كيف جُمعت هذه البيانات؟» «ما تحليل ITT؟» «لماذا اخترتم هذا المقياس الإحصائي؟» MSL الذي يفهم هذه المفاهيم يتحول من ناقل للمعلومات إلى شريك علمي حقيقي.</p>
+
+  <div class="alert-teal">
+    <span class="ab-icon">🎯</span>
+    <div>
+      <h4>ما ستتعلمه</h4>
+      <p>مصادر البيانات السريرية، معايير الجودة، مبادئ GCP، أنواع التحليل الإحصائي، ITT مقابل Per-Protocol، قراءة منحنيات Kaplan-Meier، والمصطلحات الإحصائية الأساسية كلها في سياق عملي.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DATA SOURCES -->
+  <div class="section-label"><div class="dot"></div><span>مصادر البيانات</span></div>
+  <h2>مصادر البيانات في التجارب السريرية</h2>
+
+  <div class="sources-grid">
+    <div class="source-card" style="border-top-color:var(--navy);">
+      <div class="sc-icon">📋</div>
+      <h4>Case Report Form (CRF)</h4>
+      <p>النموذج الموحد لتسجيل بيانات كل مريض في التجربة. حجر الأساس في جمع البيانات المنهجي.</p>
+      <span class="sc-tag" style="background:var(--blue-bg);color:var(--blue);">إلكتروني (eCRF) أو ورقي</span>
+    </div>
+    <div class="source-card" style="border-top-color:var(--teal);">
+      <div class="sc-icon">🏥</div>
+      <h4>السجلات الطبية الإلكترونية (EHR)</h4>
+      <p>بيانات الرعاية الصحية الفعلية — أساس Real-World Evidence وأبحاث Phase IV.</p>
+      <span class="sc-tag" style="background:#E8F5F3;color:var(--teal);">RWE الأساسي</span>
+    </div>
+    <div class="source-card" style="border-top-color:var(--gold);">
+      <div class="sc-icon">📊</div>
+      <h4>قواعد البيانات الإدارية</h4>
+      <p>بيانات المطالبات التأمينية والمستشفيات — ضخمة الحجم، قيّمة لدراسات الاستخدام الفعلي.</p>
+      <span class="sc-tag" style="background:var(--orange-bg);color:var(--orange);">ملايين المرضى</span>
+    </div>
+    <div class="source-card" style="border-top-color:var(--purple);">
+      <div class="sc-icon">🧬</div>
+      <h4>البيانات البيولوجية (Biomarkers)</h4>
+      <p>تحاليل الدم، الصور الطبية، القياسات الفيزيولوجية. تُستخدم لقياس Surrogate Endpoints.</p>
+      <span class="sc-tag" style="background:var(--purple-bg);color:var(--purple);">قياسية وموضوعية</span>
+    </div>
+    <div class="source-card" style="border-top-color:var(--red-dark);">
+      <div class="sc-icon">📱</div>
+      <h4>بيانات المريض المباشرة (PRO/ePRO)</h4>
+      <p>تقارير المريض عن الأعراض وجودة الحياة — تُجمع عبر تطبيقات أو استبيانات.</p>
+      <span class="sc-tag" style="background:var(--red-bg);color:var(--red-dark);">صوت المريض</span>
+    </div>
+    <div class="source-card" style="border-top-color:var(--teal-light);">
+      <div class="sc-icon">⌚</div>
+      <h4>الأجهزة القابلة للارتداء (Wearables)</h4>
+      <p>بيانات مستمرة 24/7 — ضربات القلب، النوم، الخطوات. تُولّد حجماً ضخماً من البيانات الحقيقية.</p>
+      <span class="sc-tag" style="background:var(--green-bg);color:var(--green);">متنامية الاستخدام</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DATA QUALITY -->
+  <div class="section-label"><div class="dot"></div><span>جودة البيانات</span></div>
+  <h2>معايير جودة البيانات — ALCOA+</h2>
+  <p>المعيار الدولي لجودة بيانات التجارب السريرية هو إطار ALCOA+ الذي تطلبه هيئات التسجيل كـ FDA وEMA.</p>
+
+  <div class="quality-wrap">
+    <div class="quality-card">
+      <div class="qc-icon">✅</div>
+      <div class="qc-term">Attributable</div>
+      <div class="qc-ar">منسوبة</div>
+      <div class="qc-def">واضح من جمع البيانات ومتى</div>
+    </div>
+    <div class="quality-card">
+      <div class="qc-icon">📖</div>
+      <div class="qc-term">Legible</div>
+      <div class="qc-ar">مقروءة</div>
+      <div class="qc-def">واضحة وقابلة للقراءة والفهم</div>
+    </div>
+    <div class="quality-card">
+      <div class="qc-icon">⏰</div>
+      <div class="qc-term">Contemporaneous</div>
+      <div class="qc-ar">فورية</div>
+      <div class="qc-def">مُسجَّلة في وقت الحدث مباشرة</div>
+    </div>
+    <div class="quality-card">
+      <div class="qc-icon">🎯</div>
+      <div class="qc-term">Original</div>
+      <div class="qc-ar">أصلية</div>
+      <div class="qc-def">البيانات الأولية غير المعدّلة</div>
+    </div>
+    <div class="quality-card">
+      <div class="qc-icon">🔬</div>
+      <div class="qc-term">Accurate</div>
+      <div class="qc-ar">دقيقة</div>
+      <div class="qc-def">تعكس الواقع الفعلي بلا أخطاء</div>
+    </div>
+    <div class="quality-card">
+      <div class="qc-icon">🔄</div>
+      <div class="qc-term">+ Complete / Consistent</div>
+      <div class="qc-ar">كاملة ومتسقة</div>
+      <div class="qc-def">لا بيانات ناقصة، متسقة عبر الزمن</div>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>صلة ALCOA+ بـ MSL</h4>
+      <p>حين يُوثّق MSL زيارة في CRM، هو يطبق مبادئ ALCOA+ بدون أن يعلم. التوثيق الفوري (Contemporaneous)، الدقيق (Accurate)، والكامل (Complete) ليس روتيناً — هو ضمان جودة البيانات.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- GCP -->
+  <div class="section-label"><div class="dot"></div><span>معايير GCP</span></div>
+  <h2>Good Clinical Practice (GCP) — الممارسة السريرية الجيدة</h2>
+  <p>GCP هو المعيار الدولي الذي يضمن أن التجارب السريرية تُجرى بطريقة أخلاقية وتُنتج بيانات موثوقة. إطار ICH E6 هو المرجع الأساسي.</p>
+
+  <div class="gcp-grid">
+    <div class="gcp-card">
+      <span class="gcp-icon">🛡️</span>
+      <div class="gcp-body"><h4>حماية المشاركين</h4><p>سلامة وحقوق المرضى فوق أي اعتبار علمي أو تجاري</p></div>
+    </div>
+    <div class="gcp-card">
+      <span class="gcp-icon">📝</span>
+      <div class="gcp-body"><h4>الموافقة المستنيرة</h4><p>كل مريض يوقّع بعد فهم كامل للمخاطر والفوائد والبدائل</p></div>
+    </div>
+    <div class="gcp-card">
+      <span class="gcp-icon">🔍</span>
+      <div class="gcp-body"><h4>المراقبة والتدقيق</h4><p>Monitoring و Auditing مستمران للتحقق من جودة البيانات</p></div>
+    </div>
+    <div class="gcp-card">
+      <span class="gcp-icon">📊</span>
+      <div class="gcp-body"><h4>التوثيق الكامل</h4><p>كل إجراء موثق — «إذا لم يُكتب، فهو لم يحدث»</p></div>
+    </div>
+    <div class="gcp-card">
+      <span class="gcp-icon">🏛️</span>
+      <div class="gcp-body"><h4>موافقة لجنة الأخلاقيات</h4><p>كل دراسة تحتاج موافقة IRB/IEC قبل البدء</p></div>
+    </div>
+    <div class="gcp-card">
+      <span class="gcp-icon">🔒</span>
+      <div class="gcp-body"><h4>سرية بيانات المرضى</h4><p>التشفير وإخفاء الهوية لحماية خصوصية المشاركين</p></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DATA PIPELINE -->
+  <div class="section-label"><div class="dot"></div><span>مسار البيانات</span></div>
+  <h2>مسار البيانات — من المريض إلى النشر</h2>
+
+  <div class="pipeline">
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--navy);">١</div>
+      <div class="pipe-body">
+        <h4>جمع البيانات (Data Collection)</h4>
+        <p>تُسجَّل بيانات كل مريض في eCRF فور الحدث — قياسات، نتائج مخبرية، أحداث ضائرة، جرعات موصوفة.</p>
+        <span class="pipe-tag" style="background:var(--blue-bg);color:var(--blue);">ALCOA+ مطلوب</span>
+      </div>
+    </div>
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--teal);">٢</div>
+      <div class="pipe-body">
+        <h4>التحقق من البيانات (Data Validation)</h4>
+        <p>تُقارن البيانات المُدخلة بالسجلات الأصلية (Source Data Verification). يُرسَل استفسار (Query) لأي قيمة غير منطقية أو مفقودة.</p>
+        <span class="pipe-tag" style="background:#E8F5F3;color:var(--teal);">يكشف الأخطاء مبكراً</span>
+      </div>
+    </div>
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--purple);">٣</div>
+      <div class="pipe-body">
+        <h4>تنظيف البيانات (Data Cleaning)</h4>
+        <p>معالجة القيم المفقودة، تصحيح الأخطاء، التحقق من الاتساق — قبل إغلاق قاعدة البيانات نهائياً (Database Lock).</p>
+        <span class="pipe-tag" style="background:var(--purple-bg);color:var(--purple);">حاسم لجودة النتائج</span>
+      </div>
+    </div>
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--gold); color:var(--navy);">٤</div>
+      <div class="pipe-body">
+        <h4>إغلاق قاعدة البيانات (Database Lock)</h4>
+        <p>نقطة لا رجعة فيها — تُقفل البيانات ولا يُسمح بأي تعديل بعدها. يضمن نزاهة التحليل.</p>
+        <span class="pipe-tag" style="background:var(--orange-bg);color:var(--orange);">لا تعديل بعده أبداً</span>
+      </div>
+    </div>
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--teal-light);">٥</div>
+      <div class="pipe-body">
+        <h4>التحليل الإحصائي (Statistical Analysis)</h4>
+        <p>يُطبَّق خطة التحليل الإحصائي المحددة مسبقاً (SAP) على البيانات المُقفلة. النتائج تُولَّد هنا.</p>
+        <span class="pipe-tag" style="background:var(--green-bg);color:var(--green);">SAP محددة قبل فتح البيانات</span>
+      </div>
+    </div>
+    <div class="pipe-item">
+      <div class="pipe-dot" style="background:var(--red-dark);">٦</div>
+      <div class="pipe-body">
+        <h4>التقرير والنشر</h4>
+        <p>يُعدّ التقرير السريري الكامل (CSR) ويُرسل للجهات التنظيمية، ويُعدّ مخطوطة علمية للنشر في مجلة محكّمة.</p>
+        <span class="pipe-tag" style="background:var(--red-bg);color:var(--red-dark);">Peer-Review إلزامي</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STATISTICAL ANALYSIS TYPES -->
+  <div class="section-label"><div class="dot"></div><span>أنواع التحليل</span></div>
+  <h2>أنواع التحليل الإحصائي — اضغط للتفاصيل</h2>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('t1',this)">ITT vs Per-Protocol</button>
+    <button class="tab-btn" onclick="showTab('t2',this)">المقاييس الإحصائية</button>
+    <button class="tab-btn" onclick="showTab('t3',this)">منحنى Kaplan-Meier</button>
+    <button class="tab-btn" onclick="showTab('t4',this)">Subgroup Analysis</button>
+  </div>
+
+  <!-- ITT vs PP -->
+  <div class="tab-panel active" id="t1">
+    <div class="analysis-compare">
+      <div class="ac-card" style="border-color:var(--teal); background:#F0FAFA;">
+        <h4 style="color:var(--teal);">✦ ITT — Intention to Treat</h4>
+        <p style="color:var(--text-mid); font-size:13px;">يحلل جميع المشاركين كما وُزِّعوا عشوائياً — بغض النظر عن التزامهم بالبروتوكول أو انسحابهم.</p>
+        <ul>
+          <li style="color:var(--green);">✓ <span>يحافظ على فائدة التعشية</span></li>
+          <li style="color:var(--green);">✓ <span>يعكس الفعالية في الحياة الحقيقية</span></li>
+          <li style="color:var(--green);">✓ <span>المعيار المفضل للتسجيل</span></li>
+          <li style="color:var(--red-dark);">✗ <span>قد يُضعّف الأثر الحقيقي للدواء</span></li>
+        </ul>
+        <div style="background:var(--teal);color:white;border-radius:8px;padding:8px 12px;font-size:12px;margin-top:10px;text-align:center;font-weight:700;">التحليل المحافظ — يميل لتقليل الأثر</div>
+      </div>
+      <div class="ac-card" style="border-color:var(--navy); background:#F0F4FA;">
+        <h4 style="color:var(--navy);">Per-Protocol (PP)</h4>
+        <p style="color:var(--text-mid); font-size:13px;">يحلل فقط المرضى الذين التزموا بالبروتوكول كاملاً طوال الدراسة.</p>
+        <ul>
+          <li style="color:var(--green);">✓ <span>يُظهر الأثر المثالي للدواء</span></li>
+          <li style="color:var(--green);">✓ <span>مفيد لفهم الفعالية البيولوجية</span></li>
+          <li style="color:var(--red-dark);">✗ <span>يفقد فائدة التعشية</span></li>
+          <li style="color:var(--red-dark);">✗ <span>عرضة لتحيز الانتقاء</span></li>
+        </ul>
+        <div style="background:var(--navy);color:var(--gold-light);border-radius:8px;padding:8px 12px;font-size:12px;margin-top:10px;text-align:center;font-weight:700;">تحليل داعم — يُستخدم جنباً لجنب مع ITT</div>
+      </div>
+    </div>
+    <div class="alert-gold">
+      <span class="ab-icon">💡</span>
+      <div>
+        <h4>قاعدة MSL: كلاهما معاً</h4>
+        <p>الدراسة القوية تُقدّم كلا التحليلين. إذا أظهر ITT وPP نتائج متقاربة — هذا دليل على متانة النتائج. إذا اختلفا كثيراً — فالسؤال هو «لماذا؟» وهو سؤال يطرحه MSL بصراحة.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATISTICAL MEASURES -->
+  <div class="tab-panel" id="t2">
+
+    <div class="stat-concept">
+      <div class="sc-header" onclick="toggleConcept(this)">
+        <span class="sc-badge">📉</span>
+        <div class="sc-title"><h4>ARR — Absolute Risk Reduction</h4><span>الخفض المطلق في الخطر</span></div>
+        <span class="sc-arrow">▼</span>
+      </div>
+      <div class="sc-body">
+        <p class="sc-explain">الفرق الفعلي في معدل الحدث بين مجموعة العلاج والمجموعة الضابطة. الأصدق سريرياً.</p>
+        <div class="sc-formula">ARR = معدل الحدث في الضابطة − معدل الحدث في العلاج</div>
+        <div class="sc-example"><strong>مثال:</strong> إذا حدثت النوبة القلبية في 10% من مجموعة Placebo و6% من مجموعة الدواء → ARR = 4%</div>
+        <span class="sc-rule" style="background:var(--green-bg);color:var(--green);">★ الأهم سريرياً — استخدمه دائماً</span>
+      </div>
+    </div>
+
+    <div class="stat-concept">
+      <div class="sc-header" onclick="toggleConcept(this)">
+        <span class="sc-badge">📊</span>
+        <div class="sc-title"><h4>RRR — Relative Risk Reduction</h4><span>الخفض النسبي في الخطر</span></div>
+        <span class="sc-arrow">▼</span>
+      </div>
+      <div class="sc-body">
+        <p class="sc-explain">نسبة الخفض مقارنةً بالمجموعة الضابطة — يبدو أكبر بكثير من ARR لنفس البيانات.</p>
+        <div class="sc-formula">RRR = ARR ÷ معدل الحدث في الضابطة × 100%</div>
+        <div class="sc-example"><strong>نفس المثال:</strong> RRR = 4% ÷ 10% × 100% = <strong>40%</strong> — بينما ARR = 4% فقط</div>
+        <span class="sc-rule" style="background:var(--red-bg);color:var(--red-dark);">⚠️ مضلل إذا قُدِّم بدون ARR</span>
+      </div>
+    </div>
+
+    <div class="stat-concept">
+      <div class="sc-header" onclick="toggleConcept(this)">
+        <span class="sc-badge">🔢</span>
+        <div class="sc-title"><h4>NNT — Number Needed to Treat</h4><span>عدد المرضى اللازم علاجهم</span></div>
+        <span class="sc-arrow">▼</span>
+      </div>
+      <div class="sc-body">
+        <p class="sc-explain">عدد المرضى الذين يجب علاجهم لمنع حدث ضار واحد. المقياس الأكثر وضوحاً للطبيب السريري.</p>
+        <div class="sc-formula">NNT = 1 ÷ ARR</div>
+        <div class="sc-example"><strong>نفس المثال:</strong> NNT = 1 ÷ 0.04 = <strong>25</strong> — «يجب علاج 25 مريضاً لمنع نوبة قلبية واحدة»</div>
+        <span class="sc-rule" style="background:var(--green-bg);color:var(--green);">★ الأكثر فائدة للطبيب في العيادة</span>
+      </div>
+    </div>
+
+    <div class="stat-concept">
+      <div class="sc-header" onclick="toggleConcept(this)">
+        <span class="sc-badge">📏</span>
+        <div class="sc-title"><h4>Confidence Interval (CI 95%)</h4><span>فترة الثقة 95%</span></div>
+        <span class="sc-arrow">▼</span>
+      </div>
+      <div class="sc-body">
+        <p class="sc-explain">النطاق الذي نثق بنسبة 95% أن القيمة الحقيقية في المجتمع تقع ضمنه. تُعطي صورة أكمل من P-value وحده.</p>
+        <div class="sc-formula">CI ضيقة = دراسة أكبر وأكثر دقة | CI واسعة = عدم يقين أكبر</div>
+        <div class="sc-example"><strong>مثال:</strong> HR = 0.75 (95% CI: 0.65–0.85) — CI لا تمر بـ 1 = دليل قوي على الأثر الحقيقي</div>
+        <span class="sc-rule" style="background:var(--blue-bg);color:var(--blue);">CI تمر بـ 1 = غير دال — بغض النظر عن P-value</span>
+      </div>
+    </div>
+
+    <div class="stat-concept">
+      <div class="sc-header" onclick="toggleConcept(this)">
+        <span class="sc-badge">⚡</span>
+        <div class="sc-title"><h4>Hazard Ratio (HR)</h4><span>نسبة الخطر في الزمن</span></div>
+        <span class="sc-arrow">▼</span>
+      </div>
+      <div class="sc-body">
+        <p class="sc-explain">يقيس معدل حدوث الحدث في مجموعة العلاج مقارنةً بالضابطة طوال فترة الدراسة — يُستخدم في دراسات البقاء على قيد الحياة.</p>
+        <div class="sc-formula">HR &lt; 1 = الدواء يُقلّل الخطر | HR = 1 = لا فرق | HR &gt; 1 = الدواء يزيد الخطر</div>
+        <div class="sc-example"><strong>مثال:</strong> HR = 0.78 تعني أن خطر الوفاة في مجموعة الدواء أقل بـ 22% في أي وقت مقارنةً بالضابطة</div>
+        <span class="sc-rule" style="background:var(--purple-bg);color:var(--purple);">شائع في دراسات الأورام والقلب</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KM CURVE -->
+  <div class="tab-panel" id="t3">
+    <h3 style="color:var(--navy); margin-bottom:12px; font-size:17px;">منحنى Kaplan-Meier — كيف يقرأه MSL؟</h3>
+    <p style="font-size:14px;">منحنى Kaplan-Meier يُظهر احتمال البقاء (أو الخلوّ من الحدث) مع مرور الوقت في مجموعتي الدراسة. هو الرسم البياني الأكثر شيوعاً في دراسات القلب والأورام.</p>
+
+    <div class="km-mock">
+      <div class="km-title">📈 مثال: احتمال الخلوّ من النوبة القلبية</div>
+      <div class="km-svg-wrap">
+        <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg" style="font-family:Cairo,sans-serif;">
+          <!-- Axes -->
+          <line x1="50" y1="240" x2="470" y2="240" stroke="#E8EDF2" stroke-width="1.5"/>
+          <line x1="50" y1="20" x2="50" y2="240" stroke="#E8EDF2" stroke-width="1.5"/>
+          <!-- Y labels -->
+          <text x="44" y="244" font-size="9" fill="#8A9BB0" text-anchor="end">0%</text>
+          <text x="44" y="184" font-size="9" fill="#8A9BB0" text-anchor="end">25%</text>
+          <text x="44" y="132" font-size="9" fill="#8A9BB0" text-anchor="end">50%</text>
+          <text x="44" y="80" font-size="9" fill="#8A9BB0" text-anchor="end">75%</text>
+          <text x="44" y="28" font-size="9" fill="#8A9BB0" text-anchor="end">100%</text>
+          <!-- X labels -->
+          <text x="50" y="254" font-size="9" fill="#8A9BB0" text-anchor="middle">0</text>
+          <text x="135" y="254" font-size="9" fill="#8A9BB0" text-anchor="middle">6</text>
+          <text x="220" y="254" font-size="9" fill="#8A9BB0" text-anchor="middle">12</text>
+          <text x="305" y="254" font-size="9" fill="#8A9BB0" text-anchor="middle">18</text>
+          <text x="390" y="254" font-size="9" fill="#8A9BB0" text-anchor="middle">24</text>
+          <text x="260" y="270" font-size="10" fill="#4A6080" text-anchor="middle">الأشهر</text>
+          <!-- Grid lines -->
+          <line x1="50" y1="184" x2="470" y2="184" stroke="#E8EDF2" stroke-width="0.8" stroke-dasharray="4,4"/>
+          <line x1="50" y1="132" x2="470" y2="132" stroke="#E8EDF2" stroke-width="0.8" stroke-dasharray="4,4"/>
+          <line x1="50" y1="80" x2="470" y2="80" stroke="#E8EDF2" stroke-width="0.8" stroke-dasharray="4,4"/>
+          <!-- Drug curve (teal - stays higher) -->
+          <polyline points="50,28 135,38 220,52 305,68 390,85 470,100" fill="none" stroke="#0D7377" stroke-width="3" stroke-linejoin="round"/>
+          <!-- Placebo curve (red - drops faster) -->
+          <polyline points="50,28 135,55 220,88 305,120 390,152 470,178" fill="none" stroke="#991B1B" stroke-width="3" stroke-linejoin="round" stroke-dasharray="8,4"/>
+          <!-- Shaded area between curves -->
+          <polygon points="50,28 135,38 220,52 305,68 390,85 470,100 470,178 390,152 305,120 220,88 135,55 50,28" fill="#0D7377" fill-opacity="0.07"/>
+          <!-- Annotations -->
+          <text x="480" y="104" font-size="10" fill="#0D7377" font-weight="700">الدواء</text>
+          <text x="480" y="182" font-size="10" fill="#991B1B" font-weight="700">Placebo</text>
+          <!-- Log-rank p value -->
+          <rect x="170" y="36" width="160" height="28" rx="6" fill="white" stroke="#E8EDF2"/>
+          <text x="250" y="52" font-size="10" fill="#0A2342" text-anchor="middle" font-weight="700">Log-rank p &lt; 0.001</text>
+          <!-- Median survival markers -->
+          <line x1="50" y1="132" x2="303" y2="132" stroke="#991B1B" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="303" y1="132" x2="303" y2="240" stroke="#991B1B" stroke-width="1" stroke-dasharray="3,3"/>
+          <circle cx="303" cy="120" r="4" fill="#991B1B"/>
+          <text x="310" y="116" font-size="9" fill="#991B1B">Median: 17.5 أشهر</text>
+        </svg>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:16px 0;">
+      <div style="background:var(--white);border-radius:10px;padding:14px;border:1px solid var(--light-gray);">
+        <div style="font-size:11px;font-weight:800;color:var(--teal);margin-bottom:6px;">ما يقوله الفاصل بين المنحنيين</div>
+        <p style="font-size:12px;color:var(--text-mid);margin:0;">كلما اتسع الفاصل بمرور الوقت — زادت منفعة العلاج. تقاربهما يعني تراجع الأثر مع الوقت.</p>
+      </div>
+      <div style="background:var(--white);border-radius:10px;padding:14px;border:1px solid var(--light-gray);">
+        <div style="font-size:11px;font-weight:800;color:var(--navy);margin-bottom:6px;">Log-rank Test</div>
+        <p style="font-size:12px;color:var(--text-mid);margin:0;">الاختبار الإحصائي الذي يُحدد هل الفرق بين المنحنيين دال إحصائياً أم لا.</p>
+      </div>
+      <div style="background:var(--white);border-radius:10px;padding:14px;border:1px solid var(--light-gray);">
+        <div style="font-size:11px;font-weight:800;color:var(--purple);margin-bottom:6px;">Median Survival</div>
+        <p style="font-size:12px;color:var(--text-mid);margin:0;">النقطة التي وصل فيها 50% من المجموعة للحدث. خط أفقي عند 50% يقاطع المنحنى.</p>
+      </div>
+      <div style="background:var(--white);border-radius:10px;padding:14px;border:1px solid var(--light-gray);">
+        <div style="font-size:11px;font-weight:800;color:var(--orange);margin-bottom:6px;">Numbers at Risk</div>
+        <p style="font-size:12px;color:var(--text-mid);margin:0;">أرقام تحت الرسم تُظهر كم مريضاً لا يزال في الدراسة. تتناقص مع الوقت — حذار من الأرقام الصغيرة في النهاية.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBGROUP -->
+  <div class="tab-panel" id="t4">
+    <h3 style="color:var(--navy); margin-bottom:12px; font-size:17px;">Subgroup Analysis — تحليل المجموعات الفرعية</h3>
+    <p style="font-size:14px;">تحليل يُظهر هل كان أثر الدواء متسقاً عبر مجموعات مختلفة من المرضى (رجال/نساء، أعمار مختلفة، درجات خطورة مختلفة).</p>
+
+    <div class="chart-mock">
+      <div class="chart-title">🌲 Forest Plot — Subgroup Analysis (HR مع 95% CI)</div>
+      <div class="bar-chart">
+        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-light); margin-bottom:4px; padding:0 12px 0 100px;">
+          <span>أفضل للعلاج ←</span>
+          <span>→ أفضل للضابطة</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">الكل (Overall)</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:70%;background:var(--teal);"><span class="bar-val">HR=0.75 ★</span></div></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">ذكور</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:68%;background:var(--navy);"><span class="bar-val">HR=0.72</span></div></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">إناث</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:72%;background:var(--navy);"><span class="bar-val">HR=0.78</span></div></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">&lt; 65 سنة</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:65%;background:var(--purple);"><span class="bar-val">HR=0.68</span></div></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">≥ 65 سنة</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:60%;background:var(--purple);"><span class="bar-val">HR=0.82</span></div></div>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label" style="font-size:11px;">مع سكري</span>
+          <div class="bar-wrap"><div class="bar-fill" style="width:66%;background:var(--gold); color:var(--navy);"><span class="bar-val" style="color:var(--navy);">HR=0.70</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-red">
+      <span class="ab-icon">⚠️</span>
+      <div>
+        <h4>تحذير: خطر Subgroup Analysis</h4>
+        <p>كلما زاد عدد المجموعات الفرعية المُحللة، زاد احتمال إيجاد نتيجة «دالة» بالصدفة (Multiple Testing Problem). MSL يسأل دائماً: «هل كانت هذه المجموعة محددة مسبقاً في البروتوكول أم كُشفت بعد رؤية البيانات؟» الأخيرة تُعتبر Hypothesis-Generating فقط.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL ROLE -->
+  <div class="section-label"><div class="dot"></div><span>دور MSL</span></div>
+  <h2>كيف يستخدم MSL فهمه للبيانات والتحليل؟</h2>
+
+  <div class="msl-cards">
+    <div class="msl-card">
+      <span class="mc-icon">🔍</span>
+      <div class="mc-body">
+        <h4>قراءة قسم Methods بعين ناقدة</h4>
+        <p>قبل كل زيارة، يقرأ MSL قسم Methods في الدراسة: كيف جُمعت البيانات؟ ما تحليل ITT أم PP؟ هل كانت SAP محددة مسبقاً؟ هذه الأسئلة تُحدد ثقته بالنتائج.</p>
+        <span class="mc-tag" style="background:#E8F5F3;color:var(--teal);">أساسي قبل كل زيارة</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">💬</span>
+      <div class="mc-body">
+        <h4>تحويل الأرقام إلى معنى سريري</h4>
+        <p>«ARR = 3.5% → NNT = 29 → يعني أنك تُنقذ مريضاً واحداً من كل 29 تُعالجهم من حدث قلبي خطير خلال 3 سنوات.» هذا هو الإحصاء الذي يفهمه الطبيب ويبني عليه قراره.</p>
+        <span class="mc-tag" style="background:var(--orange-bg);color:var(--orange);">قيمة MSL الحقيقية</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">⚖️</span>
+      <div class="mc-body">
+        <h4>الصدق حول قيود البيانات</h4>
+        <p>إذا كانت البيانات مبنية على Subgroup Analysis غير محدد مسبقاً، أو نقطة نهاية بديلة، أو عينة صغيرة — يذكر MSL ذلك بوضوح. هذه الأمانة هي ما يكسب ثقة الطبيب الباحث.</p>
+        <span class="mc-tag" style="background:var(--green-bg);color:var(--green);">يبني المصداقية</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">🤝</span>
+      <div class="mc-body">
+        <h4>دعم مناقشات ISS</h4>
+        <p>حين يصمم باحث دراسة ISS، يُناقش معه MSL خطة جمع البيانات والتحليل الإحصائي — يُساعد على ضمان الجودة دون التدخل في الاستقلالية.</p>
+        <span class="mc-tag" style="background:var(--purple-bg);color:var(--purple);">شراكة علمية</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 البيانات بدون فهم = ضجيج. البيانات مع فهم = قرار طبي.</h3>
+    <p>MSL ليس إحصائياً — لكنه يفهم ما يكفي ليطرح الأسئلة الصحيحة، يقرأ الأرقام بسياقها، ويُترجمها إلى واقع المريض أمام الطبيب. هذا الفهم هو ما يُحوّله من وسيط إلى شريك علمي حقيقي.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. دراسة استخدمت تحليل ITT وأظهرت ARR = 2.5%. بعدها استخدمت تحليل Per-Protocol وأظهرت ARR = 5%. ما التفسير الأرجح؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. تحليل Per-Protocol هو الأصح دائماً ويجب الاعتماد عليه</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. الدراسة تحتوي على خطأ إحصائي</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. كثيراً من المرضى لم يلتزموا بالبروتوكول — في الحياة الحقيقية الأثر أقل (ITT)، لكن مع الالتزام الكامل الأثر أكبر (PP)</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. يجب تجاهل ITT لأنه يشمل منسحبين</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! ITT يعكس الواقع — بعض المرضى لن يلتزموا. PP يُظهر الأثر المثالي. الفجوة بينهما تُشير لمشكلة الالتزام (Adherence) وهي معلومة مهمة سريرياً.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ الفارق بين ITT وPP يعكس معدل عدم الالتزام. ITT يعكس الواقع — أثر الدواء حين لا يلتزم الجميع. PP يعكس أثره في ظروف مثالية.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. ما الذي يُشير إليه «Numbers at Risk» في أسفل منحنى Kaplan-Meier؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. عدد المرضى الذين توفوا في كل فترة زمنية</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. عدد المرضى الذين لا يزالون في الدراسة ولم يصلوا للحدث بعد — يتناقص مع الوقت</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. عدد المرضى الذين انسحبوا من الدراسة</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. إجمالي عدد المرضى في كل مجموعة في بداية الدراسة</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! Numbers at Risk مهم جداً — حين يصبح صغيراً جداً في نهاية الدراسة، تصبح المنحنيات غير موثوقة ويجب الحذر من تفسير الفروق في هذه النقطة.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ Numbers at Risk = عدد المرضى الذين لا يزالون في المتابعة ولم يصلوا للحدث. يتناقص بمرور الوقت — حين يصبح صغيراً، تصبح المنحنيات غير موثوقة.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. أظهر Subgroup Analysis أن الدواء فعّال بشكل خاص لدى مرضى فوق 70 سنة (p = 0.03). لكن هذه المجموعة لم تكن محددة في البروتوكول الأصلي. كيف يتعامل MSL مع هذه النتيجة؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. يستخدمها كدليل قوي على فاعلية الدواء لكبار السن</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. يتجاهلها تماماً لأنها غير موثوقة</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. يُقدّمها كـ «فرضية تستحق الدراسة» وليس كدليل قاطع — لأن Subgroup غير محدد مسبقاً هو Hypothesis-Generating فقط</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. يستخدمها فقط مع الأطباء المتخصصين في كبار السن</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ تماماً! Subgroup Analysis غير المحدد مسبقاً هو مُولّد للفرضيات — مثير للاهتمام ويستحق الدراسة، لكنه ليس دليلاً قاطعاً. MSL يُوضّح هذا بصراحة.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ Subgroup غير محدد في البروتوكول = Hypothesis-Generating فقط. مثير للاهتمام لكن ليس دليلاً — ويجب تأكيده في دراسة مصممة لهذه المجموعة تحديداً.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. ما المقصود بـ ALCOA في سياق جودة بيانات التجارب السريرية؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','b')">أ. نوع من برامج التحليل الإحصائي المستخدمة في التجارب</div>
+      <div class="quiz-option" onclick="answer('q4','b','b')">ب. إطار معايير جودة البيانات: منسوبة، مقروءة، فورية، أصلية، دقيقة</div>
+      <div class="quiz-option" onclick="answer('q4','c','b')">ج. هيئة تنظيمية دولية تُراقب التجارب السريرية</div>
+      <div class="quiz-option" onclick="answer('q4','d','b')">د. معيار موافقة FDA على بروتوكولات الدراسة</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ صحيح! ALCOA = Attributable, Legible, Contemporaneous, Original, Accurate — المعيار الدولي لضمان جودة بيانات التجارب. تطبّقه هيئات التسجيل كـ FDA وEMA.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ ALCOA هو إطار جودة البيانات: منسوبة (A)، مقروءة (L)، فورية (C)، أصلية (O)، دقيقة (A). معيار دولي تطلبه FDA وEMA.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>تعلمت مصادر البيانات السريرية ومعايير ALCOA+، فهمت مسار البيانات من الجمع حتى النشر، عرفت الفرق بين ITT وPer-Protocol، وأصبحت قادراً على قراءة منحنى Kaplan-Meier وتفسير ARR وNNT وHR بشكل صحيح. هذه الأدوات تجعل MSL شريكاً علمياً حقيقياً في أي نقاش بحثي.</p>
+  </div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleConcept(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.sc-arrow');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.sc-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.sc-arrow').forEach(a => a.style.transform = '');
+  if (!isOpen) { body.classList.add('open'); arrow.style.transform = 'rotate(180deg)'; }
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

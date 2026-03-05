@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تصميم التجارب السريرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #071A30 0%, #0A2342 60%, #0A3020 100%);
+    padding: 52px 36px 44px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-80px; left:-60px; width:360px; height:360px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .hero::after { content:''; position:absolute; bottom:-40px; right:-40px; width:200px; height:200px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--teal); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; line-height:1.3; position:relative; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:var(--teal); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Trial phases timeline */
+  .phases-wrap { margin:24px 0; }
+  .phase-row { display:flex; gap:0; margin-bottom:12px; position:relative; }
+  .phase-card {
+    flex:1; border-radius:12px; padding:18px 16px; cursor:pointer;
+    transition:all 0.2s; border:2px solid transparent; position:relative;
+  }
+  .phase-card:hover { transform:translateY(-2px); filter:brightness(1.05); }
+  .phase-card.selected { border-color:var(--gold); box-shadow:0 6px 24px rgba(240,165,0,0.2); }
+  .phase-num { font-size:22px; font-weight:900; margin-bottom:4px; }
+  .phase-card h4 { font-size:13px; font-weight:800; margin-bottom:3px; }
+  .phase-card p { font-size:11px; margin:0; opacity:0.85; }
+  .phase-arrow { display:flex; align-items:center; padding:0 6px; color:var(--text-light); font-size:18px; }
+  .phase-detail {
+    background:var(--white); border-radius:14px; border:2px solid var(--gold);
+    padding:22px; margin-top:4px; margin-bottom:16px;
+    display:none; box-shadow:0 6px 24px rgba(10,35,66,0.1);
+    animation: slideDown 0.2s ease;
+  }
+  .phase-detail.open { display:block; }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:none} }
+  .pd-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:12px; }
+  .pd-item { background:var(--off-white); border-radius:8px; padding:12px; }
+  .pd-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.7px; margin-bottom:4px; }
+  .pd-val { font-size:13px; font-weight:600; color:var(--text-dark); }
+
+  /* PICO framework */
+  .pico-wrap { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:24px 0; }
+  .pico-card { border-radius:14px; padding:22px; color:var(--white); position:relative; overflow:hidden; }
+  .pico-card::after { content:attr(data-letter); position:absolute; bottom:-10px; left:10px; font-size:80px; font-weight:900; opacity:0.1; line-height:1; }
+  .pico-letter { font-size:32px; font-weight:900; margin-bottom:6px; }
+  .pico-word { font-size:14px; font-weight:800; margin-bottom:4px; }
+  .pico-en { font-size:11px; opacity:0.75; margin-bottom:10px; }
+  .pico-desc { font-size:12.5px; opacity:0.9; margin:0; }
+  .pico-example { background:rgba(255,255,255,0.12); border-radius:8px; padding:8px 10px; margin-top:10px; font-size:12px; }
+
+  /* Design elements */
+  .design-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin:20px 0; }
+  .design-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); border-top:4px solid; transition:transform 0.2s; }
+  .design-card:hover { transform:translateY(-2px); }
+  .design-card .dc-icon { font-size:26px; margin-bottom:10px; }
+  .design-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .design-card p { font-size:13px; color:var(--text-mid); margin-bottom:8px; }
+  .design-card .dc-tag { font-size:10px; font-weight:700; padding:2px 9px; border-radius:8px; display:inline-block; }
+
+  /* Blinding visual */
+  .blind-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0; }
+  .blind-card { background:var(--white); border-radius:12px; padding:18px 14px; text-align:center; border:2px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); transition:all 0.2s; }
+  .blind-card:hover { border-color:var(--teal); }
+  .blind-card .bc-icon { font-size:28px; margin-bottom:8px; }
+  .blind-card h4 { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .blind-card p { font-size:12px; color:var(--text-mid); margin:0; }
+  .blind-card .bc-best { font-size:10px; font-weight:800; padding:3px 10px; border-radius:8px; margin-top:8px; display:inline-block; }
+
+  /* Endpoints table */
+  .endpoint-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); margin:20px 0; font-size:13.5px; }
+  .endpoint-table th { padding:12px 16px; font-weight:800; }
+  .endpoint-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:30%; }
+  .endpoint-table th:nth-child(2) { background:var(--teal); color:var(--white); text-align:center; }
+  .endpoint-table th:nth-child(3) { background:#5BA3A0; color:var(--white); text-align:center; }
+  .endpoint-table td { padding:11px 16px; border-bottom:1px solid var(--light-gray); vertical-align:middle; text-align:center; }
+  .endpoint-table td:first-child { text-align:right; background:#F8FAFC; font-weight:700; color:var(--navy); font-size:12px; }
+  .endpoint-table tr:nth-child(even) td { background:#F3F4F6; }
+  .endpoint-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .endpoint-table tr:last-child td { border-bottom:none; }
+
+  /* Sample size */
+  .ss-explainer { background:var(--white); border-radius:16px; padding:24px; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); margin:20px 0; }
+  .ss-factors { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:16px; }
+  .ss-factor { background:var(--off-white); border-radius:10px; padding:14px; border-right:3px solid; }
+  .ss-factor h5 { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:4px; }
+  .ss-factor p { font-size:12px; color:var(--text-mid); margin:0; }
+  .ss-formula { background:var(--navy); color:var(--gold-light); font-family:'Tajawal',sans-serif; padding:14px 18px; border-radius:10px; font-size:14px; font-weight:700; text-align:center; margin:14px 0; letter-spacing:0.5px; }
+
+  /* Protocol sections */
+  .protocol-list { display:flex; flex-direction:column; gap:0; margin:20px 0; position:relative; }
+  .protocol-list::before { content:''; position:absolute; top:24px; right:23px; bottom:24px; width:2px; background:var(--light-gray); }
+  .proto-item { display:flex; gap:16px; padding-bottom:16px; position:relative; z-index:1; }
+  .proto-item:last-child { padding-bottom:0; }
+  .proto-num { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:900; color:var(--white); }
+  .proto-body { background:var(--white); border-radius:12px; padding:15px 18px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .proto-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .proto-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .proto-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* MSL role */
+  .msl-cards { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .msl-card { display:flex; gap:14px; background:var(--white); border-radius:12px; padding:16px 18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .mc-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .mc-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .mc-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .mc-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* Alert */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); } .alert-teal p { color:#065F46; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); } .alert-gold p { color:#78350F; }
+  .alert-red { background:var(--red-bg); border:1px solid #FCA5A5; }
+  .alert-red h4 { color:var(--red-dark); } .alert-red p { color:#7F1D1D; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section{padding:28px 18px;}
+    .pico-wrap,.blind-cards{grid-template-columns:1fr;}
+    .phase-row{flex-direction:column;}
+    .phase-arrow{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🔬 التجارب السريرية</div>
+  <h1>تصميم <span>التجارب السريرية</span></h1>
+  <div class="hero-accent"></div>
+  <p>كيف تُصمَّم التجربة السريرية من الفكرة إلى البروتوكول؟ وما دور MSL في فهم هذا التصميم وشرحه للأطباء؟</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>المقدمة</span></div>
+  <h2>لماذا يفهم MSL تصميم التجارب السريرية؟</h2>
+  <p>MSL لا يُصمّم التجارب السريرية بنفسه — لكنه يناقشها يومياً مع أطباء بحثيين وأكاديميين. معرفة عناصر التصميم الجيد تُمكّنه من تقييم قوة الأدلة، الإجابة على التساؤلات الصعبة، ودعم الباحثين في دراسات ISS.</p>
+
+  <div class="alert-teal">
+    <span class="ab-icon">🎯</span>
+    <div>
+      <h4>ما ستتعلمه</h4>
+      <p>مراحل التطوير السريري Phase I–IV، إطار PICO، عناصر تصميم RCT، أنواع التعمية، نقاط النهاية، حجم العينة، والبروتوكول السريري — كل ما يحتاجه MSL لمناقشة الأبحاث بثقة.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PHASES -->
+  <div class="section-label"><div class="dot"></div><span>مراحل التطوير</span></div>
+  <h2>مراحل التطوير السريري — اضغط لعرض التفاصيل</h2>
+
+  <div class="phases-wrap">
+    <div class="phase-row">
+      <div class="phase-card" style="background:linear-gradient(135deg,#1E3A5F,#2A4A7F); color:var(--white);" onclick="showPhase('ph1',this)">
+        <div class="phase-num">I</div>
+        <h4>السلامة الأولى</h4>
+        <p>أول تجربة على البشر</p>
+      </div>
+      <div class="phase-arrow">←</div>
+      <div class="phase-card" style="background:linear-gradient(135deg,#0D5C5F,#0D7377); color:var(--white);" onclick="showPhase('ph2',this)">
+        <div class="phase-num">II</div>
+        <h4>إشارات الفعالية</h4>
+        <p>تحسين الجرعة</p>
+      </div>
+      <div class="phase-arrow">←</div>
+      <div class="phase-card" style="background:linear-gradient(135deg,#14532D,#16A34A); color:var(--white);" onclick="showPhase('ph3',this)">
+        <div class="phase-num">III</div>
+        <h4>إثبات الفعالية</h4>
+        <p>أساس التسجيل</p>
+      </div>
+      <div class="phase-arrow">←</div>
+      <div class="phase-card" style="background:linear-gradient(135deg,#78350F,#B45309); color:var(--white);" onclick="showPhase('ph4',this)">
+        <div class="phase-num">IV</div>
+        <h4>ما بعد التسويق</h4>
+        <p>مراقبة طويلة الأمد</p>
+      </div>
+    </div>
+
+    <div class="phase-detail" id="ph1">
+      <h4>📋 Phase I — أول تجربة على البشر</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pd-label">عدد المشاركين</div><div class="pd-val">20 – 100 (أصحاء عادةً)</div></div>
+        <div class="pd-item"><div class="pd-label">الهدف الرئيسي</div><div class="pd-val">السلامة، التحمل، الحرائك الدوائية (PK)</div></div>
+        <div class="pd-item"><div class="pd-label">المدة النموذجية</div><div class="pd-val">أشهر – سنة</div></div>
+        <div class="pd-item"><div class="pd-label">نسبة النجاح</div><div class="pd-val">~63% تنتقل لـ Phase II</div></div>
+        <div class="pd-item"><div class="pd-label">ما لا تُثبته</div><div class="pd-val">لا تُثبت الفعالية أبداً</div></div>
+        <div class="pd-item"><div class="pd-label">ما يسأله MSL</div><div class="pd-val">هل ظهرت إشارات سمية مبكرة؟ ما الجرعة القصوى المتحملة (MTD)؟</div></div>
+      </div>
+    </div>
+
+    <div class="phase-detail" id="ph2">
+      <h4>📋 Phase II — البحث عن إشارات الفعالية</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pd-label">عدد المشاركين</div><div class="pd-val">100 – 300 مريض</div></div>
+        <div class="pd-item"><div class="pd-label">الهدف الرئيسي</div><div class="pd-val">إشارات أولية للفعالية، تحسين الجرعة</div></div>
+        <div class="pd-item"><div class="pd-label">نقاط النهاية</div><div class="pd-val">غالباً نقاط نهاية بديلة (Surrogate)</div></div>
+        <div class="pd-item"><div class="pd-label">نسبة النجاح</div><div class="pd-val">~31% تنتقل لـ Phase III</div></div>
+        <div class="pd-item"><div class="pd-label">تصميمه</div><div class="pd-val">قد يكون مزدوج التعمية أو مفتوحاً</div></div>
+        <div class="pd-item"><div class="pd-label">ما يسأله MSL</div><div class="pd-val">ما الجرعة التي اختيرت لـ Phase III ولماذا؟</div></div>
+      </div>
+    </div>
+
+    <div class="phase-detail" id="ph3">
+      <h4>📋 Phase III — أساس الموافقة التنظيمية ★</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pd-label">عدد المشاركين</div><div class="pd-val">1,000 – 30,000+ مريض</div></div>
+        <div class="pd-item"><div class="pd-label">الهدف الرئيسي</div><div class="pd-val">إثبات الفعالية والسلامة بشكل قاطع</div></div>
+        <div class="pd-item"><div class="pd-label">نقاط النهاية</div><div class="pd-val">سريرية صلبة (وفيات، نوبات قلبية)</div></div>
+        <div class="pd-item"><div class="pd-label">التصميم</div><div class="pd-val">RCT مزدوجة التعمية — المعيار الذهبي</div></div>
+        <div class="pd-item"><div class="pd-label">المدة</div><div class="pd-val">2 – 5 سنوات عادةً</div></div>
+        <div class="pd-item"><div class="pd-label">ما يسأله MSL</div><div class="pd-val">ما نقطة النهاية الأولية؟ ما نسبة الانسحاب؟ هل شملت مرضى مشابهين؟</div></div>
+      </div>
+    </div>
+
+    <div class="phase-detail" id="ph4">
+      <h4>📋 Phase IV — ما بعد التسويق</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pd-label">عدد المشاركين</div><div class="pd-val">آلاف إلى ملايين المرضى</div></div>
+        <div class="pd-item"><div class="pd-label">الهدف الرئيسي</div><div class="pd-val">مراقبة السلامة طويلة الأمد في الحياة الحقيقية</div></div>
+        <div class="pd-item"><div class="pd-label">أنواعه</div><div class="pd-val">Post-Marketing Surveillance، PASS، PAES</div></div>
+        <div class="pd-item"><div class="pd-label">الصلة بـ MSL</div><div class="pd-val">أكثر صلة بعمله اليومي — يناقش نتائجه مع الأطباء</div></div>
+        <div class="pd-item"><div class="pd-label">ما يُولّده</div><div class="pd-val">Real-World Evidence وبيانات سلامة إضافية</div></div>
+        <div class="pd-item"><div class="pd-label">ما يسأله MSL</div><div class="pd-val">هل ظهرت آثار جانبية نادرة لم تُكشف في Phase III؟</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PICO -->
+  <div class="section-label"><div class="dot"></div><span>إطار PICO</span></div>
+  <h2>إطار PICO — قلب تصميم أي دراسة سريرية</h2>
+  <p>قبل تصميم أي دراسة، يجب صياغة سؤال بحثي واضح باستخدام إطار PICO. هذا الإطار يحدد من، ماذا، مقابل ماذا، وبأي نتيجة.</p>
+
+  <div class="pico-wrap">
+    <div class="pico-card" style="background:linear-gradient(135deg,var(--navy),#1A3A5C);" data-letter="P">
+      <div class="pico-letter">P</div>
+      <div class="pico-word">المريض / السكان المستهدفون</div>
+      <div class="pico-en">Population / Patient</div>
+      <div class="pico-desc">من هم المرضى المستهدفون؟ ما خصائصهم؟ ما معايير الإدراج والإقصاء؟</div>
+      <div class="pico-example">مثال: مرضى السكري النوع 2، عمر 45-75، HbA1c بين 7.5-10%، بدون فشل كلوي</div>
+    </div>
+    <div class="pico-card" style="background:linear-gradient(135deg,var(--teal),#0A5C5F);" data-letter="I">
+      <div class="pico-letter">I</div>
+      <div class="pico-word">التدخل</div>
+      <div class="pico-en">Intervention</div>
+      <div class="pico-desc">ما الدواء أو التدخل المدروس؟ ما جرعته وطريقة إعطائه ومدة العلاج؟</div>
+      <div class="pico-example">مثال: دواء X بجرعة 10mg يومياً لمدة 52 أسبوعاً</div>
+    </div>
+    <div class="pico-card" style="background:linear-gradient(135deg,#78350F,#B45309);" data-letter="C">
+      <div class="pico-letter">C</div>
+      <div class="pico-word">المقارنة</div>
+      <div class="pico-en">Comparison / Control</div>
+      <div class="pico-desc">ما البديل المقارن؟ Placebo أم علاج معياري أم جرعة مختلفة؟</div>
+      <div class="pico-example">مثال: مجموعة Placebo + علاج معياري بالميتفورمين</div>
+    </div>
+    <div class="pico-card" style="background:linear-gradient(135deg,#166534,#15803D);" data-letter="O">
+      <div class="pico-letter">O</div>
+      <div class="pico-word">النتيجة المقاسة</div>
+      <div class="pico-en">Outcome</div>
+      <div class="pico-desc">ما نقطة النهاية الأولية والثانوية؟ كيف تُقاس؟ خلال أي فترة زمنية؟</div>
+      <div class="pico-example">مثال: خفض HbA1c بعد 52 أسبوعاً (Primary) + وزن الجسم وحوادث قلبية (Secondary)</div>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>MSL وإطار PICO</h4>
+      <p>حين يناقش MSL دراسة مع طبيب، يُرجع دائماً لإطار PICO: «هل مرضاك يتطابقون مع P في الدراسة؟ هل الجرعة نفسها (I)؟ هل المقارن مناسب لواقعك (C)؟ هل نقطة النهاية تهمك سريرياً (O)؟»</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BLINDING -->
+  <div class="section-label"><div class="dot"></div><span>التعمية</span></div>
+  <h2>أنواع التعمية (Blinding) وأثرها على قوة الدليل</h2>
+
+  <div class="blind-cards">
+    <div class="blind-card">
+      <div class="bc-icon">👁️</div>
+      <h4>Open-Label</h4>
+      <p>المريض والطبيب وفريق الدراسة يعلمون بنوع العلاج</p>
+      <span class="bc-best" style="background:var(--red-bg);color:var(--red-dark);">أضعف ضبطاً للتحيز</span>
+    </div>
+    <div class="blind-card">
+      <div class="bc-icon">🙈</div>
+      <h4>Single-Blind</h4>
+      <p>المريض لا يعلم — لكن الطبيب والباحث يعلمان</p>
+      <span class="bc-best" style="background:var(--orange-bg);color:var(--orange);">ضبط متوسط</span>
+    </div>
+    <div class="blind-card" style="border-color:var(--teal);">
+      <div class="bc-icon">🙈🙈</div>
+      <h4>Double-Blind ✦</h4>
+      <p>لا المريض ولا الطبيب يعلمان — الأقوى في تقليل التحيز</p>
+      <span class="bc-best" style="background:var(--green-bg);color:var(--green);">★ الأفضل والأكثر استخداماً</span>
+    </div>
+  </div>
+
+  <div class="alert-teal">
+    <span class="ab-icon">💡</span>
+    <div>
+      <h4>لماذا التعمية مهمة جداً؟</h4>
+      <p>بدون تعمية، قد يُعامل الطبيب مجموعة الدواء بشكل مختلف لا شعورياً، وقد يُبلّغ المريض عن تحسن بسبب توقعاته (Placebo Effect). Double-blind يُلغي هذين التأثيرين معاً.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ENDPOINTS -->
+  <div class="section-label"><div class="dot"></div><span>نقاط النهاية</span></div>
+  <h2>نقاط النهاية — ماذا تقيس الدراسة؟</h2>
+  <p>نقطة النهاية (Endpoint) هي المتغير الذي تقيسه الدراسة لتحديد نجاح العلاج. اختيارها يُحدد قيمة الدراسة بالكامل.</p>
+
+  <table class="endpoint-table">
+    <thead>
+      <tr>
+        <th>نوع نقطة النهاية</th>
+        <th>التعريف والأمثلة</th>
+        <th>القيمة السريرية</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary Endpoint<br>الأولية</td>
+        <td>نقطة النهاية الرئيسية التي صُممت الدراسة لقياسها<br><em>مثال: معدل الوفيات خلال سنة</em></td>
+        <td>أعلى قيمة — تُحدد نجاح الدراسة</td>
+      </tr>
+      <tr>
+        <td>Secondary Endpoint<br>الثانوية</td>
+        <td>نقاط نهاية إضافية تُقاس لكنها ليست الهدف الأساسي<br><em>مثال: جودة الحياة، نسبة الاستشفاء</em></td>
+        <td>معلومات داعمة — لا تُثبت الفعالية وحدها</td>
+      </tr>
+      <tr>
+        <td>Hard Endpoint<br>صلبة</td>
+        <td>نتائج لا لبس فيها مثل الوفاة، النوبة القلبية، السكتة الدماغية</td>
+        <td>الأقوى سريرياً — ما يهتم به الأطباء</td>
+      </tr>
+      <tr>
+        <td>Surrogate Endpoint<br>بديلة</td>
+        <td>مؤشر يُفترض أنه يرتبط بالنتيجة السريرية<br><em>مثال: HbA1c، LDL، ضغط الدم</em></td>
+        <td>أسرع وأرخص — لكن لا تُثبت التأثير السريري مباشرة</td>
+      </tr>
+      <tr>
+        <td>Composite Endpoint<br>مركّبة</td>
+        <td>تجمع أحداثاً متعددة في نقطة واحدة<br><em>مثال: MACE = وفاة + نوبة قلبية + سكتة</em></td>
+        <td>تزيد الأحداث — لكن تُخفي الفروق بين المكونات</td>
+      </tr>
+      <tr>
+        <td>PRO — Patient Reported<br>ما يُبلّغ عنه المريض</td>
+        <td>جودة الحياة، الألم، القدرة الوظيفية بتقرير المريض</td>
+        <td>تعكس ما يهم المريض فعلاً — متنامية الأهمية</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alert-red">
+    <span class="ab-icon">⚠️</span>
+    <div>
+      <h4>تحذير: نقاط النهاية البديلة</h4>
+      <p>Surrogate Endpoints أسرع وأرخص — لكن تحسّن مؤشر معملي لا يعني تحسين نتيجة سريرية بالضرورة. مثال: دواء خفّض LDL لكن لم يُقلّل الوفيات القلبية. MSL يُفرّق دائماً بين الاثنين عند النقاش.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SAMPLE SIZE -->
+  <div class="section-label"><div class="dot"></div><span>حجم العينة</span></div>
+  <h2>حجم العينة — لماذا يهم MSL؟</h2>
+
+  <div class="ss-explainer">
+    <p style="margin-bottom:0;">حجم العينة ليس عشوائياً. يُحسب مسبقاً بناءً على عوامل محددة. فهم هذا الحساب يُمكّن MSL من تقييم قوة الدراسة وتفسير نتائجها بشكل صحيح.</p>
+
+    <div class="ss-formula">
+      حجم العينة = دالة في [ قوة الدراسة (Power) + مستوى الدلالة (α) + حجم الأثر المتوقع + معدل الحدث في المجموعة الضابطة ]
+    </div>
+
+    <div class="ss-factors">
+      <div class="ss-factor" style="border-right-color:var(--teal);">
+        <h5>🎯 Power (قوة الدراسة)</h5>
+        <p>احتمال الكشف عن أثر حقيقي. عادةً 80-90%. Power أعلى = عينة أكبر.</p>
+      </div>
+      <div class="ss-factor" style="border-right-color:var(--navy);">
+        <h5>α (مستوى الدلالة)</h5>
+        <p>عتبة رفض الفرضية الصفرية. عادةً 0.05. α أصغر = عينة أكبر.</p>
+      </div>
+      <div class="ss-factor" style="border-right-color:var(--gold);">
+        <h5>📏 Effect Size</h5>
+        <p>حجم الأثر المتوقع. أثر صغير يحتاج عينة أكبر بكثير لاكتشافه.</p>
+      </div>
+      <div class="ss-factor" style="border-right-color:var(--purple);">
+        <h5>📉 معدل الحدث</h5>
+        <p>كلما كان الحدث أندر، كلما احتجت عينة أكبر لرصد الفرق.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>الدراسة الصغيرة ≠ الدراسة الضعيفة دائماً</h4>
+      <p>دراسة على 200 مريض لمرض نادر جداً قد تكون قوية علمياً إذا كان حجم الأثر كبيراً. والعكس: دراسة على مليون مريض قد تُظهر فروقاً صغيرة جداً لا قيمة سريرية لها. السياق هو الحكم دائماً.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROTOCOL -->
+  <div class="section-label"><div class="dot"></div><span>بروتوكول الدراسة</span></div>
+  <h2>عناصر بروتوكول الدراسة السريرية</h2>
+  <p>البروتوكول هو «دستور» الدراسة — وثيقة تحدد كل شيء مسبقاً. MSL يستخدمه لفهم إجابة «لماذا صُممت الدراسة هكذا؟»</p>
+
+  <div class="protocol-list">
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--navy);">١</div>
+      <div class="proto-body">
+        <h4>السؤال البحثي وإطار PICO</h4>
+        <p>تحديد واضح ودقيق لما تريد الدراسة الإجابة عليه — الأساس الذي يبنى عليه كل شيء.</p>
+        <span class="proto-tag" style="background:var(--blue-bg);color:var(--blue);">قبل أي شيء</span>
+      </div>
+    </div>
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--teal);">٢</div>
+      <div class="proto-body">
+        <h4>معايير الإدراج والإقصاء</h4>
+        <p>من يُدرج في الدراسة ومن يُستبعد؟ هذه المعايير تُحدد قابلية التطبيق على مرضى الطبيب.</p>
+        <span class="proto-tag" style="background:#E8F5F3;color:var(--teal);">MSL يُحللها بعناية</span>
+      </div>
+    </div>
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--purple);">٣</div>
+      <div class="proto-body">
+        <h4>التصميم والتعشية والتعمية</h4>
+        <p>كيف يُوزَّع المرضى؟ هل التعمية مزدوجة؟ ما طريقة التعشية المستخدمة (Block/Stratified)؟</p>
+        <span class="proto-tag" style="background:var(--purple-bg);color:var(--purple);">يُحدد قوة الدليل</span>
+      </div>
+    </div>
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--gold); color:var(--navy);">٤</div>
+      <div class="proto-body">
+        <h4>نقاط النهاية والمقاييس</h4>
+        <p>ما نقطة النهاية الأولية بالضبط؟ كيف تُقاس؟ من يُقيّمها؟ في أي توقيت؟</p>
+        <span class="proto-tag" style="background:var(--orange-bg);color:var(--orange);">قلب تفسير النتائج</span>
+      </div>
+    </div>
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--teal-light);">٥</div>
+      <div class="proto-body">
+        <h4>حجم العينة والتحليل الإحصائي</h4>
+        <p>لماذا هذا الحجم؟ ما خطة التحليل؟ هل هي ITT أم Per-Protocol؟ هل هناك تعديل للمقارنات المتعددة؟</p>
+        <span class="proto-tag" style="background:var(--green-bg);color:var(--green);">يكشف نقاط الضعف</span>
+      </div>
+    </div>
+    <div class="proto-item">
+      <div class="proto-num" style="background:var(--red-dark);">٦</div>
+      <div class="proto-body">
+        <h4>الاعتبارات الأخلاقية والموافقة</h4>
+        <p>موافقة لجنة الأخلاقيات (IRB/EC)، الموافقة المستنيرة للمرضى، قواعد الإيقاف المبكر (Stopping Rules).</p>
+        <span class="proto-tag" style="background:var(--red-bg);color:var(--red-dark);">إلزامي قانونياً</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL ROLE -->
+  <div class="section-label"><div class="dot"></div><span>دور MSL</span></div>
+  <h2>كيف يستخدم MSL معرفته بتصميم التجارب؟</h2>
+
+  <div class="msl-cards">
+    <div class="msl-card">
+      <span class="mc-icon">🔍</span>
+      <div class="mc-body">
+        <h4>تقييم قوة الدراسات المقدَّمة له</h4>
+        <p>حين يتلقى MSL دراسة جديدة من الشركة، لا يكتفي بقراءة الـ Abstract — يُقيّم التصميم: هل الـ PICO واضح؟ هل التعمية مزدوجة؟ هل نقطة النهاية سريرية أم بديلة؟</p>
+        <span class="mc-tag" style="background:#E8F5F3;color:var(--teal);">قبل كل زيارة</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">💬</span>
+      <div class="mc-body">
+        <h4>الإجابة على تساؤلات الأطباء البحثيين</h4>
+        <p>الأطباء الأكاديميون يسألون: «لماذا استُبعد مرضى الفشل الكلوي؟» أو «لماذا اختارتم نقطة نهاية بديلة؟» MSL الذي يفهم التصميم يُجيب بثقة ومصداقية.</p>
+        <span class="mc-tag" style="background:var(--orange-bg);color:var(--orange);">أثناء الزيارة</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">🤝</span>
+      <div class="mc-body">
+        <h4>دعم الباحثين في ISS</h4>
+        <p>حين يقترح طبيب دراسة ISS، يُساعده MSL على صياغة PICO واضح، تحديد نقاط النهاية المناسبة، والتفكير في حجم العينة — دون التدخل في الاستقلالية البحثية.</p>
+        <span class="mc-tag" style="background:var(--purple-bg);color:var(--purple);">دور استراتيجي</span>
+      </div>
+    </div>
+    <div class="msl-card">
+      <span class="mc-icon">⚖️</span>
+      <div class="mc-body">
+        <h4>الصدق في تقييم حدود الدراسة</h4>
+        <p>MSL لا يُخفي نقاط ضعف التصميم — إذا كانت الدراسة Open-Label أو اعتمدت على Surrogate Endpoint، يذكر ذلك بصراحة. هذه الأمانة العلمية هي ما يميزه.</p>
+        <span class="mc-tag" style="background:var(--green-bg);color:var(--green);">أساس المصداقية</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 MSL يقرأ الدراسة كعالم — ويشرحها كمعلم</h3>
+    <p>الفرق بين MSL متوسط ومتميز هو هذا: الأول يحفظ النتائج. الثاني يفهم التصميم، يعرف نقاط القوة والضعف، ويستطيع ربط كل ذلك بواقع مريض الطبيب أمامه. هذا ما يجعل الطبيب يثق بـ MSL كمرجع علمي حقيقي.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. طبيب يقول: «دراسة Phase II أثبتت أن دواءكم فعّال — لماذا تحتاجون Phase III؟» ما إجابة MSL؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. «Phase III إجراء بيروقراطي تطلبه هيئات التسجيل فقط»</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. «Phase II كافٍ لإثبات الفعالية — لكننا نحتاج Phase III للسلامة»</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. «Phase II يُظهر إشارات أولية فقط على عينة صغيرة — Phase III يُثبت الفعالية بقوة على آلاف المرضى بتصميم RCT صارم مع نقاط نهاية سريرية»</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. «صحيح أن Phase II يكفي — لكن المعايير الدولية تُلزمنا بـ Phase III»</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ ممتاز! Phase II إشارات أولية على عينة صغيرة — بينما Phase III هو الإثبات الحقيقي بآلاف المرضى ونقاط نهاية سريرية صلبة.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ Phase II يُظهر إشارات فقط — Phase III هو الإثبات الحقيقي على آلاف المرضى بـ RCT صارم ونقاط نهاية سريرية.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. دراسة أظهرت أن الدواء خفّض LDL بنسبة 35% (p &lt; 0.001). هل هذا يعني أنه يُقلّل من الوفيات القلبية؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. نعم، لأن LDL مؤشر موثوق جداً للوفيات القلبية</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. لا بالضرورة — LDL نقطة نهاية بديلة، وتحسين المؤشر لا يُثبت التأثير على نقاط نهاية سريرية صلبة كالوفيات</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. نعم، لأن الدلالة الإحصائية قوية جداً</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. نعم إذا كانت الدراسة مزدوجة التعمية</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ صحيح! LDL هو Surrogate Endpoint — قد يرتبط بالوفيات لكن لا يُثبتها. تاريخ الأدوية مليء بأمثلة لعلاجات حسّنت مؤشرات معملية لكنها لم تُقلّل الوفيات.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ LDL هو Surrogate Endpoint. تحسينه لا يعني بالضرورة تقليل الوفيات. تاريخ الدواء مليء بأمثلة حسّنت مؤشرات معملية لكن لم تُقلّل الوفيات — أو أضرّت.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. ما العنصر الأهم في إطار PICO الذي يُحدد مدى قابلية نتائج الدراسة للتطبيق على مرضى طبيب معين؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','a')">أ. P — معايير الإدراج والإقصاء (هل مرضاه يُشبهون مرضى الدراسة؟)</div>
+      <div class="quiz-option" onclick="answer('q3','b','a')">ب. I — جرعة الدواء المستخدمة في الدراسة</div>
+      <div class="quiz-option" onclick="answer('q3','c','a')">ج. C — نوع المجموعة الضابطة (Placebo أم علاج معياري)</div>
+      <div class="quiz-option" onclick="answer('q3','d','a')">د. O — نقطة النهاية المختارة</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ ممتاز! P — معايير الإدراج والإقصاء — هو الأكثر أهمية للتطبيق السريري. إذا استبعدت الدراسة كبار السن أو مرضى الكلى، فنتائجها لا تنطبق على هذه الفئات.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ P — معايير الإدراج والإقصاء — هو الأكثر أهمية لتحديد هل مرضى الطبيب مشمولون أصلاً في الدراسة أم لا.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. دراسة استخدمت Composite Endpoint (MACE = وفاة + نوبة قلبية + سكتة دماغية) وأظهرت انخفاضاً بنسبة 20%. ما السؤال الذي يجب أن يطرحه MSL المتمكن؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','c')">أ. «هل الدراسة كانت مزدوجة التعمية؟»</div>
+      <div class="quiz-option" onclick="answer('q4','b','c')">ب. «كم كان حجم عينة الدراسة؟»</div>
+      <div class="quiz-option" onclick="answer('q4','c','c')">ج. «ما الانخفاض في كل مكوّن منفرداً؟ هل خفّض الوفيات أم فقط السكتات الأقل خطورة؟»</div>
+      <div class="quiz-option" onclick="answer('q4','d','c')">د. «هل هناك مقارنة مع دواء منافس؟»</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! Composite Endpoint قد يُخفي أن كل الانخفاض جاء من الأحداث الأقل خطورة (السكتات الصغيرة) بينما لا يوجد تأثير على الوفيات. MSL ينظر دائماً للمكوّنات منفردةً.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ الأهم هو تحليل المكوّنات منفردةً — لأن Composite قد يُخفي أن الانخفاض كله جاء من الأحداث الأقل خطورة بينما لا يوجد تأثير فعلي على الوفيات.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>فهمت مراحل التطوير السريري Phase I–IV، تعلمت إطار PICO، عرفت الفرق بين نقاط النهاية الصلبة والبديلة والمركّبة، وأدركت كيف يُحسب حجم العينة ولماذا يهم. MSL الذي يفهم تصميم التجارب لا يكتفي بنقل النتائج — بل يُفسّر ما وراءها بأمانة علمية حقيقية.</p>
+  </div>
+
+</div>
+
+<script>
+function showPhase(id, el) {
+  const panel = document.getElementById(id);
+  const allPanels = document.querySelectorAll('.phase-detail');
+  const allCards = document.querySelectorAll('.phase-card');
+  const isOpen = panel.classList.contains('open');
+  allPanels.forEach(p => p.classList.remove('open'));
+  allCards.forEach(c => c.classList.remove('selected'));
+  if (!isOpen) { panel.classList.add('open'); el.classList.add('selected'); }
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

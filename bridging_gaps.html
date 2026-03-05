@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سد الفجوات في رعاية المريض</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+    --pink: #9D174D;
+    --pink-bg: #FCE7F3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #071428 0%, #0A2342 50%, #0A1F1A 100%);
+    padding: 52px 36px 44px; position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-90px; left:-70px; width:380px; height:380px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .hero::after  { content:''; position:absolute; bottom:-50px; right:-40px; width:240px; height:240px; border-radius:50%; background:var(--pink); opacity:0.07; }
+  .hero-badge { display:inline-block; background:linear-gradient(90deg,var(--teal),var(--pink)); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,40px); font-weight:900; margin-bottom:10px; line-height:1.25; position:relative; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:linear-gradient(90deg,var(--teal),var(--gold)); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:640px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  /* Layout */
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p  { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Stat row */
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:20px 0; }
+  .stat-box { background:var(--white); border-radius:14px; padding:20px 16px; text-align:center; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .stat-num   { font-size:28px; font-weight:900; line-height:1; margin-bottom:5px; }
+  .stat-label { font-size:12px; color:var(--text-mid); font-weight:600; }
+  .stat-sub   { font-size:10px; color:var(--text-light); margin-top:3px; }
+
+  /* Patient journey map */
+  .journey-map { background:var(--white); border-radius:16px; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.08); overflow:hidden; margin:20px 0; }
+  .jm-header { background:var(--navy); padding:16px 22px; color:var(--white); font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px; }
+  .jm-stages { display:flex; overflow-x:auto; padding:20px; gap:0; position:relative; }
+  .jm-stages::before { content:''; position:absolute; top:50%; left:0; right:0; height:2px; background:var(--light-gray); z-index:0; transform:translateY(-50%); }
+  .jm-stage { flex:1; min-width:110px; display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; z-index:1; }
+  .jm-dot { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; border:3px solid var(--white); box-shadow:0 2px 8px rgba(10,35,66,0.15); }
+  .jm-stage h5 { font-size:11px; font-weight:800; color:var(--navy); text-align:center; }
+  .jm-stage .gap-tag { font-size:9px; font-weight:700; padding:2px 7px; border-radius:8px; text-align:center; }
+
+  /* Gap cards - accordion */
+  .gap-card { background:var(--white); border-radius:16px; border:1px solid var(--light-gray); overflow:hidden; margin:12px 0; box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .gap-header { padding:18px 22px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:background 0.2s; }
+  .gap-header:hover { background:var(--off-white); }
+  .gap-icon  { font-size:26px; flex-shrink:0; }
+  .gap-title { flex:1; }
+  .gap-title h4  { font-size:15px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .gap-title span{ font-size:12px; color:var(--text-light); }
+  .gap-chevron { font-size:14px; color:var(--text-light); transition:transform 0.25s; }
+  .gap-body { padding:0 22px 20px; display:none; border-top:1px solid var(--light-gray); }
+  .gap-body.open { display:block; animation:fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+
+  /* Content inside gap body */
+  .gb-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:10px; margin:14px 0; }
+  .gb-item { background:var(--off-white); border-radius:10px; padding:13px; }
+  .gb-item .gi-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.7px; margin-bottom:4px; }
+  .gb-item .gi-val   { font-size:13px; font-weight:600; color:var(--text-dark); }
+  .gb-example { background:var(--off-white); border-radius:10px; padding:14px 16px; font-size:13.5px; color:var(--text-mid); border-right:3px solid var(--teal); margin:12px 0; }
+  .gb-example strong { color:var(--navy); }
+  .gb-list { list-style:none; }
+  .gb-list li { font-size:13.5px; color:var(--text-mid); padding:7px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:8px; align-items:flex-start; }
+  .gb-list li:last-child { border-bottom:none; }
+  .gb-list li::before { content:'◆'; font-size:7px; color:var(--teal); margin-top:7px; flex-shrink:0; }
+
+  /* Barrier vs bridge table */
+  .bb-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); margin:20px 0; font-size:13.5px; }
+  .bb-table th { padding:12px 16px; font-weight:800; text-align:center; }
+  .bb-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:28%; }
+  .bb-table th:nth-child(2){ background:var(--red-dark); color:var(--white); }
+  .bb-table th:nth-child(3){ background:var(--teal);     color:var(--white); }
+  .bb-table td { padding:11px 16px; border-bottom:1px solid var(--light-gray); text-align:center; vertical-align:middle; }
+  .bb-table td:first-child { background:#F8FAFC; font-weight:700; color:var(--navy); text-align:right; font-size:12px; }
+  .bb-table tr:nth-child(even) td { background:#F3F4F6; }
+  .bb-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .bb-table tr:last-child td { border-bottom:none; }
+
+  /* MSL Bridge actions */
+  .bridge-steps { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .bridge-step { display:flex; gap:14px; background:var(--white); border-radius:12px; padding:16px 18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); border-right:4px solid; transition:transform 0.15s; }
+  .bridge-step:hover { transform:translateX(-3px); }
+  .bs-icon { font-size:24px; flex-shrink:0; margin-top:2px; }
+  .bs-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .bs-body p  { font-size:13px; color:var(--text-mid); margin:0; }
+  .bs-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* Scenario */
+  .scenario { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); overflow:hidden; margin:20px 0; box-shadow:0 4px 16px rgba(10,35,66,0.07); }
+  .scenario-hdr { background:var(--navy); padding:14px 20px; color:var(--white); font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px; }
+  .scenario-body { padding:20px; }
+  .scenario-body p { font-size:14px; margin-bottom:14px; }
+  .s-opt { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-radius:10px; margin-bottom:8px; font-size:13.5px; }
+  .s-opt.correct { background:var(--green-bg); border:1px solid #86EFAC; color:var(--green); }
+  .s-opt.wrong   { background:var(--red-bg);   border:1px solid #FCA5A5; color:var(--red-dark); }
+  .s-badge { font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; flex-shrink:0; margin-top:2px; }
+  .sb-c { background:var(--green-bg); color:var(--green); }
+  .sb-w { background:var(--red-bg);   color:var(--red-dark); }
+
+  /* Equity grid */
+  .equity-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin:20px 0; }
+  .equity-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); border-top:4px solid; }
+  .eq-icon { font-size:26px; margin-bottom:10px; }
+  .equity-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .equity-card p  { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* Alert */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p  { font-size:13.5px; margin:0; }
+  .alert-teal  { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); }   .alert-teal p { color:#065F46; }
+  .alert-gold  { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); }  .alert-gold p { color:#78350F; }
+  .alert-red   { background:var(--red-bg); border:1px solid #FCA5A5; }
+  .alert-red h4  { color:var(--red-dark); } .alert-red p { color:#7F1D1D; }
+  .alert-purple{ background:var(--purple-bg); border:1px solid #C4B5FD; }
+  .alert-purple h4 { color:var(--purple); } .alert-purple p { color:#4C1D95; }
+
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p  { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover   { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong   { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb   { background:var(--red-bg);   color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section { padding:28px 18px; }
+    .jm-stages { gap:0; padding:14px; }
+    .jm-stage { min-width:80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🌉 رعاية المريض</div>
+  <h1>سد <span>الفجوات</span> في رعاية المريض</h1>
+  <div class="hero-accent"></div>
+  <p>بين التشخيص والعلاج، بين العلاج والالتزام، بين الالتزام والنتيجة — فجوات تُكلّف المرضى صحتهم. MSL يقف في قلب هذه الفجوات ويبني الجسور.</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- Intro -->
+  <div class="section-label"><div class="dot"></div><span>لماذا تهمنا الفجوات؟</span></div>
+  <h2>الفجوات في رعاية المريض — المشكلة الصامتة</h2>
+  <p>يُعاني ملايين المرضى حول العالم ليس لأن العلاج غير موجود — بل لأن هناك فجوات بين وجود العلاج ووصوله إليهم. فجوة في التشخيص، فجوة في الوصف، فجوة في الالتزام، فجوة في المتابعة. كل فجوة = مريض لم يحصل على الرعاية التي يستحقها.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--red-dark);">50%</div>
+      <div class="stat-label">من المرضى بالأمراض المزمنة لا يلتزمون بعلاجهم على المدى البعيد</div>
+      <div class="stat-sub">WHO</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--navy);">$528B</div>
+      <div class="stat-label">تكلفة عدم الالتزام العلاجي سنوياً في الولايات المتحدة وحدها</div>
+      <div class="stat-sub">NEHI Report</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--teal);">69%</div>
+      <div class="stat-label">من حالات دخول المستشفى المرتبطة بالدواء يمكن الوقاية منها</div>
+      <div class="stat-sub">AHA</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--purple);">7 سنوات</div>
+      <div class="stat-label">متوسط التأخير في تشخيص الأمراض النادرة من ظهور الأعراض</div>
+      <div class="stat-sub">NORD</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Patient Journey Map -->
+  <div class="section-label"><div class="dot"></div><span>رحلة المريض</span></div>
+  <h2>رحلة المريض — أين تقع الفجوات؟</h2>
+
+  <div class="journey-map">
+    <div class="jm-header">🗺️ خريطة رحلة المريض من الأعراض إلى النتيجة</div>
+    <div class="jm-stages">
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--navy);">🤒</div>
+        <h5>ظهور الأعراض</h5>
+        <span class="gap-tag" style="background:var(--red-bg);color:var(--red-dark);">فجوة الوعي</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:#1E3A5C;">👨‍⚕️</div>
+        <h5>زيارة الطبيب</h5>
+        <span class="gap-tag" style="background:var(--orange-bg);color:var(--orange);">فجوة الوصول</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--teal);">🔬</div>
+        <h5>التشخيص</h5>
+        <span class="gap-tag" style="background:var(--purple-bg);color:var(--purple);">فجوة التشخيص</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--teal-light);">💊</div>
+        <h5>الوصف والعلاج</h5>
+        <span class="gap-tag" style="background:var(--blue-bg);color:var(--blue);">فجوة الوصف</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--gold);color:var(--navy);">🏥</div>
+        <h5>الصرف والوصول</h5>
+        <span class="gap-tag" style="background:var(--orange-bg);color:var(--orange);">فجوة الوصول</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--purple);">✅</div>
+        <h5>الالتزام بالعلاج</h5>
+        <span class="gap-tag" style="background:var(--red-bg);color:var(--red-dark);">فجوة الالتزام</span>
+      </div>
+      <div class="jm-stage">
+        <div class="jm-dot" style="background:var(--green);">📈</div>
+        <h5>النتيجة العلاجية</h5>
+        <span class="gap-tag" style="background:var(--green-bg);color:var(--green);">الهدف النهائي</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Gap Cards -->
+  <div class="section-label"><div class="dot"></div><span>أنواع الفجوات</span></div>
+  <h2>الفجوات الرئيسية — اضغط لعرض التفاصيل ودور MSL</h2>
+
+  <!-- Gap 1: Diagnosis -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g1',this)">
+      <span class="gap-icon">🔬</span>
+      <div class="gap-title">
+        <h4>فجوة التشخيص — Diagnostic Gap</h4>
+        <span>المرضى الذين يعيشون سنوات دون تشخيص صحيح</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g1">
+      <p style="padding-top:14px; font-size:14px;">فجوة التشخيص تعني أن المريض يُعاني من مرض لكنه لم يُشخَّص بعد — إما لأن الطبيب لا يعرف بوجود المرض، أو لأن أعراضه تُشبه أمراضاً أخرى، أو لأن الفحوصات اللازمة لم تُطلب.</p>
+      <div class="gb-grid">
+        <div class="gb-item"><div class="gi-label">الأسباب الشائعة</div><div class="gi-val">أعراض غير محددة، ندرة المرض، نقص الوعي، غياب الـ Biomarker Testing</div></div>
+        <div class="gb-item"><div class="gi-label">الأكثر تأثراً</div><div class="gi-val">الأمراض النادرة، الأمراض المناعية الذاتية، بعض سرطانات المراحل المبكرة</div></div>
+        <div class="gb-item"><div class="gi-label">التكلفة</div><div class="gi-val">تشخيص متأخر = مرض أكثر تقدماً = علاج أصعب وأغلى</div></div>
+        <div class="gb-item"><div class="gi-label">دور MSL</div><div class="gi-val">تثقيف الأطباء على الأعراض المبكرة والفحوصات التشخيصية المناسبة</div></div>
+      </div>
+      <div class="gb-example">
+        <strong>مثال — سرطان الرئة:</strong> 75% من حالات سرطان الرئة تُكتشف في المراحل المتقدمة لأن الأعراض المبكرة غير محددة. MSL يُثقّف أطباء الرئة وأطباء الرعاية الأولية على قيمة الـ Low-Dose CT وBiomarker Testing في المرضى عالي الخطورة.
+      </div>
+      <div class="alert-teal">
+        <span class="ab-icon">🎯</span>
+        <div><h4>كيف يسد MSL فجوة التشخيص؟</h4>
+        <p>يُعرّف الأطباء بالـ Companion Diagnostics، يُنظّم برامج تثقيفية حول الأعراض المبكرة، يُشارك بيانات RWE تُظهر معدلات التشخيص الفعلية في المنطقة مقارنةً بالمتوقع.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 2: Treatment -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g2',this)">
+      <span class="gap-icon">💊</span>
+      <div class="gap-title">
+        <h4>فجوة الوصف العلاجي — Treatment Gap</h4>
+        <span>المرضى المُشخَّصون الذين لا يحصلون على العلاج المناسب</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g2">
+      <p style="padding-top:14px; font-size:14px;">حتى بعد التشخيص الصحيح، قد لا يحصل المريض على العلاج الأمثل — إما لأن الطبيب لا يعرف بالعلاجات الجديدة، أو بسبب القيود في البروتوكولات، أو بسبب تحفظات الطبيب على دليل معين.</p>
+      <div class="gb-grid">
+        <div class="gb-item"><div class="gi-label">نقص المعرفة</div><div class="gi-val">الطبيب لا يعلم بالعلاجات الجديدة أو الإرشادات المُحدَّثة</div></div>
+        <div class="gb-item"><div class="gi-label">القيود البروتوكولية</div><div class="gi-val">بروتوكولات قديمة لم تُحدَّث لتشمل العلاجات المستحدثة</div></div>
+        <div class="gb-item"><div class="gi-label">الخوف من الآثار الجانبية</div><div class="gi-val">الطبيب يتردد في وصف علاج جديد بسبب مخاوف السلامة</div></div>
+        <div class="gb-item"><div class="gi-label">Clinical Inertia</div><div class="gi-val">الميل للاستمرار بالعلاج القديم رغم توفر بديل أفضل</div></div>
+      </div>
+      <div class="gb-example">
+        <strong>مثال — قصور القلب:</strong> رغم وجود أدوية SGLT2i بأدلة قوية لتقليل وفيات قصور القلب، نسبة وصفها لا تزال منخفضة لأن كثيراً من أطباء القلب اعتادوا على البروتوكولات القديمة. MSL يُقدّم الأدلة ويُناقش الحالات السريرية لتجسير هذه الفجوة.
+      </div>
+      <div class="alert-gold">
+        <span class="ab-icon">⚠️</span>
+        <div><h4>Clinical Inertia — العائق الأصعب</h4>
+        <p>Clinical Inertia هو استمرار الطبيب في نفس النهج العلاجي رغم توفر دليل أفضل. MSL لا يُغيّره بالضغط — بل بالحوار العلمي الصادق وتقديم الأدلة في سياق مرضى الطبيب الفعليين.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 3: Access -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g3',this)">
+      <span class="gap-icon">🌍</span>
+      <div class="gap-title">
+        <h4>فجوة الوصول — Access Gap</h4>
+        <span>المرضى الذين يعرف طبيبهم العلاج الأمثل لكنهم لا يستطيعون الحصول عليه</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g3">
+      <p style="padding-top:14px; font-size:14px;">فجوة الوصول هي الفجوة بين وجود العلاج الفعّال ووصوله للمريض المحتاج — وأسبابها متعددة ومتشابكة.</p>
+      <ul class="gb-list">
+        <li><strong>التكلفة:</strong> الأدوية البيولوجية والعلاجات الجينية مرتفعة التكلفة بشكل غير مسبوق — بعضها يتجاوز مليون دولار</li>
+        <li><strong>التغطية التأمينية:</strong> كثير من العلاجات الجديدة لا تُغطيها شركات التأمين أو الأنظمة الصحية الحكومية بعد</li>
+        <li><strong>الجغرافيا:</strong> المرضى في المناطق النائية أو الدول النامية لا يستطيعون الوصول لمراكز التخصص</li>
+        <li><strong>البيروقراطية:</strong> إجراءات Prior Authorization المعقدة تُعيق وصول المريض للعلاج الذي وصفه طبيبه</li>
+        <li><strong>سلسلة التوريد:</strong> نقص الأدوية وانقطاعها من المستودعات والصيدليات</li>
+      </ul>
+      <div class="gb-example">
+        <strong>دور MSL في فجوة الوصول:</strong> MSL لا يُقرّر التغطية التأمينية، لكنه يُزوّد الطبيب بالأدلة الداعمة لطلبات Prior Authorization، يُعرّفه ببرامج دعم المرضى (Patient Support Programs)، وينقل للشركة بيانات فجوات الوصول الفعلية في السوق.
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 4: Adherence -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g4',this)">
+      <span class="gap-icon">📅</span>
+      <div class="gap-title">
+        <h4>فجوة الالتزام العلاجي — Adherence Gap</h4>
+        <span>المرضى الذين يحصلون على العلاج لكنهم لا يلتزمون به</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g4">
+      <p style="padding-top:14px; font-size:14px;">الالتزام العلاجي (Adherence) يعني أخذ الدواء الصحيح بالجرعة الصحيحة في الوقت الصحيح لفترة كافية. نصف المرضى بالأمراض المزمنة لا يُحققون هذا — وهذا وحده يُكلف ملايين الوفيات سنوياً.</p>
+      <div class="gb-grid">
+        <div class="gb-item"><div class="gi-label">أسباب عدم الالتزام</div><div class="gi-val">نسيان، آثار جانبية، تعقيد النظام، تكلفة، إحساس بالتحسن، نقص الإيمان بفائدة الدواء</div></div>
+        <div class="gb-item"><div class="gi-label">الأمراض الأكثر تأثراً</div><div class="gi-val">ارتفاع ضغط الدم، السكري، الاكتئاب، الربو، فشل القلب</div></div>
+        <div class="gb-item"><div class="gi-label">Persistence vs Adherence</div><div class="gi-val">Persistence = الاستمرار في العلاج | Adherence = أخذه بشكل صحيح</div></div>
+        <div class="gb-item"><div class="gi-label">قياسه</div><div class="gi-val">MPR (Medication Possession Ratio) وPDC (Proportion of Days Covered)</div></div>
+      </div>
+
+      <table class="bb-table" style="margin-top:14px;">
+        <thead><tr>
+          <th>العامل</th>
+          <th>🚧 حاجز للالتزام</th>
+          <th>🌉 جسر MSL</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>الآثار الجانبية</td><td>المريض يتوقف عند ظهورها</td><td>الطبيب يستعد لإدارتها ويُطمئن المريض</td></tr>
+          <tr><td>تعقيد الجرعة</td><td>جرعات متعددة يومياً تُنسى</td><td>مناقشة صيغ طويلة المفعول أو جرعة يومية</td></tr>
+          <tr><td>التكلفة</td><td>المريض يُقلّص الجرعات</td><td>توعية الطبيب ببرامج دعم المريض</td></tr>
+          <tr><td>نقص الفهم</td><td>«أنا بخير، لماذا أستمر؟»</td><td>تثقيف الطبيب على كيفية شرح أهمية الاستمرار</td></tr>
+          <tr><td>نمط الحياة</td><td>نسيان، سفر، رمضان</td><td>مناقشة التكيّف مع نمط حياة المريض</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Gap 5: Knowledge -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g5',this)">
+      <span class="gap-icon">📚</span>
+      <div class="gap-title">
+        <h4>فجوة المعرفة — Knowledge Gap</h4>
+        <span>الفجوة بين أحدث الأدلة العلمية وما يعرفه الطبيب في عيادته</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g5">
+      <p style="padding-top:14px; font-size:14px;">تتضاعف الأبحاث الطبية كل بضع سنوات. الطبيب المشغول لا يستطيع متابعة كل ورقة بحثية جديدة. هذه الفجوة بين ما هو مُنشور وما هو مُطبَّق يمكن أن تعني فارقاً بين الحياة والموت.</p>
+      <ul class="gb-list">
+        <li><strong>التحديث المستمر:</strong> إرشادات العلاج تتغير — طبيب تخرج قبل 10 سنوات قد لا يعلم بالتحولات الجذرية في بروتوكول علاج معين</li>
+        <li><strong>تخصص المعرفة:</strong> طبيب الرعاية الأولية يعالج مرضى بمئات الأمراض — لا يمكنه أن يكون خبيراً في كل شيء</li>
+        <li><strong>التحيز التأكيدي:</strong> الطبيب قد يُؤخّر تبني معرفة جديدة تتعارض مع ممارسته الحالية</li>
+        <li><strong>جودة المعلومات:</strong> ليس كل مصدر معلومات موثوق — الطبيب يحتاج من يساعده على تقييم جودة الأدلة</li>
+      </ul>
+      <div class="gb-example">
+        <strong>هنا يكون MSL في أوج قيمته:</strong> MSL هو الجسر المتخصص بين أحدث الأبحاث وعيادة الطبيب. لا يُعطي ورقة بحثية فقط — بل يُترجمها لواقع مرضى الطبيب بالأدلة والسياق والصدق.
+      </div>
+      <div class="alert-purple">
+        <span class="ab-icon">💡</span>
+        <div><h4>الفرق بين MSL والمراجع الطبية التقليدية</h4>
+        <p>المجلات والمراجع تُقدّم المعلومات عاماً. MSL يُقدّمها بسياق مريض الطبيب تحديداً، يُجيب على أسئلته الفعلية، ويُشكّل حواراً علمياً حقيقياً — وهذا ما لا تستطيعه أي مرجع مكتوب.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 6: Follow-up -->
+  <div class="gap-card">
+    <div class="gap-header" onclick="toggleGap('g6',this)">
+      <span class="gap-icon">🔄</span>
+      <div class="gap-title">
+        <h4>فجوة المتابعة والاستمرارية — Continuity Gap</h4>
+        <span>الانقطاع في الرعاية بين مقدمي الخدمة والزيارات</span>
+      </div>
+      <span class="gap-chevron">▼</span>
+    </div>
+    <div class="gap-body" id="g6">
+      <p style="padding-top:14px; font-size:14px;">الرعاية الصحية الجيدة ليست حدثاً — هي عملية مستمرة. حين تنقطع حلقات التواصل بين الطبيب والمريض أو بين مزودي الرعاية المختلفين، تسقط المرضى في الفجوات.</p>
+      <div class="gb-grid">
+        <div class="gb-item"><div class="gi-label">انقطاع التحويل</div><div class="gi-val">Transition of Care — ما يحدث حين ينتقل المريض من المستشفى للمنزل أو بين الأطباء</div></div>
+        <div class="gb-item"><div class="gi-label">نقص التنسيق</div><div class="gi-val">طبيب الرعاية الأولية والأخصائي لا يتشاركان المعلومات بشكل كافٍ</div></div>
+        <div class="gb-item"><div class="gi-label">غياب المتابعة</div><div class="gi-val">المريض يُوصف له علاج لكن لا أحد يتابع هل التزم أم لا</div></div>
+        <div class="gb-item"><div class="gi-label">الحل التكنولوجي</div><div class="gi-val">EHR المتكامل، Remote Monitoring، تطبيقات تذكير المريض</div></div>
+      </div>
+      <div class="gb-example">
+        <strong>مثال — مريض قصور القلب:</strong> 25% من مرضى قصور القلب يعودون للمستشفى خلال 30 يوماً من الخروج. السبب الأكبر: انقطاع المتابعة وعدم الالتزام بالعلاج بعد الخروج. MSL يُساعد المستشفيات على تصميم بروتوكولات متابعة فعّالة بالأدلة.
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL as Bridge Builder -->
+  <div class="section-label"><div class="dot"></div><span>MSL كباني جسور</span></div>
+  <h2>MSL — باني الجسور في كل فجوة</h2>
+
+  <div class="bridge-steps">
+    <div class="bridge-step" style="border-right-color:var(--navy);">
+      <span class="bs-icon">🔍</span>
+      <div class="bs-body">
+        <h4>تحديد الفجوة أولاً</h4>
+        <p>قبل سد أي فجوة، يجب تحديدها. MSL يُحلّل بيانات زياراته، أسئلة الأطباء، ومعدلات التشخيص والوصف في منطقته لتحديد أين تقع الفجوة الفعلية.</p>
+        <span class="bs-tag" style="background:var(--blue-bg);color:var(--blue);">Gap Analysis</span>
+      </div>
+    </div>
+    <div class="bridge-step" style="border-right-color:var(--teal);">
+      <span class="bs-icon">🎓</span>
+      <div class="bs-body">
+        <h4>التثقيف العلمي المُخصَّص</h4>
+        <p>ليس تثقيفاً عاماً — بل محادثة علمية مُصمَّمة لحاجة هذا الطبيب بالذات، بناءً على تخصصه ومرضاه وأسئلته الفعلية.</p>
+        <span class="bs-tag" style="background:#E8F5F3;color:var(--teal);">Tailored Education</span>
+      </div>
+    </div>
+    <div class="bridge-step" style="border-right-color:var(--purple);">
+      <span class="bs-icon">🔗</span>
+      <div class="bs-body">
+        <h4>ربط الطبيب بالموارد المناسبة</h4>
+        <p>MSL لا يعمل وحده — يربط الطبيب بالخبراء، المراجع، برامج دعم المريض، وفرص المشاركة في الأبحاث. هو الجسر بين الطبيب وكل الموارد التي تُخدم مريضه.</p>
+        <span class="bs-tag" style="background:var(--purple-bg);color:var(--purple);">Resource Connector</span>
+      </div>
+    </div>
+    <div class="bridge-step" style="border-right-color:var(--gold);">
+      <span class="bs-icon">📊</span>
+      <div class="bs-body">
+        <h4>نقل بيانات الفجوات للداخل</h4>
+        <p>MSL يُوثّق الفجوات التي يرصدها ميدانياً وينقلها للفريق الداخلي — Medical Affairs، Market Access، Medical Information. هذه البيانات تُشكّل استراتيجية الشركة.</p>
+        <span class="bs-tag" style="background:var(--orange-bg);color:var(--orange);">Insight Generation</span>
+      </div>
+    </div>
+    <div class="bridge-step" style="border-right-color:var(--teal-light);">
+      <span class="bs-icon">🤝</span>
+      <div class="bs-body">
+        <h4>دعم ISS لملء الفجوات البحثية</h4>
+        <p>حين تكون الفجوة ناتجة عن نقص في الأدلة — MSL يُحفّز الباحثين على إجراء دراسات ISS لملء هذه الفجوة بدليل حقيقي.</p>
+        <span class="bs-tag" style="background:var(--green-bg);color:var(--green);">Evidence Generation</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Health Equity -->
+  <div class="section-label"><div class="dot"></div><span>عدالة الرعاية</span></div>
+  <h2>الفجوات وعدالة الرعاية الصحية</h2>
+  <p>ليست كل الفجوات متساوية — بعض الفئات السكانية تعاني من فجوات أعمق وأوسع بسبب محددات اجتماعية وعوامل هيكلية خارج نطاق سيطرة المريض.</p>
+
+  <div class="equity-grid">
+    <div class="equity-card" style="border-top-color:var(--navy);">
+      <div class="eq-icon">🌍</div>
+      <h4>الفجوة الجغرافية</h4>
+      <p>المرضى في المناطق النائية يبعدون ساعات عن أقرب طبيب متخصص — فجوة وصول هيكلية.</p>
+    </div>
+    <div class="equity-card" style="border-top-color:var(--red-dark);">
+      <div class="eq-icon">💰</div>
+      <h4>الفجوة الاقتصادية</h4>
+      <p>محدودو الدخل يختارون بين الدواء والطعام. تكلفة العلاجات البيولوجية تجعلها حكراً على القادرين.</p>
+    </div>
+    <div class="equity-card" style="border-top-color:var(--purple);">
+      <div class="eq-icon">🗣️</div>
+      <h4>الفجوة اللغوية والثقافية</h4>
+      <p>المرضى الذين لا يتحدثون لغة الطبيب أو تتعارض تعليماته مع معتقداتهم يواجهون حواجز إضافية.</p>
+    </div>
+    <div class="equity-card" style="border-top-color:var(--teal);">
+      <div class="eq-icon">👵</div>
+      <h4>فجوة كبار السن</h4>
+      <p>كبار السن مُستبعدون من كثير من التجارب السريرية — الأدلة عنهم أقل، والعلاجات قد لا تناسب احتياجاتهم.</p>
+    </div>
+    <div class="equity-card" style="border-top-color:var(--gold);">
+      <div class="eq-icon">🧬</div>
+      <h4>فجوة التنوع في الأبحاث</h4>
+      <p>معظم التجارب السريرية أُجريت على مجموعات سكانية محددة — النتائج قد لا تنطبق على كل المرضى.</p>
+    </div>
+    <div class="equity-card" style="border-top-color:var(--pink);">
+      <div class="eq-icon">🧠</div>
+      <h4>فجوة الصحة النفسية</h4>
+      <p>الأمراض النفسية تُضاعف عدم الالتزام العلاجي في الأمراض الجسدية — لكنها غالباً تُعالَج بشكل منفصل.</p>
+    </div>
+  </div>
+
+  <div class="alert-teal">
+    <span class="ab-icon">🌟</span>
+    <div><h4>MSL وعدالة الرعاية</h4>
+    <p>MSL الواعي يُدرك أن الفجوات ليست متساوية. حين يُناقش الأدلة مع الطبيب، يسأل: «هل تنطبق هذه النتائج على مرضاك تحديداً؟ هل شملت الدراسة مجموعات مشابهة لهم؟» — هذا الوعي بالتنوع هو جزء من الأمانة العلمية.</p></div>
+  </div>
+
+  <!-- Scenario -->
+  <div class="divider"></div>
+  <div class="section-label"><div class="dot"></div><span>سيناريو تطبيقي</span></div>
+  <h2>سيناريو: طبيب يرفض تغيير العلاج رغم الأدلة</h2>
+
+  <div class="scenario">
+    <div class="scenario-hdr">🩺 موقف واقعي — Clinical Inertia في الممارسة</div>
+    <div class="scenario-body">
+      <p style="font-weight:600;color:var(--text-dark);">طبيب باطنة متمرس يقول: «أنا أعالج مرضى السكري من النوع الثاني منذ 20 سنة بنفس البروتوكول وهم بخير. لا أرى سبباً لتغيير شيء يعمل.»</p>
+      <div class="s-opt wrong">
+        <span class="s-badge sb-w">❌</span>
+        «البروتوكول القديم أقل فعالية من الجديد — يجب أن تُغيّر ممارستك»
+      </div>
+      <div class="s-opt wrong">
+        <span class="s-badge sb-w">❌</span>
+        «دراسات جديدة أثبتت أن دواءنا أفضل — دعني أُرسل لك المواد»
+      </div>
+      <div class="s-opt correct">
+        <span class="s-badge sb-c">✅</span>
+        «خبرتك الطويلة قيّمة جداً. هل تُخبرني أكثر عن مرضاك — هل هناك من لا يصل للأهداف العلاجية رغم الالتزام؟ الأدلة الجديدة تُظهر أن SGLT2i و GLP-1 تُقلّل مخاطر القلب والكلى بشكل مستقل عن ضبط السكر — ما رأيك في مناقشة من قد يستفيد منها بين مرضاك؟»
+      </div>
+      <div class="alert-teal" style="margin-top:14px;margin-bottom:0;">
+        <span class="ab-icon">💡</span>
+        <div><h4>لماذا هذا النهج الصحيح؟</h4>
+        <p>MSL لا يُجادل الطبيب ولا يُشعره بأنه مخطئ. يبدأ بالاعتراف بخبرته، يسأل عن مرضاه الفعليين، ويُقدّم الأدلة بصيغة «من قد يستفيد» لا «يجب أن تُغيّر». هذا يُقلل المقاومة ويفتح حواراً حقيقياً.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Quiz -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. طبيب يُشخّص مريضاً بصح ويصف له العلاج المناسب، لكن المريض يتوقف عن الدواء بعد شهر. أي فجوة هذه تحديداً؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. فجوة التشخيص</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. فجوة الوصف العلاجي</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. فجوة الالتزام العلاجي — التشخيص والوصف صحيحان لكن المريض لم يستمر</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. فجوة المتابعة</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! التشخيص والوصف كانا صحيحين — المشكلة في الالتزام (Adherence). MSL يُساعد الطبيب على فهم أسباب عدم الالتزام ومعالجتها مع المريض مسبقاً.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ هذه فجوة الالتزام تحديداً — التشخيص والوصف صحيحان، لكن المريض توقف عن الدواء. MSL يُساعد الطبيب على تحديد عوامل عدم الالتزام ومعالجتها استباقياً.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. ما المقصود بـ «Clinical Inertia» وكيف يتعامل معه MSL؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. مقاومة المريض لتغيير أسلوب حياته رغم توصيات الطبيب</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. استمرار الطبيب في نفس النهج العلاجي رغم توفر دليل أفضل — MSL يعالجه بالحوار العلمي الصادق لا بالضغط</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. بطء الجهات التنظيمية في الموافقة على الأدوية الجديدة</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. توقف التجارب السريرية في منتصف الطريق بسبب نقص التمويل</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! Clinical Inertia = الطبيب يستمر بالقديم رغم الأفضل. MSL لا يُجادله — بل يسأل عن مرضاه الفعليين ويُقدّم الأدلة في سياق «من قد يستفيد» لا «أنت مخطئ».</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ Clinical Inertia = الطبيب يستمر في نهجه العلاجي رغم توفر دليل أفضل. MSL يتعامل معه بالحوار العلمي الصادق — يسأل عن المرضى الذين لا يصلون للأهداف ويعرض الأدلة بسياق إيجابي.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. طبيب يقول: «أعرف أن دواء X أفضل لمريضي، لكن شركة التأمين ترفض تغطيته». أي فجوة هذه؟ وما دور MSL؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. فجوة المعرفة — الطبيب يحتاج معلومات أكثر عن الدواء</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. فجوة التشخيص — التشخيص غير مكتمل</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. فجوة الوصول — MSL يُزوّد الطبيب بالأدلة الداعمة لطلب Prior Authorization ويُعرّفه ببرامج دعم المريض</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. فجوة الالتزام — المريض لن يلتزم بالدواء</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ صحيح! فجوة الوصول — الطبيب يعرف الحل لكن المريض لا يستطيع الوصول إليه. MSL يُساعد بتوفير الأدلة الداعمة لـ Prior Authorization وتعريف الطبيب ببرامج دعم المريض المتاحة.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ هذه فجوة الوصول — الطبيب يعرف الحل والتشخيص صحيح، لكن نظام التمويل يمنع الوصول. MSL يدعم بأدلة لـ Prior Authorization ويُعرّف الطبيب ببرامج دعم المريض.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. لماذا يُعتبر MSL في موقع مثالي لتحديد الفجوات في رعاية المريض؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','d')">أ. لأنه يملك صلاحية تغيير بروتوكولات العلاج في المستشفيات</div>
+      <div class="quiz-option" onclick="answer('q4','b','d')">ب. لأنه يُجري أبحاثاً مستقلة على المرضى</div>
+      <div class="quiz-option" onclick="answer('q4','c','d')">ج. لأنه يملك بيانات مبيعات تُظهر أين لا يُصرف الدواء</div>
+      <div class="quiz-option" onclick="answer('q4','d','d')">د. لأنه يتواصل مع عشرات الأطباء ميدانياً، يسمع تساؤلاتهم، ويرصد الفجوات الحقيقية بين الأدلة والممارسة — ثم ينقل هذه الرؤى للفريق الداخلي</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! MSL هو «أذن الشركة» في السوق. تواصله المستمر مع الأطباء يُعطيه رؤية فريدة للفجوات الحقيقية بين الأدلة والممارسة — وهذه الرؤى لا تقدر عليها أي دراسة مكتبية.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ القيمة الفريدة لـ MSL هي موقعه الميداني — يتحدث مع عشرات الأطباء، يسمع تساؤلاتهم الحقيقية، ويرصد الفجوات الفعلية بين أحدث الأدلة وما يُطبَّق في العيادة. ثم يُحوّل هذه الرؤى لاستراتيجية.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>تعرّفت على الفجوات الستة الرئيسية في رحلة المريض — التشخيص، الوصف، الوصول، الالتزام، المعرفة، والاستمرارية. فهمت كيف يكون MSL باني الجسور في كل فجوة — بالتثقيف المُخصَّص، ربط الموارد، دعم الأبحاث، ونقل الرؤى للداخل. وأدركت أن الفجوات ليست متساوية — بعضها هيكلي وعدالة رعاية مسألة أخلاقية يجب أن يكون MSL واعياً بها.</p>
+  </div>
+
+</div>
+
+<script>
+function toggleGap(id, header) {
+  const body = document.getElementById(id);
+  const chevron = header.querySelector('.gap-chevron');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.gap-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('.gap-chevron').forEach(c => c.style.transform = '');
+  if (!isOpen) {
+    body.classList.add('open');
+    chevron.style.transform = 'rotate(180deg)';
+    setTimeout(() => body.scrollIntoView({ behavior:'smooth', block:'nearest' }), 80);
+  }
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const idx = ['a','b','c','d'].indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => {
+    f.classList.remove('show','correct-fb','wrong-fb'); f.style.display = 'none';
+  });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display = 'block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

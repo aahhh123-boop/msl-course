@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اتجاهات الابتكار الطبي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+    --pink: #9D174D;
+    --pink-bg: #FCE7F3;
+    --indigo: #3730A3;
+    --indigo-bg: #E0E7FF;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #050D1A 0%, #0A1F35 40%, #0A2E2A 100%);
+    padding: 52px 36px 44px; position: relative; overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-100px; left:-80px; width:400px; height:400px; border-radius:50%; background:var(--teal); opacity:0.07; }
+  .hero::after { content:''; position:absolute; bottom:-60px; right:-50px; width:260px; height:260px; border-radius:50%; background:var(--purple); opacity:0.07; }
+  .star-field { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+  .hero-badge { display:inline-block; background:linear-gradient(90deg,var(--teal),var(--purple)); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,40px); font-weight:900; margin-bottom:10px; line-height:1.25; position:relative; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:linear-gradient(90deg,var(--teal),var(--purple)); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:640px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Trend hero cards */
+  .trends-hero { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin:24px 0; }
+  .trend-card {
+    border-radius:16px; padding:24px 20px; color:var(--white);
+    position:relative; overflow:hidden; cursor:pointer;
+    transition:transform 0.2s, box-shadow 0.2s;
+    border:1px solid rgba(255,255,255,0.1);
+  }
+  .trend-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.2); }
+  .trend-card::after { content:attr(data-icon); position:absolute; bottom:-10px; left:10px; font-size:80px; opacity:0.1; pointer-events:none; }
+  .tc-num { font-size:11px; font-weight:800; opacity:0.7; margin-bottom:8px; letter-spacing:1px; text-transform:uppercase; }
+  .tc-icon { font-size:32px; margin-bottom:10px; }
+  .trend-card h3 { font-size:16px; font-weight:800; margin-bottom:6px; color:var(--white); }
+  .trend-card p { font-size:12.5px; opacity:0.85; margin:0; color:rgba(255,255,255,0.85); }
+  .tc-tag { display:inline-block; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); border-radius:10px; font-size:10px; font-weight:700; padding:2px 10px; margin-top:10px; }
+
+  /* Deep-dive sections — expandable */
+  .deepdive { background:var(--white); border-radius:16px; border:1px solid var(--light-gray); overflow:hidden; margin:12px 0; box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .dd-header { padding:18px 22px; display:flex; align-items:center; gap:14px; cursor:pointer; transition:background 0.2s; }
+  .dd-header:hover { background:var(--off-white); }
+  .dd-icon { font-size:26px; flex-shrink:0; }
+  .dd-title { flex:1; }
+  .dd-title h4 { font-size:15px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .dd-title span { font-size:12px; color:var(--text-light); }
+  .dd-chevron { font-size:14px; color:var(--text-light); transition:transform 0.25s; }
+  .dd-body { padding:0 22px 20px; display:none; border-top:1px solid var(--light-gray); animation:fadeDown 0.2s ease; }
+  .dd-body.open { display:block; }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+
+  /* Sub-content inside deepdive */
+  .dd-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin:14px 0; }
+  .dd-item { background:var(--off-white); border-radius:10px; padding:14px; }
+  .dd-item .di-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.7px; margin-bottom:5px; }
+  .dd-item .di-val { font-size:13px; font-weight:600; color:var(--text-dark); }
+  .dd-example { background:var(--off-white); border-radius:10px; padding:14px 16px; font-size:13.5px; color:var(--text-mid); border-right:3px solid var(--teal); margin:12px 0; }
+  .dd-example strong { color:var(--navy); }
+  .dd-tags { display:flex; flex-wrap:wrap; gap:6px; margin:10px 0; }
+  .dd-tag { font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+  .dd-list { list-style:none; margin:10px 0; }
+  .dd-list li { font-size:13.5px; color:var(--text-mid); padding:6px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:8px; align-items:flex-start; }
+  .dd-list li:last-child { border-bottom:none; }
+  .dd-list li::before { content:'◆'; font-size:7px; color:var(--teal); margin-top:7px; flex-shrink:0; }
+
+  /* Timeline */
+  .timeline { position:relative; margin:20px 0; }
+  .timeline::before { content:''; position:absolute; top:0; bottom:0; right:23px; width:2px; background:var(--light-gray); }
+  .tl-item { display:flex; gap:16px; padding-bottom:18px; position:relative; z-index:1; }
+  .tl-item:last-child { padding-bottom:0; }
+  .tl-year { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:var(--white); flex-direction:column; gap:0; }
+  .tl-body { background:var(--white); border-radius:12px; padding:14px 18px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .tl-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .tl-body p { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* MSL impact cards */
+  .impact-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:20px 0; }
+  .impact-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); border-top:4px solid; }
+  .impact-card .ic-icon { font-size:26px; margin-bottom:10px; }
+  .impact-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .impact-card p { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* Stat counters */
+  .stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:20px 0; }
+  .stat-box { background:var(--white); border-radius:14px; padding:20px 16px; text-align:center; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); }
+  .stat-num { font-size:30px; font-weight:900; line-height:1; margin-bottom:5px; }
+  .stat-label { font-size:12px; color:var(--text-mid); font-weight:600; }
+  .stat-sub { font-size:10px; color:var(--text-light); margin-top:3px; }
+
+  /* Comparison: traditional vs precision */
+  .vs-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); margin:20px 0; font-size:13.5px; }
+  .vs-table th { padding:13px 16px; font-weight:800; text-align:center; }
+  .vs-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:30%; }
+  .vs-table th:nth-child(2) { background:#4A5270; color:var(--white); }
+  .vs-table th:nth-child(3) { background:var(--teal); color:var(--white); }
+  .vs-table td { padding:11px 16px; border-bottom:1px solid var(--light-gray); text-align:center; vertical-align:middle; }
+  .vs-table td:first-child { background:#F8FAFC; font-weight:700; color:var(--navy); text-align:right; font-size:12px; }
+  .vs-table tr:nth-child(even) td { background:#F3F4F6; }
+  .vs-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .vs-table tr:last-child td { border-bottom:none; }
+
+  /* Alert boxes */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); } .alert-teal p { color:#065F46; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); } .alert-gold p { color:#78350F; }
+  .alert-purple { background:var(--purple-bg); border:1px solid #C4B5FD; }
+  .alert-purple h4 { color:var(--purple); } .alert-purple p { color:#4C1D95; }
+
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+  .highlight-purple { background:linear-gradient(135deg,#2D1B69,#4C1D95); }
+  .highlight-purple h3 { color:#C4B5FD; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section{padding:28px 18px;}
+    .trends-hero{grid-template-columns:1fr;}
+    .vs-table th,.vs-table td{padding:9px 10px; font-size:12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🚀 مستقبل الطب</div>
+  <h1>اتجاهات <span>الابتكار الطبي</span></h1>
+  <div class="hero-accent"></div>
+  <p>من الذكاء الاصطناعي إلى العلاجات الجينية — ما الاتجاهات التي تُعيد تشكيل الطب؟ وكيف يواكبها MSL ويُفسّرها للأطباء؟</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>لماذا يهم MSL؟</span></div>
+  <h2>الابتكار الطبي وMSL — لماذا يجب أن يكون في المقدمة؟</h2>
+  <p>الأطباء اليوم يعالجون بأدوية لم تكن موجودة قبل خمس سنوات. KOL المتخصص في الأورام يناقشه عن CAR-T وآليات المناعة. طبيب القلب يسأل عن بيانات الذكاء الاصطناعي في تفسير الصور. MSL الذي يفهم هذه الاتجاهات يتحدث لغة الطبيب — والذي لا يفهمها يفقد المصداقية.</p>
+
+  <!-- Stats -->
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--teal);">$1.3T</div>
+      <div class="stat-label">قيمة سوق الرعاية الصحية الرقمية</div>
+      <div class="stat-sub">2025 توقعات</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--purple);">70%</div>
+      <div class="stat-label">من الأدوية الجديدة في خط الأنابيب تستهدف Biomarkers</div>
+      <div class="stat-sub">FDA 2024</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--gold);">40%</div>
+      <div class="stat-label">خفض في تكلفة التسلسل الجيني خلال 5 سنوات</div>
+      <div class="stat-sub">NIH Report</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--navy);">2x</div>
+      <div class="stat-label">تسارع وتيرة الموافقات التنظيمية للعلاجات المبتكرة</div>
+      <div class="stat-sub">مقارنة بـ 2015</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TREND OVERVIEW CARDS -->
+  <div class="section-label"><div class="dot"></div><span>الاتجاهات الكبرى</span></div>
+  <h2>الاتجاهات الكبرى — اضغط على كل اتجاه للتفاصيل</h2>
+
+  <div class="trends-hero">
+    <div class="trend-card" style="background:linear-gradient(135deg,#0D4A6B,#0D7377);" data-icon="🧬" onclick="toggleDD('dd1',this)">
+      <div class="tc-num">الاتجاه ١</div>
+      <div class="tc-icon">🧬</div>
+      <h3>الطب الدقيق والمُخصَّص</h3>
+      <p>العلاج المبني على الخصائص الجينية والبيولوجية الفردية لكل مريض</p>
+      <span class="tc-tag">Precision Medicine</span>
+    </div>
+    <div class="trend-card" style="background:linear-gradient(135deg,#3B1F6B,#6D28D9);" data-icon="🤖" onclick="toggleDD('dd2',this)">
+      <div class="tc-num">الاتجاه ٢</div>
+      <div class="tc-icon">🤖</div>
+      <h3>الذكاء الاصطناعي في الطب</h3>
+      <p>من تشخيص الأشعة إلى اكتشاف الأدوية واتخاذ القرار السريري</p>
+      <span class="tc-tag">AI & Machine Learning</span>
+    </div>
+    <div class="trend-card" style="background:linear-gradient(135deg,#1A4731,#14A085);" data-icon="💉" onclick="toggleDD('dd3',this)">
+      <div class="tc-num">الاتجاه ٣</div>
+      <div class="tc-icon">💉</div>
+      <h3>العلاجات الجينية والخلوية</h3>
+      <p>CAR-T، CRISPR، العلاجات الجينية — إعادة برمجة المرض من جذوره</p>
+      <span class="tc-tag">Gene & Cell Therapy</span>
+    </div>
+    <div class="trend-card" style="background:linear-gradient(135deg,#7A1F3B,#BE185D);" data-icon="💊" onclick="toggleDD('dd4',this)">
+      <div class="tc-num">الاتجاه ٤</div>
+      <div class="tc-icon">💊</div>
+      <h3>العلاجات البيولوجية والأجسام المضادة</h3>
+      <p>mAbs، Bispecifics، ADCs — الجيل الجديد من العلاجات المستهدفة</p>
+      <span class="tc-tag">Biologics & mAbs</span>
+    </div>
+    <div class="trend-card" style="background:linear-gradient(135deg,#1A2F5C,#1E40AF);" data-icon="📱" onclick="toggleDD('dd5',this)">
+      <div class="tc-num">الاتجاه ٥</div>
+      <div class="tc-icon">📱</div>
+      <h3>الصحة الرقمية والرعاية عن بُعد</h3>
+      <p>Telemedicine، Digital Therapeutics، الأجهزة القابلة للارتداء</p>
+      <span class="tc-tag">Digital Health</span>
+    </div>
+    <div class="trend-card" style="background:linear-gradient(135deg,#2A1A0A,#92400E);" data-icon="⚡" onclick="toggleDD('dd6',this)">
+      <div class="tc-num">الاتجاه ٦</div>
+      <div class="tc-icon">⚡</div>
+      <h3>منصات الرنا المرسال (mRNA)</h3>
+      <p>ما بدأ بلقاحات كوفيد اليوم يُطوَّر لعلاج السرطان والأمراض المزمنة</p>
+      <span class="tc-tag">mRNA Technology</span>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 1: PRECISION MEDICINE -->
+  <div class="deepdive" id="dd1" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd1',null)">
+      <span class="dd-icon">🧬</span>
+      <div class="dd-title"><h4>الطب الدقيق والمُخصَّص — Precision Medicine</h4><span>العلاج المبني على الجينوم والبيومارکرز</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">الطب الدقيق يعني تصميم العلاج بناءً على الخصائص الفريدة لكل مريض — جيناته، بروتيناته، بيئته، وأسلوب حياته. بدلاً من «علاج واحد للجميع»، نحن نتجه نحو «العلاج الصحيح للمريض الصحيح في الوقت الصحيح».</p>
+
+      <table class="vs-table" style="margin-top:14px;">
+        <thead>
+          <tr>
+            <th>المعيار</th>
+            <th>الطب التقليدي</th>
+            <th>الطب الدقيق</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>أساس العلاج</td><td>التشخيص المرضي العام</td><td>الملف الجيني والبيومارکر</td></tr>
+          <tr><td>معدل الاستجابة</td><td>30–50% في المتوسط</td><td>60–90% للمرضى المُختارين</td></tr>
+          <tr><td>الآثار الجانبية</td><td>أعلى (علاج للجميع)</td><td>أقل (مستهدف بدقة)</td></tr>
+          <tr><td>تكلفة الدواء</td><td>منخفضة نسبياً</td><td>مرتفعة جداً</td></tr>
+          <tr><td>مثال</td><td>كيماوي عام للسرطان</td><td>EGFR inhibitor لمن يحمل الطفرة</td></tr>
+        </tbody>
+      </table>
+
+      <div class="dd-example"><strong>مثال حقيقي — سرطان الرئة:</strong> قبل الطب الدقيق، كل مرضى سرطان الرئة يأخذون نفس الكيماوي. اليوم، نفحص طفرة EGFR، ALK، ROS1، KRAS — وكل مريض يأخذ العلاج المناسب لطفرته تحديداً. الاستجابة ارتفعت من 30% إلى أكثر من 75% في بعض الطفرات.</div>
+
+      <div class="dd-tags">
+        <span class="dd-tag" style="background:var(--blue-bg);color:var(--blue);">Companion Diagnostics</span>
+        <span class="dd-tag" style="background:var(--green-bg);color:var(--green);">Biomarker Testing</span>
+        <span class="dd-tag" style="background:var(--purple-bg);color:var(--purple);">Genomic Sequencing</span>
+        <span class="dd-tag" style="background:var(--orange-bg);color:var(--orange);">Liquid Biopsy</span>
+      </div>
+
+      <div class="alert-teal" style="margin-top:12px;">
+        <span class="ab-icon">💡</span>
+        <div><h4>دور MSL في الطب الدقيق</h4><p>MSL يُعلّم الأطباء على أهمية فحص الـ Biomarkers قبل وصف العلاج، يشرح Companion Diagnostics المرتبطة بالدواء، ويُوضح من «يستحق» الدواء ومن لا يستفيد منه — هذه المعلومات تُنقذ مرضى وتوفر علاجات غير فعّالة.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 2: AI -->
+  <div class="deepdive" id="dd2" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd2',null)">
+      <span class="dd-icon">🤖</span>
+      <div class="dd-title"><h4>الذكاء الاصطناعي في الطب</h4><span>من تشخيص الأشعة إلى اكتشاف الأدوية</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">الذكاء الاصطناعي يدخل في كل مرحلة من مراحل الطب — من اكتشاف الأدوية (يختصر من 10 سنوات إلى 3) إلى قراءة الأشعة وإدارة المرضى وتوقع المضاعفات.</p>
+
+      <div class="dd-grid">
+        <div class="dd-item">
+          <div class="di-label">اكتشاف الأدوية</div>
+          <div class="di-val">تحليل ملايين الجزيئات في أيام بدلاً من سنوات</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">تشخيص الأشعة</div>
+          <div class="di-val">دقة تساوي أو تتفوق على الأخصائيين في بعض التطبيقات</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">التنبؤ بالمخاطر</div>
+          <div class="di-val">تحديد المرضى الأكثر عرضة للمضاعفات قبل حدوثها</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">تحليل RWE</div>
+          <div class="di-val">استخلاص رؤى من ملايين السجلات الطبية الإلكترونية</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">اللقاءات التكيفية</div>
+          <div class="di-val">Adaptive Trial Designs تُعدّل البروتوكول تلقائياً بناءً على البيانات الواردة</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">الكيمياء التنبؤية</div>
+          <div class="di-val">AlphaFold حلّ مشكلة طيّ البروتين — فتح الباب لأدوية جديدة كلياً</div>
+        </div>
+      </div>
+
+      <div class="alert-gold" style="margin-top:10px;">
+        <span class="ab-icon">⚠️</span>
+        <div><h4>تحديات AI في الطب</h4><p>قابلية التفسير (Explainability): الطبيب يريد أن يفهم «لماذا» قرر الـ AI هذا التشخيص — ليس فقط «ماذا». التحيز في البيانات التدريبية قد يؤدي لنتائج مختلفة عبر الفئات السكانية.</p></div>
+      </div>
+
+      <div class="dd-example"><strong>مثال — سرطان الجلد:</strong> نظام AI يُشخّص الميلانوما من صورة جلدية بدقة 95% — مقارنة بـ 86% للأطباء المتخصصين. لكن دقته تنخفض على البشرة الداكنة لأن بيانات التدريب كانت أقل تنوعاً.</div>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 3: GENE & CELL THERAPY -->
+  <div class="deepdive" id="dd3" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd3',null)">
+      <span class="dd-icon">💉</span>
+      <div class="dd-title"><h4>العلاجات الجينية والخلوية</h4><span>CAR-T · CRISPR · Gene Therapy</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">العلاجات الجينية والخلوية تُمثّل ثورة حقيقية — لا تُعالج الأعراض بل تستهدف الخلل الجيني الأساسي للمرض أو تُعيد برمجة خلايا المريض لمحاربة المرض.</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-year" style="background:var(--teal);">CAR<br>-T</div>
+          <div class="tl-body">
+            <h4>CAR-T Cell Therapy</h4>
+            <p>يُستخلص خلايا T من المريض، تُعاد هندستها جينياً لمهاجمة الخلايا السرطانية، ثم تُحقن مرة أخرى. معدلات استجابة غير مسبوقة في سرطانات الدم المتقدمة — بعض المرضى وصلوا لهدأة كاملة بعد علاج واحد.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year" style="background:var(--purple);">CRIS<br>PR</div>
+          <div class="tl-body">
+            <h4>CRISPR-Cas9 — مقص الجينات</h4>
+            <p>تقنية تُتيح تعديل أي جين بدقة غير مسبوقة. أول علاج CRISPR (Casgevy) حصل على موافقة FDA 2023 لمرض فقر الدم المنجلي وبيتا ثلاسيميا. يُعتبر إنجازاً تاريخياً.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-year" style="background:var(--navy);">Gene<br>Rx</div>
+          <div class="tl-body">
+            <h4>العلاج الجيني التقليدي</h4>
+            <p>إدخال نسخة سليمة من جين معطوب باستخدام ناقلات فيروسية (AAV). Zolgensma لضمور العضلات الشوكي — أغلى دواء في التاريخ ($2.1M) لكنه يُعالج مرضاً كان قاتلاً في الطفولة.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-purple" style="margin-top:10px;">
+        <span class="ab-icon">🧪</span>
+        <div><h4>تحدي MSL في العلاجات الجينية</h4><p>الأطباء يحتاجون فهم آليات معقدة جداً — كيف تعمل AAV vectors؟ ما خطر الـ Immunogenicity؟ ما بروتوكولات المتابعة طويلة الأمد؟ MSL المتخصص في هذا المجال يحتاج مستوى علمياً عالياً جداً.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 4: BIOLOGICS -->
+  <div class="deepdive" id="dd4" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd4',null)">
+      <span class="dd-icon">💊</span>
+      <div class="dd-title"><h4>العلاجات البيولوجية — الجيل الجديد</h4><span>mAbs · Bispecifics · ADCs</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">البيولوجيات ثورت الطب في العقدين الماضيين — واليوم الجيل الثالث يأخذها لمستوى جديد من الدقة والفعالية.</p>
+
+      <div class="dd-grid">
+        <div class="dd-item">
+          <div class="di-label">mAbs — Monoclonal Antibodies</div>
+          <div class="di-val">أجسام مضادة أحادية النسيلة — تستهدف بروتيناً محدداً بدقة شديدة. Pembrolizumab، Dupilumab، Trastuzumab</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">Bispecific Antibodies</div>
+          <div class="di-val">يستهدف هدفين في آنٍ واحد — مثلاً يربط الخلية السرطانية بخلية T المناعية مباشرةً</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">ADC — Antibody Drug Conjugate</div>
+          <div class="di-val">«صاروخ موجّه» — جسم مضاد متصل بمادة كيماوية توصلها مباشرة للخلية السرطانية فقط</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">Biosimilars</div>
+          <div class="di-val">نسخ بيولوجية مشابهة للأصل — توفر الأثر العلاجي بتكلفة أقل — تنمو بسرعة</div>
+        </div>
+      </div>
+
+      <div class="dd-example"><strong>مثال — ADC (Antibody-Drug Conjugate):</strong> Enhertu (DS-8201) يُستخدم في سرطان الثدي HER2+. الجسم المضاد يجد الخلايا السرطانية التي تُعبّر عن HER2، ثم يُطلق الكيماوي داخلها فقط — مما يقلل الآثار الجانبية الكيماوية الجهازية بشكل كبير.</div>
+
+      <div class="alert-teal">
+        <span class="ab-icon">💡</span>
+        <div><h4>MSL و Biosimilars</h4><p>Biosimilars تطرح تساؤلات علمية مهمة لدى الأطباء — هل هي «نفس» الدواء؟ هل يمكن التحويل (Switching)؟ ما Immunogenicity المحتمل؟ MSL يُجيب على هذه الأسئلة بدقة علمية وشفافية.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 5: DIGITAL HEALTH -->
+  <div class="deepdive" id="dd5" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd5',null)">
+      <span class="dd-icon">📱</span>
+      <div class="dd-title"><h4>الصحة الرقمية والرعاية عن بُعد</h4><span>Telemedicine · DTx · Wearables</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">كوفيد-19 سرّع تبني الصحة الرقمية بعشر سنوات في غضون عامين. اليوم أصبحت جزءاً لا يتجزأ من الرعاية الصحية الحديثة.</p>
+
+      <ul class="dd-list">
+        <li><strong>Telemedicine:</strong> رعاية طبية عن بُعد — تُزيل الحواجز الجغرافية وتُحسّن الوصول خاصة للمناطق النائية</li>
+        <li><strong>Digital Therapeutics (DTx):</strong> تطبيقات معتمدة طبياً كعلاج (مثل تطبيق لعلاج الأرق أو إدارة السكري) — FDA أصدر بالفعل موافقات على DTx</li>
+        <li><strong>Continuous Glucose Monitoring (CGM):</strong> مراقبة السكر بشكل مستمر كل دقيقة — غيّرت إدارة السكري بالكامل</li>
+        <li><strong>AI-Powered ECG:</strong> Apple Watch يكشف الرجفان الأذيني — مئات الآلاف شُخِّصوا مبكراً</li>
+        <li><strong>Remote Patient Monitoring:</strong> متابعة مرضى القلب والرئة عن بُعد في الوقت الحقيقي</li>
+        <li><strong>Decentralized Trials (DCT):</strong> تجارب سريرية يشارك فيها المرضى من منازلهم — توسّع العينة وتُقلّل التكاليف</li>
+      </ul>
+
+      <div class="dd-example"><strong>أهمية لـ MSL:</strong> الأطباء يسألون عن كيفية دمج البيانات الرقمية في القرار السريري. MSL الذي يفهم DTx والـ Wearables يستطيع مساعدة الطبيب على استيعاب هذه الأدوات ضمن بروتوكول علاجه.</div>
+    </div>
+  </div>
+
+  <!-- DEEPDIVE 6: mRNA -->
+  <div class="deepdive" id="dd6" style="display:none;">
+    <div class="dd-header" onclick="toggleDD('dd6',null)">
+      <span class="dd-icon">⚡</span>
+      <div class="dd-title"><h4>منصة الرنا المرسال (mRNA)</h4><span>ما بعد كوفيد — مستقبل واعد</span></div>
+      <span class="dd-chevron">▲</span>
+    </div>
+    <div class="dd-body open">
+      <p style="padding-top:14px; font-size:14px;">نجاح لقاحات mRNA ضد كوفيد-19 فتح الباب أمام ثورة علاجية كاملة — التقنية ذاتها تُطوَّر الآن لمكافحة السرطان والأمراض الوراثية والمزمنة.</p>
+
+      <div class="dd-grid">
+        <div class="dd-item">
+          <div class="di-label">آلية العمل</div>
+          <div class="di-val">تُعطي خلايا الجسم «تعليمات» لصنع بروتين معين — إما لتنشيط المناعة أو لتعويض بروتين مفقود</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">ميزة التصنيع</div>
+          <div class="di-val">سريع جداً — لقاح كوفيد صُنع في 9 أشهر مقابل 10-15 سنة تقليدياً</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">اللقاحات السرطانية</div>
+          <div class="di-val">Moderna تطور لقاح mRNA شخصياً لسرطان الجلد — نتائج Phase II واعدة جداً</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">أمراض نادرة</div>
+          <div class="di-val">علاج نقص بروتينات معينة كمرض PA (Propionic Acidemia) — تجارب متقدمة</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">تحدي الاستقرار</div>
+          <div class="di-val">mRNA حساس للحرارة — يحتاج تبريداً عميقاً وتقنيات LNP لحمايته</div>
+        </div>
+        <div class="dd-item">
+          <div class="di-label">الأفق الزمني</div>
+          <div class="di-val">أول علاج mRNA غير لقاحي متوقع الموافقة عليه خلال 2025-2027</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL IMPACT -->
+  <div class="section-label"><div class="dot"></div><span>تأثير الابتكار على MSL</span></div>
+  <h2>كيف تُغيّر هذه الاتجاهات دور MSL؟</h2>
+
+  <div class="impact-grid">
+    <div class="impact-card" style="border-top-color:var(--teal);">
+      <div class="ic-icon">🧬</div>
+      <h4>تعقيد علمي أعلى</h4>
+      <p>MSL اليوم يحتاج فهم الجينوم والـ Biomarkers والعلاجات الخلوية — التدريب العلمي المستمر أصبح ضرورة وليس خياراً.</p>
+    </div>
+    <div class="impact-card" style="border-top-color:var(--purple);">
+      <div class="ic-icon">🤖</div>
+      <h4>أدوات رقمية جديدة</h4>
+      <p>MSL يستخدم الذكاء الاصطناعي في إعداد الزيارات، تحليل الأدبيات، وفهم بيانات RWE الضخمة بشكل أسرع.</p>
+    </div>
+    <div class="impact-card" style="border-top-color:var(--gold);">
+      <div class="ic-icon">🎯</div>
+      <h4>تخصص أعمق</h4>
+      <p>MSL الأورام اليوم يتخصص في CAR-T أو ADC أو Precision Oncology — الشمولية تُفقد مكانها لصالح التخصص العميق.</p>
+    </div>
+    <div class="impact-card" style="border-top-color:var(--blue);">
+      <div class="ic-icon">🌐</div>
+      <h4>KOL رقمي وعالمي</h4>
+      <p>KOL اليوم لديه حضور رقمي ضخم — MSL يتعامل مع آراء علمية تنتشر عالمياً في ثوانٍ ويحتاج التفاعل معها بسرعة.</p>
+    </div>
+    <div class="impact-card" style="border-top-color:var(--red-dark);">
+      <div class="ic-icon">💰</div>
+      <h4>نقاشات الوصول والتكلفة</h4>
+      <p>العلاجات المبتكرة باهظة التكلفة — MSL يواجه أسئلة صعبة من الأطباء حول إمكانية وصول مرضاهم لها.</p>
+    </div>
+    <div class="impact-card" style="border-top-color:var(--teal-light);">
+      <div class="ic-icon">📊</div>
+      <h4>أدلة متطورة أكثر تعقيداً</h4>
+      <p>Adaptive Trials، Basket Trials، Platform Trials — تصاميم جديدة تتطلب فهماً إحصائياً أعمق من MSL.</p>
+    </div>
+  </div>
+
+  <div class="highlight highlight-purple">
+    <h3>🌟 MSL في عصر الابتكار — المُفسِّر والمُبسِّط</h3>
+    <p>كلما ازداد الطب تعقيداً، ازداد دور MSL أهمية. الطبيب السريري المشغول لا يملك وقتاً لقراءة كل ورقة بحثية عن CRISPR وCAR-T وADC. MSL هو من يُترجم هذا التعقيد إلى معنى سريري عملي — ويربط الابتكار بمريض حقيقي أمام الطبيب.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. ما المقصود بـ «Companion Diagnostic» في سياق الطب الدقيق؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. جهاز طبي يُساعد الطبيب في إجراء العملية الجراحية</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. دراسة مرافقة تُجرى بجانب التجربة الرئيسية لقياس الجودة</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. فحص تشخيصي يُحدد هل المريض يحمل الـ Biomarker الذي يجعله مؤهلاً للاستفادة من العلاج</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. برنامج دعم المريض المرافق للدواء</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! Companion Diagnostic هو الفحص الذي يُحدد من «يستحق» العلاج — مثل فحص EGFR قبل إعطاء EGFR inhibitor. بدونه قد يُعطى الدواء لمن لن يستفيد.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ Companion Diagnostic هو الفحص التشخيصي المرافق للدواء الذي يُحدد هل يحمل المريض الـ Biomarker الذي يجعله مؤهلاً للاستجابة للعلاج.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. طبيب أورام يسأل: «ما الفرق بين CAR-T والعلاج الجيني التقليدي؟» ما الإجابة الصحيحة؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. لا فرق — كلاهما يُعدّل الجينات مباشرة</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. CAR-T يُعيد هندسة خلايا T المناعية للمريض لمهاجمة السرطان، بينما العلاج الجيني يُدخل جيناً سليماً لتصحيح خلل وراثي</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. CAR-T للأورام فقط، والعلاج الجيني للأمراض المناعية فقط</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. CAR-T يُستخدم بالتحليل الجيني فقط ولا يُعدّل الخلايا</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! CAR-T = إعادة هندسة الخلايا المناعية للمريض نفسه لمهاجمة السرطان. العلاج الجيني = تصحيح أو استبدال جين معطوب. كلاهما يتضمن تعديلاً جينياً لكن بأهداف مختلفة.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ CAR-T يُعيد برمجة خلايا T المناعية للمريض لمهاجمة الخلايا السرطانية. العلاج الجيني يُصحّح خللاً وراثياً بإدخال جين سليم. هدفان مختلفان وإن تشابهت التقنية.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. ما أبرز ميزة لـ ADC (Antibody-Drug Conjugate) مقارنة بالعلاج الكيماوي التقليدي؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. أرخص بكثير في التصنيع</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. لا يحتاج فحص Biomarker قبل الاستخدام</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. يُوصل المادة الكيماوية مباشرة للخلايا السرطانية فقط — يُقلّل الآثار الجانبية الجهازية بشكل كبير</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. يعمل عبر تنشيط الجهاز المناعي بدلاً من الكيماوي</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ صحيح! ADC = «صاروخ موجّه» — الجسم المضاد يجد الخلية السرطانية ثم يُطلق الكيماوي داخلها فقط. الخلايا السليمة تتأثر بشكل أقل بكثير من الكيماوي الجهازي.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ الميزة الأساسية لـ ADC هي دقة التوصيل — الكيماوي يُطلق داخل الخلية السرطانية المستهدفة فقط، مما يُقلّل الآثار الجانبية الجهازية الشديدة للكيماوي التقليدي.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. كيف يُغيّر الذكاء الاصطناعي دور MSL في المستقبل القريب؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','c')">أ. سيستبدل MSL بالكامل في تقديم المعلومات للأطباء</div>
+      <div class="quiz-option" onclick="answer('q4','b','c')">ب. لن يؤثر على دور MSL لأن العلاقات الإنسانية لا يمكن استبدالها</div>
+      <div class="quiz-option" onclick="answer('q4','c','c')">ج. يُعزّز قدرة MSL — يساعده في تحليل الأدبيات وتخصيص المحادثات وتحليل RWE، لكن العلاقة العلمية الإنسانية تبقى محور الدور</div>
+      <div class="quiz-option" onclick="answer('q4','d','c')">د. سيُحوّل MSL لمحلل بيانات فقط بدلاً من الزيارات الميدانية</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! AI أداة تُعزّز MSL لا تستبدله. يُسرّع تحليل الأدبيات ويُخصّص المحادثات — لكن الثقة العلمية والعلاقة الإنسانية مع KOL هي ما يبنيه MSL فقط.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ AI يُعزّز دور MSL ولا يستبدله. يُساعده في تحليل البيانات وإعداد الزيارات — لكن بناء الثقة العلمية مع KOL وتفسير الأدلة بسياق سريري هي مهارات إنسانية لا يستطيع AI تقديمها.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>تعرفت على الاتجاهات الكبرى الستة في الابتكار الطبي — الطب الدقيق، الذكاء الاصطناعي، العلاجات الجينية والخلوية، البيولوجيات الجديدة، الصحة الرقمية، ومنصة mRNA. فهمت كيف تُعيد هذه الاتجاهات تشكيل دور MSL وتجعله أكثر أهمية من أي وقت مضى — كمُترجم للابتكار ومُبسِّط للتعقيد في خدمة الطبيب والمريض.</p>
+  </div>
+
+</div>
+
+<script>
+function toggleDD(id, clickedCard) {
+  const el = document.getElementById(id);
+  const isVisible = el.style.display !== 'none';
+  // close all
+  ['dd1','dd2','dd3','dd4','dd5','dd6'].forEach(did => {
+    document.getElementById(did).style.display = 'none';
+  });
+  if (!isVisible) {
+    el.style.display = 'block';
+    setTimeout(() => el.scrollIntoView({behavior:'smooth', block:'nearest'}), 50);
+  }
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

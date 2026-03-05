@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أدوار ومسؤوليات الشؤون الطبية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --red: #991B1B;
+    --red-bg: #FEE2E2;
+    --purple: #7D3C98;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: var(--navy);
+    padding: 52px 36px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-80px; left:-80px; width:340px; height:340px; border-radius:50%; background:var(--teal); opacity:0.1; }
+  .hero::after { content:''; position:absolute; bottom:-60px; right:-40px; width:220px; height:220px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; position:relative; line-height:1.3; }
+  .hero h1 span { color:var(--gold); }
+  .hero-accent { width:56px; height:4px; background:var(--teal); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  /* Section */
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Role cards */
+  .roles-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:18px; margin:24px 0; }
+  .role-card {
+    background:var(--white);
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid var(--light-gray);
+    box-shadow:0 4px 16px rgba(10,35,66,0.07);
+    transition:transform 0.2s, box-shadow 0.2s;
+    cursor:default;
+  }
+  .role-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(10,35,66,0.12); }
+  .role-card-top { padding:20px; }
+  .role-icon-wrap { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; margin-bottom:12px; }
+  .role-card h3 { font-size:15px; margin-bottom:6px; }
+  .role-card p { font-size:13px; margin:0; }
+  .role-card-footer { padding:10px 20px; border-top:1px solid var(--light-gray); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+
+  /* Org chart */
+  .org { background:var(--white); border-radius:16px; padding:28px; border:1px solid var(--light-gray); box-shadow:0 4px 16px rgba(10,35,66,0.07); margin:24px 0; }
+  .org-ceo { text-align:center; margin-bottom:16px; }
+  .org-box { display:inline-block; padding:10px 24px; border-radius:10px; font-weight:800; font-size:14px; }
+  .org-box.top { background:var(--navy); color:var(--gold); }
+  .org-box.mid { background:var(--teal); color:var(--white); }
+  .org-box.highlight { background:var(--gold); color:var(--navy); }
+  .org-box.muted { background:var(--light-gray); color:var(--text-mid); font-weight:600; font-size:13px; }
+  .org-line-v { width:2px; height:24px; background:var(--teal); margin:0 auto; }
+  .org-h-row { display:flex; justify-content:center; position:relative; margin-bottom:0; }
+  .org-h-row::before { content:''; position:absolute; top:0; left:15%; right:15%; height:2px; background:var(--light-gray); }
+  .org-branches { display:flex; justify-content:space-around; flex-wrap:wrap; gap:10px; margin-top:0; }
+  .org-branch-wrap { display:flex; flex-direction:column; align-items:center; gap:0; }
+  .org-branch-line { width:2px; height:22px; background:var(--light-gray); }
+  .org-sub { text-align:center; padding:8px 12px; border-radius:8px; font-size:12px; font-weight:600; min-width:110px; }
+
+  /* Responsibilities timeline */
+  .resp-list { display:flex; flex-direction:column; gap:0; margin:20px 0; position:relative; }
+  .resp-list::before { content:''; position:absolute; top:24px; right:23px; bottom:24px; width:2px; background:var(--light-gray); z-index:0; }
+  .resp-item { display:flex; gap:18px; align-items:flex-start; padding-bottom:20px; position:relative; z-index:1; }
+  .resp-item:last-child { padding-bottom:0; }
+  .resp-dot { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .resp-body { background:var(--white); border-radius:12px; padding:18px 20px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .resp-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:5px; }
+  .resp-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .resp-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:7px; }
+
+  /* Comparison table */
+  .comp-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 18px rgba(10,35,66,0.09); font-size:13.5px; margin:20px 0; }
+  .comp-table th { padding:14px 16px; font-weight:800; text-align:center; }
+  .comp-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:30%; }
+  .comp-table th:nth-child(2) { background:#1A3A5C; color:#AAB8C8; }
+  .comp-table th:nth-child(3) { background:var(--teal); color:var(--white); }
+  .comp-table th:nth-child(4) { background:#5BA3A0; color:var(--white); }
+  .comp-table td { padding:12px 16px; border-bottom:1px solid var(--light-gray); vertical-align:middle; text-align:center; }
+  .comp-table td:first-child { background:#F8FAFC; font-weight:700; color:var(--navy); text-align:right; font-size:12px; }
+  .comp-table tr:nth-child(even) td { background:#F3F4F6; }
+  .comp-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .comp-table tr:last-child td { border-bottom:none; }
+
+  /* Key skills */
+  .skills-wrap { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+  .skill-box { background:var(--white); border-radius:12px; padding:18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .skill-box h4 { font-size:13px; font-weight:800; color:var(--navy); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+  .skill-tag { font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; }
+  .skill-box ul { list-style:none; }
+  .skill-box li { font-size:13px; color:var(--text-mid); padding:5px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:7px; align-items:flex-start; }
+  .skill-box li:last-child { border-bottom:none; }
+  .skill-box li::before { content:'◆'; font-size:7px; color:var(--teal); margin-top:6px; flex-shrink:0; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); position:relative; overflow:hidden; }
+  .highlight::after { content:''; position:absolute; bottom:-30px; left:20px; width:150px; height:150px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .highlight h3 { color:var(--gold); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* Day in life */
+  .daylife { display:flex; flex-direction:column; gap:10px; margin:20px 0; }
+  .dl-item { display:flex; gap:14px; align-items:flex-start; background:var(--white); border-radius:11px; padding:14px 18px; border:1px solid var(--light-gray); }
+  .dl-time { font-size:12px; font-weight:800; color:var(--teal); min-width:60px; flex-shrink:0; padding-top:2px; font-family:'Tajawal',sans-serif; }
+  .dl-content h5 { font-size:13px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+  .dl-content p { font-size:12.5px; color:var(--text-mid); margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red); }
+
+  @media(max-width:600px){
+    .hero,.section{padding:28px 18px;}
+    .roles-grid,.skills-wrap{grid-template-columns:1fr;}
+    .comp-table{font-size:11px;}
+    .comp-table th,.comp-table td{padding:9px 10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">الشؤون الطبية والعلمية</div>
+  <h1>الأدوار والمسؤوليات في<br><span>الشؤون الطبية</span></h1>
+  <div class="hero-accent"></div>
+  <p>فهم شامل لكل الأدوار داخل قسم Medical Affairs — من MSL إلى Medical Director — وما يتوقعه منك كل دور</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>40 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>مبتدئ</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- INTRO -->
+  <div class="section-label"><div class="dot"></div><span>نظرة عامة</span></div>
+  <h2>ما هو قسم الشؤون الطبية؟</h2>
+  <p>قسم الشؤون الطبية (Medical Affairs) هو القسم الذي يربط العلم بالممارسة الطبية داخل شركات الأدوية والأجهزة الطبية. يعمل كجسر بين الأبحاث السريرية من جهة، والمجتمع الطبي والمرضى من جهة أخرى.</p>
+  <p>يتميز هذا القسم بأنه <strong>غير تجاري بالكامل</strong> — لا يحمل أهدافاً بيعية ولا يقاس بأرقام المبيعات. مصداقيته تأتي من الاستقلالية العلمية.</p>
+
+  <div class="highlight">
+    <h3>💡 لماذا يهمك هذا كـ HCP؟</h3>
+    <p>إذا كنت طبيباً أو صيدلانياً، فأنت تتعامل مع الشؤون الطبية بالفعل — كل مرة تتحدث مع MSL أو تطرح سؤالاً علمياً على ممثل طبي. معرفة هيكل هذا القسم تمنحك ميزة تنافسية حين تقرر الانضمام إليه.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ORG CHART -->
+  <div class="section-label"><div class="dot"></div><span>الهيكل التنظيمي</span></div>
+  <h2>هيكل قسم الشؤون الطبية</h2>
+
+  <div class="org">
+    <div class="org-ceo">
+      <div class="org-box top">Chief Medical Officer (CMO)</div>
+    </div>
+    <div class="org-line-v"></div>
+    <div class="org-ceo">
+      <div class="org-box mid">VP / Head of Medical Affairs</div>
+    </div>
+    <div class="org-line-v"></div>
+    <div style="height:2px; background:var(--light-gray); margin:0 5%;"></div>
+    <div class="org-branches" style="margin-top:16px;">
+      <div class="org-branch-wrap">
+        <div class="org-branch-line"></div>
+        <div class="org-sub org-box highlight">فريق MSL<br><small style="font-weight:500;font-size:10px;">Field Medical</small></div>
+      </div>
+      <div class="org-branch-wrap">
+        <div class="org-branch-line"></div>
+        <div class="org-sub org-box muted">Medical Information<br><small style="font-size:10px;">الاستعلامات الطبية</small></div>
+      </div>
+      <div class="org-branch-wrap">
+        <div class="org-branch-line"></div>
+        <div class="org-sub org-box muted">Medical Education<br><small style="font-size:10px;">التعليم الطبي</small></div>
+      </div>
+      <div class="org-branch-wrap">
+        <div class="org-branch-line"></div>
+        <div class="org-sub org-box muted">Health Economics<br><small style="font-size:10px;">الاقتصاد الصحي</small></div>
+      </div>
+      <div class="org-branch-wrap">
+        <div class="org-branch-line"></div>
+        <div class="org-sub org-box muted">Pharmacovigilance<br><small style="font-size:10px;">السلامة الدوائية</small></div>
+      </div>
+    </div>
+    <p style="text-align:center; font-size:11px; color:var(--text-light); margin-top:14px;">★ أنت كـ MSL ستعمل ضمن فريق Field Medical</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ROLES -->
+  <div class="section-label"><div class="dot"></div><span>الأدوار الرئيسية</span></div>
+  <h2>الأدوار الرئيسية في الشؤون الطبية</h2>
+
+  <div class="roles-grid">
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#E8F5F3;">🔬</div>
+        <h3>MSL — المسؤول الطبي العلمي</h3>
+        <p>يبني علاقات علمية مع KOL ويتبادل المعلومات الطبية القائمة على الأدلة. الدور الميداني الأكثر تفاعلاً مع المجتمع الطبي.</p>
+      </div>
+      <div class="role-card-footer" style="color:var(--teal); background:#E8F5F3;">المؤهل: MD / PharmD / PhD</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#FEF3C7;">👨‍⚕️</div>
+        <h3>Medical Advisor / Medical Director</h3>
+        <p>يقود الاستراتيجية الطبية للمنتج، يراجع المواد العلمية، ويدعم الفرق الداخلية بالخبرة الطبية المتخصصة.</p>
+      </div>
+      <div class="role-card-footer" style="color:#92400E; background:#FEF3C7;">المؤهل: MD متخصص أو PhD</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#EDE9FE;">📞</div>
+        <h3>Medical Information Specialist</h3>
+        <p>يستقبل ويجيب على الاستفسارات الطبية من الأطباء والصيادلة والمرضى بشكل دقيق وموثق.</p>
+      </div>
+      <div class="role-card-footer" style="color:var(--purple); background:#EDE9FE;">المؤهل: PharmD / MD / MSc</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#DBEAFE;">📚</div>
+        <h3>Medical Education Manager</h3>
+        <p>يصمم وينفذ برامج التعليم الطبي المستمر (CME) ويطور المحتوى التعليمي للأطباء والمرضى.</p>
+      </div>
+      <div class="role-card-footer" style="color:#1E40AF; background:#DBEAFE;">المؤهل: MD / PharmD / تعليم طبي</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#FEE2E2;">💊</div>
+        <h3>Pharmacovigilance (Drug Safety)</h3>
+        <p>يرصد ويوثق الآثار الجانبية والتقارير الأمنية للدواء ويضمن الإبلاغ عنها للجهات التنظيمية في الوقت المناسب.</p>
+      </div>
+      <div class="role-card-footer" style="color:#991B1B; background:#FEE2E2;">المؤهل: MD / PharmD / صحة عامة</div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-top">
+        <div class="role-icon-wrap" style="background:#D1FAE5;">📊</div>
+        <h3>Health Economics & Outcomes (HEOR)</h3>
+        <p>يقيّم الجدوى الاقتصادية للعلاجات ويقدم الأدلة لصانعي القرار في التأمين الصحي والسياسات الطبية.</p>
+      </div>
+      <div class="role-card-footer" style="color:#065F46; background:#D1FAE5;">المؤهل: اقتصاد صحي / صيدلة / طب</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RESPONSIBILITIES -->
+  <div class="section-label"><div class="dot"></div><span>مسؤوليات MSL بالتفصيل</span></div>
+  <h2>مسؤوليات MSL اليومية والاستراتيجية</h2>
+
+  <div class="resp-list">
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#E8F5F3;">🤝</div>
+      <div class="resp-body">
+        <h4>إدارة علاقات KOL</h4>
+        <p>بناء وصيانة علاقات علمية مع قادة الرأي الطبي في التخصص. يشمل ذلك التخطيط لجدول الزيارات السنوي، تتبع اهتماماتهم البحثية، وتوفير بيانات ذات قيمة لكل لقاء.</p>
+        <span class="resp-tag" style="background:#E8F5F3; color:var(--teal);">مستمرة طوال العام</span>
+      </div>
+    </div>
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#FEF3C7;">📋</div>
+      <div class="resp-body">
+        <h4>التبادل العلمي (Scientific Exchange)</h4>
+        <p>تقديم وناقشة آخر الأبحاث والبيانات السريرية بأسلوب أكاديمي. ليس عرضاً ترويجياً بل حواراً علمياً يستمع فيه MSL للطبيب بقدر ما يتحدث.</p>
+        <span class="resp-tag" style="background:#FEF3C7; color:#92400E;">أساسية في كل زيارة</span>
+      </div>
+    </div>
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#DBEAFE;">🔬</div>
+      <div class="resp-body">
+        <h4>دعم الدراسات ISS (Investigator-Sponsored Studies)</h4>
+        <p>تقييم ودعم الدراسات البحثية التي يقترحها الأطباء وتتوافق مع أهداف الشركة العلمية. يتضمن التقييم العلمي، تسهيل الموافقة الداخلية، ومتابعة الدراسة.</p>
+        <span class="resp-tag" style="background:#DBEAFE; color:#1E40AF;">استراتيجية عالية الأثر</span>
+      </div>
+    </div>
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#EDE9FE;">🎤</div>
+      <div class="resp-body">
+        <h4>حضور المؤتمرات الطبية</h4>
+        <p>تمثيل الشركة علمياً في المؤتمرات المحلية والدولية. جمع أحدث البيانات، التواصل مع KOL، وتقديم تقارير علمية داخلية بعد المؤتمر.</p>
+        <span class="resp-tag" style="background:#EDE9FE; color:var(--purple);">دورية — 4-8 مؤتمرات سنوياً</span>
+      </div>
+    </div>
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#D1FAE5;">📝</div>
+      <div class="resp-body">
+        <h4>التوثيق في نظام CRM</h4>
+        <p>توثيق كل تفاعل في نظام إدارة العلاقات (Veeva) خلال 24 ساعة. يشمل ملخص المحادثة، الاستفسارات المطروحة، المتابعات المطلوبة، وأي معلومات Off-Label تم طلبها.</p>
+        <span class="resp-tag" style="background:#D1FAE5; color:#065F46;">إلزامي — خلال 24 ساعة</span>
+      </div>
+    </div>
+    <div class="resp-item">
+      <div class="resp-dot" style="background:#FEE2E2;">🔄</div>
+      <div class="resp-body">
+        <h4>التعاون الداخلي</h4>
+        <p>التنسيق مع الفرق الداخلية كـ Medical Information وPharmacovigila nce وRegulatory. نقل رؤى KOL وملاحظات السوق للفرق المختصة عبر القنوات الرسمية فقط.</p>
+        <span class="resp-tag" style="background:#FEE2E2; color:#991B1B;">بعيداً عن فريق المبيعات</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-label"><div class="dot"></div><span>مقارنة الأدوار</span></div>
+  <h2>مقارنة أدوار الشؤون الطبية</h2>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>المعيار</th>
+        <th>MSL</th>
+        <th>Medical Advisor</th>
+        <th>Med. Information</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>بيئة العمل</td><td>ميداني (Field)</td><td>داخلي (Office)</td><td>داخلي (Office)</td></tr>
+      <tr><td>الجمهور المستهدف</td><td>KOL وأطباء متخصصون</td><td>فرق داخلية</td><td>أي HCP أو مريض</td></tr>
+      <tr><td>طبيعة التواصل</td><td>تبادل علمي وجهاً لوجه</td><td>مراجعة واستراتيجية</td><td>إجابة استفسارات</td></tr>
+      <tr><td>درجة السفر</td><td>عالية جداً</td><td>منخفضة-متوسطة</td><td>لا سفر</td></tr>
+      <tr><td>المؤهل الشائع</td><td>MD / PharmD / PhD</td><td>MD متخصص</td><td>PharmD / MD</td></tr>
+      <tr><td>المسار الوظيفي</td><td>Senior MSL → Manager</td><td>Director → VP</td><td>Specialist → Manager</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+
+  <!-- DAY IN LIFE -->
+  <div class="section-label"><div class="dot"></div><span>يوم في حياة MSL</span></div>
+  <h2>يوم نموذجي في حياة MSL</h2>
+
+  <div class="daylife">
+    <div class="dl-item">
+      <div class="dl-time">٨:٠٠ ص</div>
+      <div class="dl-content"><h5>مراجعة البريد والتوثيق</h5><p>مراجعة رسائل Veeva، تحديث التوثيق من زيارات الأمس، قراءة أي تحديثات علمية جديدة</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">٩:٣٠ ص</div>
+      <div class="dl-content"><h5>زيارة KOL أولى — استشاري قلبية</h5><p>مناقشة نتائج دراسة Phase III جديدة + سؤال Off-Label وردٌّ موثق + تنسيق دراسة ISS محتملة</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">١١:٣٠ ص</div>
+      <div class="dl-content"><h5>توثيق الزيارة الأولى في Veeva</h5><p>ملخص المحادثة، الاستفسارات، المتابعات المطلوبة — قبل أن تبدأ الزيارة الثانية</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">١:٠٠ م</div>
+      <div class="dl-content"><h5>زيارة KOL ثانية — رئيس قسم الصيدلة</h5><p>تقديم بيانات pharmacokinetics جديدة، الحصول على رأيه في بروتوكول دراسة مقترحة</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">٣:٠٠ م</div>
+      <div class="dl-content"><h5>اجتماع داخلي مع Medical Team</h5><p>مشاركة رؤى السوق مع Medical Advisor، تنسيق الاستجابة لسؤال طبي معلق مع Medical Information</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">٤:٣٠ م</div>
+      <div class="dl-content"><h5>تحضير المؤتمر القادم</h5><p>مراجعة الأبحاث المقدمة في المؤتمر الأسبوع المقبل، تحديد KOL المستهدفين للتواصل</p></div>
+    </div>
+    <div class="dl-item">
+      <div class="dl-time">٦:٠٠ م</div>
+      <div class="dl-content"><h5>قراءة علمية يومية</h5><p>مراجعة آخر المنشورات في PubMed والمجلات الطبية المتخصصة — الـ MSL يتعلم باستمرار</p></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SKILLS -->
+  <div class="section-label"><div class="dot"></div><span>المهارات المطلوبة</span></div>
+  <h2>المهارات الأساسية لكل دور</h2>
+
+  <div class="skills-wrap">
+    <div class="skill-box">
+      <h4>🔬 MSL <span class="skill-tag" style="background:#E8F5F3;color:var(--teal);">أنت هنا</span></h4>
+      <ul>
+        <li>قراءة وتقييم الأبحاث السريرية</li>
+        <li>تواصل علمي مقنع مع الأطباء</li>
+        <li>مهارات العرض والتقديم</li>
+        <li>إدارة علاقات KOL</li>
+        <li>المرونة والسفر المستمر</li>
+        <li>توثيق دقيق في CRM</li>
+      </ul>
+    </div>
+    <div class="skill-box">
+      <h4>👨‍⚕️ Medical Advisor</h4>
+      <ul>
+        <li>خبرة سريرية متعمقة في التخصص</li>
+        <li>مراجعة المحتوى العلمي والتسويقي</li>
+        <li>التخطيط الاستراتيجي للمنتج</li>
+        <li>التفاعل مع الجهات التنظيمية</li>
+        <li>قيادة الفرق الطبية</li>
+      </ul>
+    </div>
+    <div class="skill-box">
+      <h4>📞 Medical Information</h4>
+      <ul>
+        <li>البحث السريع في المصادر الطبية</li>
+        <li>الكتابة العلمية الدقيقة</li>
+        <li>التواصل الهاتفي والكتابي</li>
+        <li>معرفة قواعد Off-Label</li>
+        <li>إدارة قواعد البيانات الطبية</li>
+      </ul>
+    </div>
+    <div class="skill-box">
+      <h4>💊 Pharmacovigilance</h4>
+      <ul>
+        <li>تحليل الأحداث الضائرة</li>
+        <li>الإبلاغ التنظيمي الدقيق</li>
+        <li>مراجعة التقارير السريرية</li>
+        <li>معرفة ICH Guidelines</li>
+        <li>الاهتمام الشديد بالتفاصيل</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. أي قسم في الشؤون الطبية يستقبل الأسئلة الطبية من الأطباء ويجيب عليها توثيقاً رسمياً؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','c')">أ. فريق MSL الميداني</div>
+      <div class="quiz-option" onclick="answer('q1','b','c')">ب. قسم التسويق الطبي</div>
+      <div class="quiz-option" onclick="answer('q1','c','c')">ج. Medical Information</div>
+      <div class="quiz-option" onclick="answer('q1','d','c')">د. قسم الشؤون التنظيمية</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! Medical Information مسؤول بالكامل عن استقبال وتوثيق والإجابة على الاستفسارات الطبية الرسمية.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ ليس بالضبط. هذه مهمة Medical Information وليس MSL أو التسويق. MSL يُجيب على أسئلة في سياق اللقاء العلمي لكن التوثيق الرسمي يعود لـ Med Info.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. ما الذي يميز MSL عن Medical Advisor من حيث بيئة العمل؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','a')">أ. MSL ميداني يقضي وقته مع الأطباء، بينما Medical Advisor يعمل داخلياً في مكتبه</div>
+      <div class="quiz-option" onclick="answer('q2','b','a')">ب. MSL يعمل في المكتب بينما Medical Advisor يزور الأطباء</div>
+      <div class="quiz-option" onclick="answer('q2','c','a')">ج. كلاهما يعمل في المكتب فقط</div>
+      <div class="quiz-option" onclick="answer('q2','d','a')">د. لا فرق في بيئة العمل بينهما</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! MSL هو الوجه الميداني للشؤون الطبية، بينما Medical Advisor يركز على العمل الاستراتيجي الداخلي.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ الإجابة الصحيحة هي الأولى. MSL هو الدور الميداني بامتياز.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. خلال كم ساعة يجب على MSL توثيق زيارته في نظام CRM؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','b')">أ. خلال أسبوع من الزيارة</div>
+      <div class="quiz-option" onclick="answer('q3','b','b')">ب. خلال 24 ساعة</div>
+      <div class="quiz-option" onclick="answer('q3','c','b')">ج. في نهاية الشهر</div>
+      <div class="quiz-option" onclick="answer('q3','d','b')">د. قبل الزيارة التالية فقط</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ صحيح تماماً! التوثيق خلال 24 ساعة ليس اختيارياً — هو متطلب إلزامي في معظم الشركات الدوائية الكبرى.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ المعيار هو 24 ساعة. التأخير في التوثيق قد يعني فقدان معلومات دقيقة وقد يُعرّض MSL لمساءلة امتثالية.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. أي دور في الشؤون الطبية يختص بتقييم الجدوى الاقتصادية للأدوية وتقديم الأدلة لهيئات التأمين؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','d')">أ. MSL</div>
+      <div class="quiz-option" onclick="answer('q4','b','d')">ب. Medical Education Manager</div>
+      <div class="quiz-option" onclick="answer('q4','c','d')">ج. Pharmacovigilance</div>
+      <div class="quiz-option" onclick="answer('q4','d','d')">د. Health Economics & Outcomes (HEOR)</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! HEOR متخصص في الاقتصاد الصحي وتقديم الأدلة لصانعي القرار في التأمين وسياسات الصحة.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ هذا دور HEOR — Health Economics & Outcomes Research — المتخصص في الجدوى الاقتصادية للعلاجات.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="highlight" style="text-align:center;">
+    <h3 style="font-size:20px;">🎓 ماذا تعلمت في هذا الدرس؟</h3>
+    <p style="max-width:560px; margin:0 auto; line-height:1.8;">
+      فهمت الهيكل الكامل لقسم الشؤون الطبية، تعرفت على 6 أدوار رئيسية وما يميز كل منها، وأصبح لديك صورة واضحة عن يوم العمل الفعلي لـ MSL ومسؤولياته اليومية والاستراتيجية.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+
+  // hide all feedbacks for this question
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+
+  const fbKey = chosen === correct ? 'c' : 'w';
+  const fb = document.getElementById(`fb-${qId}-${fbKey}`);
+  if (fb) {
+    fb.style.display = 'block';
+    fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb');
+  }
+}
+</script>
+</body>
+</html>

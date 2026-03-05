@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أنواع الأدلة السريرية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #5B21B6;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+    --pink: #9D174D;
+    --pink-bg: #FCE7F3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0A2342 0%, #0D1F3C 100%);
+    padding: 52px 36px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-70px; right:-60px; width:320px; height:320px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero::after { content:''; position:absolute; bottom:-50px; left:-40px; width:220px; height:220px; border-radius:50%; background:var(--teal); opacity:0.08; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; position:relative; line-height:1.3; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:var(--gold); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Interactive tabs */
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+  .tab-btn {
+    padding:8px 18px; border-radius:20px; font-size:13px; font-weight:700;
+    cursor:pointer; border:2px solid var(--light-gray); background:var(--white);
+    color:var(--text-mid); transition:all 0.2s; font-family:'Cairo',sans-serif;
+  }
+  .tab-btn:hover { border-color:var(--teal); color:var(--teal); }
+  .tab-btn.active { background:var(--navy); border-color:var(--navy); color:var(--white); }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* Evidence type cards */
+  .ev-card {
+    background:var(--white); border-radius:16px; border:1px solid var(--light-gray);
+    overflow:hidden; box-shadow:0 6px 20px rgba(10,35,66,0.09); margin-bottom:16px;
+  }
+  .ev-card-header {
+    padding:20px 24px; display:flex; align-items:center; gap:16px;
+  }
+  .ev-icon { font-size:32px; flex-shrink:0; }
+  .ev-title h3 { font-size:17px; margin-bottom:2px; }
+  .ev-title .ev-en { font-size:12px; color:var(--text-light); font-weight:600; }
+  .ev-title .ev-level { font-size:11px; font-weight:800; padding:2px 10px; border-radius:10px; margin-top:4px; display:inline-block; }
+  .ev-body { padding:0 24px 20px; }
+  .ev-body p { font-size:14px; margin-bottom:10px; }
+  .ev-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  .ev-pro { background:var(--green-bg); border-radius:8px; padding:10px 12px; }
+  .ev-con { background:var(--red-bg); border-radius:8px; padding:10px 12px; }
+  .ev-pro h5 { font-size:11px; font-weight:800; color:var(--green); margin-bottom:5px; }
+  .ev-con h5 { font-size:11px; font-weight:800; color:var(--red-dark); margin-bottom:5px; }
+  .ev-pro li, .ev-con li { font-size:12px; color:var(--text-dark); list-style:none; padding:2px 0; display:flex; gap:6px; }
+  .ev-pro li::before { content:'✓'; color:var(--green); font-weight:800; flex-shrink:0; }
+  .ev-con li::before { content:'✗'; color:var(--red-dark); font-weight:800; flex-shrink:0; }
+  .ev-example { background:var(--off-white); border-radius:8px; padding:10px 14px; margin-top:10px; font-size:13px; color:var(--text-mid); border-right:3px solid var(--teal); }
+  .ev-example strong { color:var(--navy); }
+
+  /* Visual pyramid — clickable */
+  .pyr-wrap { margin:20px 0; }
+  .pyr-row { display:flex; justify-content:center; margin-bottom:6px; }
+  .pyr-block {
+    border-radius:10px; padding:14px 20px; color:var(--white); text-align:center;
+    cursor:pointer; transition:all 0.18s; width:100%;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .pyr-block:hover { filter:brightness(1.1); }
+  .pyr-block.selected { outline:3px solid var(--gold); outline-offset:2px; }
+  .pyr-block .pb-left { text-align:right; }
+  .pyr-block h4 { font-size:14px; font-weight:800; margin-bottom:1px; }
+  .pyr-block p { font-size:11px; opacity:0.85; margin:0; }
+  .pyr-block .pb-right { font-size:22px; flex-shrink:0; }
+  .pyr-detail-panel {
+    background:var(--white); border-radius:12px; border:2px solid var(--gold);
+    padding:20px; margin-bottom:8px; display:none;
+    box-shadow:0 6px 20px rgba(10,35,66,0.1);
+    animation: fadeIn 0.2s ease;
+  }
+  .pyr-detail-panel.open { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:none} }
+  .pyr-detail-panel h4 { font-size:16px; font-weight:800; color:var(--navy); margin-bottom:12px; }
+  .pd-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; }
+  .pd-item { background:var(--off-white); border-radius:8px; padding:12px; }
+  .pd-item .pdi-label { font-size:10px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:0.7px; margin-bottom:4px; }
+  .pd-item .pdi-val { font-size:13px; color:var(--text-dark); font-weight:600; }
+
+  /* Bias types */
+  .bias-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:20px 0; }
+  .bias-card { background:var(--white); border-radius:12px; padding:18px; border:1px solid var(--light-gray); box-shadow:0 2px 10px rgba(10,35,66,0.06); border-top:4px solid; }
+  .bias-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:6px; }
+  .bias-card p { font-size:13px; color:var(--text-mid); margin-bottom:8px; }
+  .bias-card .bc-example { font-size:12px; background:var(--off-white); padding:8px 10px; border-radius:6px; color:var(--text-dark); font-style:italic; }
+
+  /* Stats explainer */
+  .stats-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:20px 0; }
+  .stat-card { background:var(--white); border-radius:14px; padding:20px 16px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); text-align:center; }
+  .stat-term { font-size:22px; font-weight:900; margin-bottom:4px; }
+  .stat-full { font-size:10px; font-weight:700; color:var(--text-light); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-def { font-size:12.5px; color:var(--text-mid); margin-bottom:8px; }
+  .stat-rule { font-size:11px; font-weight:700; padding:3px 10px; border-radius:8px; display:inline-block; }
+
+  /* How MSL uses evidence */
+  .usage-steps { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .usage-step { display:flex; gap:14px; align-items:flex-start; background:var(--white); border-radius:12px; padding:16px 18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .us-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .us-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .us-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .us-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* Scenario cards */
+  .scenario { background:var(--white); border-radius:14px; border:1px solid var(--light-gray); overflow:hidden; margin:20px 0; box-shadow:0 4px 16px rgba(10,35,66,0.07); }
+  .scenario-hdr { background:var(--navy); padding:14px 20px; color:var(--white); font-weight:700; font-size:14px; display:flex; align-items:center; gap:10px; }
+  .scenario-body { padding:20px; }
+  .scenario-body p { font-size:14px; margin-bottom:14px; }
+  .s-opt { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-radius:10px; margin-bottom:8px; font-size:13.5px; }
+  .s-opt.correct { background:var(--green-bg); border:1px solid #86EFAC; color:var(--green); }
+  .s-opt.wrong { background:var(--red-bg); border:1px solid #FCA5A5; color:var(--red-dark); }
+  .s-opt.neutral { background:var(--off-white); border:1px solid var(--light-gray); color:var(--text-mid); }
+  .s-badge { font-size:11px; font-weight:800; padding:2px 8px; border-radius:6px; flex-shrink:0; margin-top:2px; }
+  .sb-correct { background:var(--green-bg); color:var(--green); }
+  .sb-wrong { background:var(--red-bg); color:var(--red-dark); }
+
+  /* Alert */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); } .alert-gold p { color:#78350F; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); } .alert-teal p { color:#065F46; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section{padding:28px 18px;}
+    .ev-grid,.pd-grid{grid-template-columns:1fr;}
+    .tabs{gap:4px;}
+    .tab-btn{font-size:11px; padding:6px 12px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">📊 الأدلة السريرية</div>
+  <h1>أنواع <span>الأدلة السريرية</span></h1>
+  <div class="hero-accent"></div>
+  <p>دليل شامل لكل أنواع الأدلة العلمية — من التجارب السريرية إلى بيانات الواقع — وكيف يستخدمها MSL في حواراته مع الأطباء</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>50 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>مبتدئ–متوسط</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>نظرة عامة</span></div>
+  <h2>لماذا يهم نوع الدليل؟</h2>
+  <p>ليست كل الأدلة متساوية. دراسة بـ 20 مريض ليست كدراسة بـ 20,000 مريض. تجربة مضبوطة ليست كملاحظة ميدانية. MSL الذي يفهم الفروق يستطيع الإجابة على أي سؤال علمي بثقة وموضوعية — وهذا ما يكسبه مصداقية الطبيب الكبير.</p>
+
+  <div class="alert-teal">
+    <span class="ab-icon">🎯</span>
+    <div>
+      <h4>ما ستتعلمه في هذا الدرس</h4>
+      <p>كل نوع دليل بالتفصيل مع نقاط قوته وضعفه، أنواع التحيز وكيف تتعرف عليها، المصطلحات الإحصائية الأساسية، وكيف يربط MSL الأدلة بالواقع السريري للطبيب.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- INTERACTIVE PYRAMID -->
+  <div class="section-label"><div class="dot"></div><span>هرم الأدلة التفاعلي</span></div>
+  <h2>اضغط على أي مستوى لعرض التفاصيل الكاملة</h2>
+
+  <div class="pyr-wrap">
+
+    <div class="pyr-row"><div class="pyr-block" style="background:var(--navy);" onclick="showPyr('p1',this)">
+      <div class="pb-left"><h4>Systematic Review & Meta-Analysis</h4><p>المراجعة المنهجية والتحليل التلوي</p></div>
+      <div class="pb-right">🥇</div>
+    </div></div>
+    <div class="pyr-detail-panel" id="p1">
+      <h4>🥇 المراجعة المنهجية والتحليل التلوي</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pdi-label">التعريف</div><div class="pdi-val">يجمع ويحلل نتائج دراسات متعددة بمنهجية صارمة للوصول لاستنتاج أشمل</div></div>
+        <div class="pd-item"><div class="pdi-label">قوة الدليل</div><div class="pdi-val" style="color:var(--green); font-weight:800;">الأعلى ✓</div></div>
+        <div class="pd-item"><div class="pdi-label">أبرز نقطة ضعف</div><div class="pdi-val">جودته تعتمد كلياً على جودة الدراسات المدرجة</div></div>
+        <div class="pd-item"><div class="pdi-label">كيف يستخدمه MSL</div><div class="pdi-val">المرجع الأقوى في النقاشات مع KOL — يُقدّمه أولاً</div></div>
+        <div class="pd-item"><div class="pdi-label">مثال</div><div class="pdi-val">Cochrane Review يحلل 60 دراسة RCT لدواء X</div></div>
+        <div class="pd-item"><div class="pdi-label">تحيز محتمل</div><div class="pdi-val">Publication Bias — الدراسات السلبية قد لا تُنشر</div></div>
+      </div>
+    </div>
+
+    <div class="pyr-row" style="padding:0 3%;"><div class="pyr-block" style="background:var(--teal);" onclick="showPyr('p2',this)">
+      <div class="pb-left"><h4>Randomized Controlled Trial (RCT)</h4><p>التجربة العشوائية المضبوطة</p></div>
+      <div class="pb-right">🧪</div>
+    </div></div>
+    <div class="pyr-detail-panel" id="p2">
+      <h4>🧪 التجربة العشوائية المضبوطة (RCT)</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pdi-label">التعريف</div><div class="pdi-val">توزيع عشوائي للمرضى على مجموعة علاج ومجموعة مقارنة لقياس التأثير</div></div>
+        <div class="pd-item"><div class="pdi-label">قوة الدليل</div><div class="pdi-val" style="color:var(--teal); font-weight:800;">عالية جداً ✓</div></div>
+        <div class="pd-item"><div class="pdi-label">المعيار الذهبي لـ</div><div class="pdi-val">إثبات الفعالية والعلاقة السببية</div></div>
+        <div class="pd-item"><div class="pdi-label">أنواعه</div><div class="pdi-val">Double-blind / Single-blind / Open-label / Crossover</div></div>
+        <div class="pd-item"><div class="pdi-label">أبرز نقطة ضعف</div><div class="pdi-val">تكلفة عالية، بيئة اصطناعية، يستبعد الفئات الخاصة</div></div>
+        <div class="pd-item"><div class="pdi-label">سؤال MSL الأساسي</div><div class="pdi-val">هل كانت مضاعفة التعمية؟ ما نسبة Dropout؟</div></div>
+      </div>
+    </div>
+
+    <div class="pyr-row" style="padding:0 6%;"><div class="pyr-block" style="background:var(--teal-light);" onclick="showPyr('p3',this)">
+      <div class="pb-left"><h4>Cohort Studies</h4><p>الدراسات التتبعية المستقبلية والاسترجاعية</p></div>
+      <div class="pb-right">👥</div>
+    </div></div>
+    <div class="pyr-detail-panel" id="p3">
+      <h4>👥 الدراسات التتبعية (Cohort Studies)</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pdi-label">المستقبلية (Prospective)</div><div class="pdi-val">تتابع مجموعة للأمام في الزمن — أقوى وأدق</div></div>
+        <div class="pd-item"><div class="pdi-label">الاسترجاعية (Retrospective)</div><div class="pdi-val">تراجع بيانات قديمة — أسرع وأرخص لكن أضعف</div></div>
+        <div class="pd-item"><div class="pdi-label">مثال</div><div class="pdi-val">متابعة 5000 مريض لـ 10 سنوات لرصد من يُصاب بأمراض قلبية</div></div>
+        <div class="pd-item"><div class="pdi-label">أبرز نقطة ضعف</div><div class="pdi-val">Confounding Variables — متغيرات محيرة صعبة الضبط</div></div>
+      </div>
+    </div>
+
+    <div class="pyr-row" style="padding:0 9%;"><div class="pyr-block" style="background:#5BA3A0;" onclick="showPyr('p4',this)">
+      <div class="pb-left"><h4>Case-Control Studies</h4><p>دراسات الحالة والشاهد</p></div>
+      <div class="pb-right">🔍</div>
+    </div></div>
+    <div class="pyr-detail-panel" id="p4">
+      <h4>🔍 دراسات الحالة والشاهد (Case-Control)</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pdi-label">التعريف</div><div class="pdi-val">مقارنة مجموعة مرضى بمجموعة سليمة مشابهة للبحث عن عوامل الخطر</div></div>
+        <div class="pd-item"><div class="pdi-label">الأفضل لـ</div><div class="pdi-val">الأمراض النادرة، أو ذات فترة تطور طويلة</div></div>
+        <div class="pd-item"><div class="pdi-label">مقياس الارتباط</div><div class="pdi-val">Odds Ratio (OR) — نسبة الأرجحية</div></div>
+        <div class="pd-item"><div class="pdi-label">أبرز نقطة ضعف</div><div class="pdi-val">Recall Bias — المرضى قد يتذكرون التعرضات بشكل مختلف</div></div>
+      </div>
+    </div>
+
+    <div class="pyr-row" style="padding:0 12%;"><div class="pyr-block" style="background:var(--text-mid);" onclick="showPyr('p5',this)">
+      <div class="pb-left"><h4>Cross-Sectional / Case Reports / Expert Opinion</h4><p>الدراسات المقطعية وتقارير الحالات وآراء الخبراء</p></div>
+      <div class="pb-right">📝</div>
+    </div></div>
+    <div class="pyr-detail-panel" id="p5">
+      <h4>📝 أدنى مستويات الدليل</h4>
+      <div class="pd-grid">
+        <div class="pd-item"><div class="pdi-label">Cross-Sectional</div><div class="pdi-val">لقطة لحظية — تقيس الانتشار لكن لا تثبت السببية</div></div>
+        <div class="pd-item"><div class="pdi-label">Case Report</div><div class="pdi-val">توثيق حالة واحدة — تُولّد فرضيات لا أدلة</div></div>
+        <div class="pd-item"><div class="pdi-label">Expert Opinion</div><div class="pdi-val">رأي مبني على الخبرة — قابل للتحيز الشخصي</div></div>
+        <div class="pd-item"><div class="pdi-label">استخدامها الصحيح</div><div class="pdi-val">نقطة بداية للبحث وليس دليلاً نهائياً</div></div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:8px;">
+      <span style="font-size:11px; color:var(--text-light); font-weight:600;">← أدنى مستوى دليل</span>
+      <span style="font-size:11px; color:var(--text-light); font-weight:600;">أعلى مستوى دليل →</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TABS: EVIDENCE TYPES IN DETAIL -->
+  <div class="section-label"><div class="dot"></div><span>الأنواع بالتفصيل</span></div>
+  <h2>أنواع الأدلة — استعرض كل نوع</h2>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('t1',this)">RCT</button>
+    <button class="tab-btn" onclick="showTab('t2',this)">Real-World</button>
+    <button class="tab-btn" onclick="showTab('t3',this)">الدراسات التتبعية</button>
+    <button class="tab-btn" onclick="showTab('t4',this)">HEOR</button>
+    <button class="tab-btn" onclick="showTab('t5',this)">Phase I-IV</button>
+  </div>
+
+  <!-- RCT -->
+  <div class="tab-panel active" id="t1">
+    <div class="ev-card">
+      <div class="ev-card-header" style="background:#E8F5F3;">
+        <span class="ev-icon">🧪</span>
+        <div class="ev-title">
+          <h3>Randomized Controlled Trial</h3>
+          <div class="ev-en">التجربة العشوائية المضبوطة</div>
+          <span class="ev-level" style="background:var(--green-bg);color:var(--green);">أعلى دليل فردي</span>
+        </div>
+      </div>
+      <div class="ev-body">
+        <p>المعيار الذهبي لإثبات الفعالية. يُوزَّع المرضى عشوائياً بين مجموعة العلاج والمقارنة، مما يقلل التحيز ويُتيح استنتاج علاقة سببية واضحة.</p>
+        <div class="ev-grid">
+          <div class="ev-pro"><h5>✅ نقاط القوة</h5>
+            <li>يثبت السببية بقوة</li>
+            <li>يقلل التحيز بالتعشية</li>
+            <li>نتائج قابلة للتكرار</li>
+            <li>معيار موافقة هيئات التسجيل</li>
+          </div>
+          <div class="ev-con"><h5>❌ نقاط الضعف</h5>
+            <li>تكلفة ووقت طويل</li>
+            <li>بيئة مصطنعة لا تعكس الواقع</li>
+            <li>يستبعد المرضى الأكثر تعقيداً</li>
+            <li>غير عملي للأمراض النادرة</li>
+          </div>
+        </div>
+        <div class="ev-example"><strong>ما يسأله MSL:</strong> هل كانت مزدوجة التعمية؟ ما نسبة الانسحاب (Dropout)؟ هل نقطة النهاية سريرية ذات معنى أم إحصائية فقط؟</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RWE -->
+  <div class="tab-panel" id="t2">
+    <div class="ev-card">
+      <div class="ev-card-header" style="background:#FEF3C7;">
+        <span class="ev-icon">🌍</span>
+        <div class="ev-title">
+          <h3>Real-World Evidence (RWE)</h3>
+          <div class="ev-en">أدلة الواقع الحقيقي</div>
+          <span class="ev-level" style="background:var(--orange-bg);color:var(--orange);">أعلى واقعية سريرية</span>
+        </div>
+      </div>
+      <div class="ev-body">
+        <p>بيانات تُجمع من الممارسة السريرية الفعلية — سجلات مرضى، قواعد بيانات مستشفيات، أجهزة قابلة للارتداء، مطالبات تأمينية. تُجيب على السؤال «هل يعمل الدواء في مرضاي الحقيقيين؟»</p>
+        <div class="ev-grid">
+          <div class="ev-pro"><h5>✅ نقاط القوة</h5>
+            <li>تعكس الممارسة الفعلية</li>
+            <li>تشمل الفئات المستبعدة من RCT</li>
+            <li>حجم عينة ضخم جداً</li>
+            <li>تكلفة منخفضة نسبياً</li>
+          </div>
+          <div class="ev-con"><h5>❌ نقاط الضعف</h5>
+            <li>صعوبة ضبط المتغيرات المحيرة</li>
+            <li>جودة البيانات غير متسقة</li>
+            <li>لا تثبت السببية بقوة RCT</li>
+            <li>تحيز الانتقاء محتمل</li>
+          </div>
+        </div>
+        <div class="ev-example"><strong>كيف يستخدمه MSL:</strong> «الـ RCT أثبت الفعالية في بيئة مضبوطة — وهذه بيانات الـ RWE تُظهر نفس النتائج في 15,000 مريض من الحياة الحقيقية بما فيهم كبار السن ومرضى الفشل الكلوي»</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBSERVATIONAL -->
+  <div class="tab-panel" id="t3">
+    <div class="ev-card">
+      <div class="ev-card-header" style="background:#E8F5F3;">
+        <span class="ev-icon">👥</span>
+        <div class="ev-title">
+          <h3>Observational Studies</h3>
+          <div class="ev-en">الدراسات الاستعراضية والتتبعية</div>
+          <span class="ev-level" style="background:var(--blue-bg);color:var(--blue);">مستوى متوسط</span>
+        </div>
+      </div>
+      <div class="ev-body">
+        <p>الباحث يراقب دون تدخل. تشمل: Cohort (تتبعية)، Case-Control (حالة-شاهد)، Cross-Sectional (مقطعية). مفيدة جداً لدراسة عوامل الخطر والأمراض النادرة.</p>
+        <div class="ev-grid">
+          <div class="ev-pro"><h5>✅ نقاط القوة</h5>
+            <li>أفضل للأمراض النادرة</li>
+            <li>أخلاقياً مناسب حين لا يمكن RCT</li>
+            <li>يكشف ارتباطات في الحياة الحقيقية</li>
+            <li>مفيد لدراسة السلامة طويلة الأمد</li>
+          </div>
+          <div class="ev-con"><h5>❌ نقاط الضعف</h5>
+            <li>لا تثبت السببية</li>
+            <li>عرضة لتحيزات متعددة</li>
+            <li>متغيرات محيرة صعبة الضبط</li>
+            <li>نتائجها تحتاج تأكيداً بـ RCT</li>
+          </div>
+        </div>
+        <div class="ev-example"><strong>مثال:</strong> دراسة Cohort تتابع 10,000 مريض لـ 5 سنوات لمقارنة معدل الإصابة بالنوبات القلبية بين مستخدمي الدواء X وغيرهم.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEOR -->
+  <div class="tab-panel" id="t4">
+    <div class="ev-card">
+      <div class="ev-card-header" style="background:var(--purple-bg);">
+        <span class="ev-icon">💰</span>
+        <div class="ev-title">
+          <h3>Health Economics & Outcomes Research</h3>
+          <div class="ev-en">أبحاث الاقتصاد الصحي والنتائج (HEOR)</div>
+          <span class="ev-level" style="background:var(--purple-bg);color:var(--purple);">أدلة القيمة الاقتصادية</span>
+        </div>
+      </div>
+      <div class="ev-body">
+        <p>تقيس الجدوى الاقتصادية للعلاج مقارنةً بالبدائل. أساسية لإقناع هيئات التأمين والصحة بتغطية الدواء وتضمينه في بروتوكولات العلاج.</p>
+        <div class="ev-grid">
+          <div class="ev-pro"><h5>✅ أنواعها</h5>
+            <li>Cost-Effectiveness Analysis</li>
+            <li>Cost-Utility Analysis (QALYs)</li>
+            <li>Budget Impact Analysis</li>
+            <li>Cost-Minimization Analysis</li>
+          </div>
+          <div class="ev-con"><h5>❌ تحديات</h5>
+            <li>تعتمد على افتراضات نمذجة</li>
+            <li>تختلف بين الأنظمة الصحية</li>
+            <li>نتائجها لا تترجم مباشرة لقرار وصف</li>
+            <li>تحتاج خبرة إحصائية متخصصة</li>
+          </div>
+        </div>
+        <div class="ev-example"><strong>QALY:</strong> Quality-Adjusted Life Year — سنة حياة معدّلة بالجودة. تُستخدم لمقارنة قيمة علاجات مختلفة بمقياس موحد.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASES -->
+  <div class="tab-panel" id="t5">
+    <div class="ev-card">
+      <div class="ev-card-header" style="background:var(--blue-bg);">
+        <span class="ev-icon">🔬</span>
+        <div class="ev-title">
+          <h3>Clinical Trial Phases I — IV</h3>
+          <div class="ev-en">مراحل التطوير السريري</div>
+          <span class="ev-level" style="background:var(--blue-bg);color:var(--blue);">تطوير منهجي</span>
+        </div>
+      </div>
+      <div class="ev-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;">
+          <div style="background:#F8FAFC; border-radius:8px; padding:12px; border-right:3px solid var(--navy);">
+            <div style="font-size:11px; font-weight:800; color:var(--navy); margin-bottom:4px;">PHASE I</div>
+            <div style="font-size:12px; color:var(--text-mid);">20-80 مشارك صحي. الهدف: السلامة والجرعة. لا يُثبت الفعالية.</div>
+          </div>
+          <div style="background:#F8FAFC; border-radius:8px; padding:12px; border-right:3px solid var(--teal);">
+            <div style="font-size:11px; font-weight:800; color:var(--teal); margin-bottom:4px;">PHASE II</div>
+            <div style="font-size:12px; color:var(--text-mid);">100-300 مريض. الهدف: إشارات الفعالية، تحسين الجرعة.</div>
+          </div>
+          <div style="background:#E8F5F3; border-radius:8px; padding:12px; border-right:3px solid var(--green);">
+            <div style="font-size:11px; font-weight:800; color:var(--green); margin-bottom:4px;">PHASE III ✦</div>
+            <div style="font-size:12px; color:var(--text-mid);">1000-30,000+ مريض. إثبات الفعالية وأساس موافقة التسجيل.</div>
+          </div>
+          <div style="background:#FEF3C7; border-radius:8px; padding:12px; border-right:3px solid var(--gold);">
+            <div style="font-size:11px; font-weight:800; color:var(--orange); margin-bottom:4px;">PHASE IV</div>
+            <div style="font-size:12px; color:var(--text-mid);">ما بعد التسويق. مراقبة السلامة طويلة الأمد في ملايين المرضى.</div>
+          </div>
+        </div>
+        <div class="ev-example"><strong>✦ Phase III</strong> هو الأساس الذي يستخدمه MSL في أغلب نقاشاته — لكن Phase IV يُعطي بيانات السلامة الأطول أمداً وهي ما يهتم بها الأطباء في الممارسة اليومية.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BIAS TYPES -->
+  <div class="section-label"><div class="dot"></div><span>أنواع التحيز</span></div>
+  <h2>أنواع التحيز التي يجب أن يعرفها MSL</h2>
+  <p>التحيز (Bias) هو أي خطأ منهجي يُشوّه النتائج. معرفة أنواعه تُمكّن MSL من تقييم الدراسة بعين ناقدة وصادقة.</p>
+
+  <div class="bias-grid">
+    <div class="bias-card" style="border-top-color:var(--red-dark);">
+      <h4>Selection Bias</h4>
+      <p>اختلاف خصائص المشاركين بين المجموعتين يُؤثر على النتائج قبل حتى بدء الدراسة.</p>
+      <div class="bc-example">«دراسة تضم فقط مرضى صحيين نسبياً لا تعكس مرضاي الحقيقيين»</div>
+    </div>
+    <div class="bias-card" style="border-top-color:var(--orange);">
+      <h4>Publication Bias</h4>
+      <p>الدراسات ذات النتائج الإيجابية تُنشر أكثر من السلبية — مما يُضخّم الفعالية الظاهرة.</p>
+      <div class="bc-example">«الـ Meta-Analysis قد يُبالغ في الفعالية إذا اعتمد على دراسات منشورة فقط»</div>
+    </div>
+    <div class="bias-card" style="border-top-color:var(--purple);">
+      <h4>Confounding Bias</h4>
+      <p>متغير ثالث مخفي يؤثر على كلا المتغيرين المدروسين ويُعطي انطباعاً زائفاً بالارتباط.</p>
+      <div class="bc-example">«مرضى يأخذون دواء X يمارسون الرياضة أكثر — هل التحسن بسبب الدواء أم الرياضة؟»</div>
+    </div>
+    <div class="bias-card" style="border-top-color:var(--blue);">
+      <h4>Recall Bias</h4>
+      <p>المرضى المصابون يتذكرون التعرضات السابقة بشكل مختلف عن الأصحاء.</p>
+      <div class="bc-example">شائع في دراسات Case-Control التي تعتمد على ذاكرة المريض</div>
+    </div>
+    <div class="bias-card" style="border-top-color:var(--teal);">
+      <h4>Attrition Bias</h4>
+      <p>الانسحاب غير العشوائي من الدراسة يُؤثر على النتائج إذا انسحب نوع معين من المرضى.</p>
+      <div class="bc-example">«إذا انسحب الذين تحسنوا أقل، قد تبدو النتائج أفضل مما هي عليه»</div>
+    </div>
+    <div class="bias-card" style="border-top-color:var(--navy);">
+      <h4>Sponsor Bias</h4>
+      <p>الدراسات التي تُموّلها شركات الأدوية تُظهر نتائج إيجابية بنسبة أعلى من الدراسات المستقلة.</p>
+      <div class="bc-example">MSL يجب أن يكون صادقاً عند مناقشة هذا التحيز مع الأطباء</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- KEY STATS -->
+  <div class="section-label"><div class="dot"></div><span>المصطلحات الإحصائية</span></div>
+  <h2>المصطلحات الإحصائية الأساسية لـ MSL</h2>
+
+  <div class="stats-cards">
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--teal);">P-value</div>
+      <div class="stat-full">Probability Value</div>
+      <div class="stat-def">احتمال أن تكون النتيجة صدفة إحصائية</div>
+      <span class="stat-rule" style="background:var(--green-bg);color:var(--green);">p &lt; 0.05 = دلالة إحصائية</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--navy);">95% CI</div>
+      <div class="stat-full">Confidence Interval</div>
+      <div class="stat-def">النطاق الذي تقع فيه القيمة الحقيقية بثقة 95%</div>
+      <span class="stat-rule" style="background:var(--orange-bg);color:var(--orange);">CI يمر بـ 1 = غير دال</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--red-dark);">ARR</div>
+      <div class="stat-full">Absolute Risk Reduction</div>
+      <div class="stat-def">الفرق المطلق في معدل الحدث بين المجموعتين</div>
+      <span class="stat-rule" style="background:var(--green-bg);color:var(--green);">الأكثر صدقاً سريرياً</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--purple);">RRR</div>
+      <div class="stat-full">Relative Risk Reduction</div>
+      <div class="stat-def">الخفض النسبي في الخطر مقارنةً بالمجموعة الضابطة</div>
+      <span class="stat-rule" style="background:var(--red-bg);color:var(--red-dark);">مضلل بدون ARR</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--gold);">NNT</div>
+      <div class="stat-full">Number Needed to Treat</div>
+      <div class="stat-def">عدد المرضى لعلاجهم لمنع حالة واحدة</div>
+      <span class="stat-rule" style="background:var(--green-bg);color:var(--green);">NNT أصغر = فعالية أعلى</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-term" style="color:var(--blue);">HR / OR</div>
+      <div class="stat-full">Hazard Ratio / Odds Ratio</div>
+      <div class="stat-def">نسبة الخطر في الدراسات التتبعية ودراسات الحالة-الشاهد</div>
+      <span class="stat-rule" style="background:var(--blue-bg);color:var(--blue);">HR=1 أو OR=1 = لا فرق</span>
+    </div>
+  </div>
+
+  <div class="alert-gold">
+    <span class="ab-icon">⚠️</span>
+    <div>
+      <h4>التحذير الإحصائي الأهم</h4>
+      <p>«دالة إحصائياً» لا تعني بالضرورة «مهمة سريرياً». دراسة على 100,000 مريض قد تُظهر فرقاً صغيراً جداً «دالاً» لكنه لا يُغيّر القرار العلاجي. MSL يسأل دائماً: ما الـ ARR؟ ما الـ NNT؟ هل هذا يهم مريض طبيبي فعلاً؟</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SCENARIO -->
+  <div class="section-label"><div class="dot"></div><span>سيناريو تطبيقي</span></div>
+  <h2>سيناريو: طبيب يتحدى بيانات دراستك</h2>
+
+  <div class="scenario">
+    <div class="scenario-hdr">🩺 موقف واقعي — كيف يتعامل MSL المتمكن؟</div>
+    <div class="scenario-body">
+      <p style="font-weight:600; color:var(--text-dark);">قال الطبيب: «شركتكم تتحدث عن خفض 40% في خطر النوبات القلبية. لكنني قرأت أن هذا خفض نسبي فقط — والخفض المطلق لا يتجاوز 2%. كيف تُبرر هذا؟»</p>
+      <div class="s-opt wrong">
+        <span class="s-badge sb-wrong">❌</span>
+        «الـ 40% هي الرقم الحقيقي والمعتمد، وهو دال إحصائياً بـ p &lt; 0.001»
+      </div>
+      <div class="s-opt wrong">
+        <span class="s-badge sb-wrong">❌</span>
+        «الـ RRR و ARR كلاهما صحيح — الأطباء يستخدمون الـ RRR عادةً»
+      </div>
+      <div class="s-opt correct">
+        <span class="s-badge sb-correct">✅</span>
+        «أنت محق تماماً. الـ RRR 40% والـ ARR 2% — كلاهما صحيح لكن يُقرأان بشكل مختلف. بمعنى الـ NNT = 50: يجب علاج 50 مريضاً لمنع نوبة قلبية واحدة. السؤال هو: هل هذا مقبول لمرضاك ذوي الخطر العالي؟ في هذه الحالة الحساب يتغير كثيراً.»
+      </div>
+      <div class="alert-teal" style="margin-top:14px; margin-bottom:0;">
+        <span class="ab-icon">💡</span>
+        <div><h4>لماذا هذه الإجابة هي الصحيحة؟</h4><p>MSL الجيد لا يتهرب من الأرقام الصعبة — يشرحها بسياق سريري حقيقي. هذا ما يبني الثقة ويجعل الطبيب يعود إليه مستقبلاً.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HOW MSL USES EVIDENCE -->
+  <div class="section-label"><div class="dot"></div><span>التطبيق العملي</span></div>
+  <h2>كيف يستخدم MSL الأدلة في الممارسة؟</h2>
+
+  <div class="usage-steps">
+    <div class="usage-step">
+      <span class="us-icon">📖</span>
+      <div class="us-body">
+        <h4>القراءة النقدية أولاً</h4>
+        <p>قبل أي زيارة، يقرأ MSL الدراسة الجديدة بعين ناقدة: نوع الدراسة، حجم العينة، نقاط النهاية، التحيزات المحتملة — ليس فقط الـ Abstract.</p>
+        <span class="us-tag" style="background:#E8F5F3;color:var(--teal);">قبل كل زيارة</span>
+      </div>
+    </div>
+    <div class="usage-step">
+      <span class="us-icon">🔗</span>
+      <div class="us-body">
+        <h4>ربط الأدلة بمرضى الطبيب</h4>
+        <p>«هذه الدراسة شملت مرضى مشابهين لمرضاك — بما فيهم مرضى السكري وذوي الفشل الكلوي الخفيف الذين يُستبعدون عادةً من التجارب.»</p>
+        <span class="us-tag" style="background:var(--orange-bg);color:var(--orange);">أثناء الزيارة</span>
+      </div>
+    </div>
+    <div class="usage-step">
+      <span class="us-icon">⚖️</span>
+      <div class="us-body">
+        <h4>تقديم الأدلة المتعارضة بصدق</h4>
+        <p>إذا كانت هناك دراسة سلبية أو متعارضة — لا يخفيها MSL. يعرضها ويُناقشها بموضوعية. هذا ما يُميّزه عن مندوب المبيعات.</p>
+        <span class="us-tag" style="background:var(--green-bg);color:var(--green);">أساس المصداقية</span>
+      </div>
+    </div>
+    <div class="usage-step">
+      <span class="us-icon">🔍</span>
+      <div class="us-body">
+        <h4>رصد الفجوات المعرفية</h4>
+        <p>حين يسأل الطبيب سؤالاً لا تجيب عنه الأدلة الحالية — يوثق MSL هذه الفجوة ويُرسلها للفريق الداخلي كفرصة بحثية.</p>
+        <span class="us-tag" style="background:var(--purple-bg);color:var(--purple);">بعد الزيارة</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 الفرق بين MSL ومندوب المبيعات في الأدلة</h3>
+    <p>مندوب المبيعات يُقدّم الأدلة الداعمة للمنتج فقط. MSL يُقدّم الصورة الكاملة — بما فيها الحدود والتعارضات والفجوات. هذه الأمانة العلمية هي ما يجعل الطبيب يصف الدواء ثقةً لا ضغطاً.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. ما أفضل نوع دراسة لإثبات أن دواءً جديداً يُخفض معدل الوفيات القلبية؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','b')">أ. دراسة Case-Control على 200 مريض</div>
+      <div class="quiz-option" onclick="answer('q1','b','b')">ب. RCT مزدوجة التعمية على 10,000 مريض مع نقطة نهاية سريرية</div>
+      <div class="quiz-option" onclick="answer('q1','c','b')">ج. Real-World Evidence من سجلات المستشفيات</div>
+      <div class="quiz-option" onclick="answer('q1','d','b')">د. آراء خبراء أمراض القلب الدوليين</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! RCT مزدوجة التعمية مع نقطة نهاية سريرية على عينة كبيرة هو المعيار الذهبي لإثبات السببية والفعالية.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ RCT مزدوجة التعمية مع نقطة نهاية سريرية هو المعيار الذهبي — يُقلّل التحيز ويُثبت العلاقة السببية بأعلى درجة ممكنة.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. دراسة Cohort أظهرت ارتباطاً بين استخدام دواء X وانخفاض نسبة السكتات الدماغية. ما التحيز الرئيسي الذي يجب على MSL أن يذكره عند مناقشة هذه الدراسة؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','c')">أ. Publication Bias لأن الدراسات السلبية لم تُنشر</div>
+      <div class="quiz-option" onclick="answer('q2','b','c')">ب. Recall Bias لأن المرضى لا يتذكرون استخدام الدواء</div>
+      <div class="quiz-option" onclick="answer('q2','c','c')">ج. Confounding Bias — قد يكون مرضى الدواء X يهتمون بصحتهم أكثر أصلاً</div>
+      <div class="quiz-option" onclick="answer('q2','d','c')">د. Attrition Bias لأن كثيراً من المرضى انسحبوا</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! في الدراسات التتبعية، Confounding Bias هو الأبرز — قد تكون هناك متغيرات أخرى تفسر الارتباط غير الدواء نفسه.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ في الدراسات التتبعية الرئيسي هو Confounding Bias — متغيرات مخفية قد تفسر الارتباط بشكل مختلف.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. أعلن طبيب: «دراسة بمليون مريض أثبتت أن دواء Y يُخفض خطر مضاعفات السكري بنسبة 30% (p &lt; 0.001)». ما السؤال الأهم الذي يجب أن يطرحه MSL المتمكن؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. «هل الدراسة مموّلة من شركة منافسة؟»</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. «هل هذه الدراسة منشورة في مجلة محكّمة؟»</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. «ما الخفض المطلق (ARR) والـ NNT؟ دراسة بمليون مريض قد تُظهر فروقاً صغيرة جداً دالة إحصائياً»</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. «هل نوع الدراسة RCT أم Observational؟»</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ ممتاز! مع حجم عينة ضخم كمليون مريض، حتى فروق ضئيلة جداً تصبح دالة إحصائياً. ARR وNNT يُحددان الأهمية السريرية الحقيقية.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ السؤال الأهم هو: ما الـ ARR والـ NNT؟ مع مليون مريض حتى 0.1% فرق يصبح p &lt; 0.001 — لكن قد لا يكون مهماً سريرياً.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. ما الميزة الرئيسية لـ Real-World Evidence على RCT؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','b')">أ. تُثبت العلاقة السببية بشكل أقوى</div>
+      <div class="quiz-option" onclick="answer('q4','b','b')">ب. تعكس أداء الدواء في المرضى الحقيقيين بما فيهم المستبعدون من RCT</div>
+      <div class="quiz-option" onclick="answer('q4','c','b')">ج. خالية تماماً من التحيزات</div>
+      <div class="quiz-option" onclick="answer('q4','d','b')">د. معتمدة من هيئات التسجيل كبديل عن RCT</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ صحيح! RWE تشمل الفئات التي تُستبعد عادةً من RCT — كبار السن والحوامل ومرضى الكلى والكبد — وهم يمثلون الواقع السريري الحقيقي.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ الميزة الرئيسية لـ RWE هي أنها تعكس الممارسة الفعلية وتشمل الفئات الخاصة المستبعدة من RCT — لكنها لا تُثبت السببية بقوة RCT.</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🎓 خلاصة الدرس</h3>
+    <p>فهمت أنواع الأدلة السريرية وهرمها، تعلمت أبرز أنواع التحيز، وعرفت كيف يُقرأ NNT وARR وRRR بصدق. MSL المتمكن لا يُقدّم الأدلة كما تُريدها الشركة — بل كما هي، بقوتها وضعفها. هذه الأمانة هي ما تبني ثقة الطبيب.
+    </p>
+  </div>
+
+</div>
+
+<script>
+function showPyr(id, el) {
+  const panel = document.getElementById(id);
+  const allPanels = document.querySelectorAll('.pyr-detail-panel');
+  const allBlocks = document.querySelectorAll('.pyr-block');
+  const isOpen = panel.classList.contains('open');
+  allPanels.forEach(p => p.classList.remove('open'));
+  allBlocks.forEach(b => b.classList.remove('selected'));
+  if (!isOpen) { panel.classList.add('open'); el.classList.add('selected'); }
+}
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

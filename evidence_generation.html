@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فهم توليد الأدلة العلمية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2342;
+    --teal: #0D7377;
+    --teal-light: #14A085;
+    --gold: #F0A500;
+    --gold-light: #F7C948;
+    --white: #FFFFFF;
+    --off-white: #F5F7FA;
+    --light-gray: #E8EDF2;
+    --text-dark: #1A2B3C;
+    --text-mid: #4A6080;
+    --text-light: #8A9BB0;
+    --red-dark: #991B1B;
+    --red-bg: #FEE2E2;
+    --green: #166534;
+    --green-bg: #D1FAE5;
+    --orange: #92400E;
+    --orange-bg: #FEF3C7;
+    --purple: #7D3C98;
+    --purple-bg: #EDE9FE;
+    --blue: #1E40AF;
+    --blue-bg: #DBEAFE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cairo', 'Tajawal', sans-serif; background: var(--off-white); color: var(--text-dark); direction: rtl; line-height: 1.7; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0A2342 0%, #0A2A1A 100%);
+    padding: 52px 36px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before { content:''; position:absolute; top:-70px; left:-70px; width:320px; height:320px; border-radius:50%; background:var(--teal); opacity:0.09; }
+  .hero::after { content:''; position:absolute; bottom:-50px; right:-40px; width:220px; height:220px; border-radius:50%; background:var(--gold); opacity:0.07; }
+  .hero-badge { display:inline-block; background:var(--teal); color:var(--white); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:16px; position:relative; }
+  .hero h1 { color:var(--white); font-size:clamp(22px,4.5vw,38px); font-weight:900; margin-bottom:10px; position:relative; line-height:1.3; }
+  .hero h1 span { color:var(--gold-light); }
+  .hero-accent { width:56px; height:4px; background:var(--teal); border-radius:2px; margin:14px 0; }
+  .hero p { color:#8A9BB0; font-size:15px; max-width:620px; position:relative; }
+  .hero-meta { display:flex; gap:14px; margin-top:20px; flex-wrap:wrap; }
+  .meta-pill { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:20px; padding:5px 14px; font-size:12px; color:#8A9BB0; }
+  .meta-pill span { color:var(--gold-light); font-weight:700; }
+
+  /* Section */
+  .section { padding:44px 36px; max-width:880px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .section-label .dot { width:9px; height:9px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+  .section-label span { font-size:11px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:24px; font-weight:800; color:var(--navy); margin-bottom:20px; }
+  h3 { font-size:17px; font-weight:700; color:var(--navy); margin-bottom:8px; }
+  p { color:var(--text-mid); margin-bottom:14px; font-size:15px; }
+  .divider { height:1px; background:var(--light-gray); margin:36px 0; }
+
+  /* Evidence pyramid — interactive */
+  .pyramid-wrap { margin:24px 0; }
+  .pyr-level {
+    border-radius:10px; padding:16px 20px; color:var(--white);
+    margin:0 auto 8px; text-align:center;
+    cursor:pointer; transition:all 0.2s; position:relative;
+  }
+  .pyr-level:hover { filter:brightness(1.12); transform:scaleX(1.01); }
+  .pyr-level h4 { font-size:14px; font-weight:800; margin-bottom:3px; }
+  .pyr-level p { font-size:12px; color:rgba(255,255,255,0.85); margin:0; }
+  .pyr-detail {
+    background:var(--white); border-radius:10px; border:1px solid var(--light-gray);
+    padding:16px 20px; margin:-4px 0 10px; font-size:13.5px;
+    color:var(--text-mid); display:none; box-shadow:0 4px 14px rgba(10,35,66,0.08);
+  }
+  .pyr-detail.open { display:block; }
+  .pyr-detail strong { color:var(--navy); }
+  .pyr-labels { display:flex; justify-content:space-between; margin-top:6px; }
+  .pyr-labels span { font-size:11px; color:var(--text-light); font-weight:600; }
+
+  /* Study types grid */
+  .study-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin:24px 0; }
+  .study-card { background:var(--white); border-radius:14px; padding:20px; border:1px solid var(--light-gray); box-shadow:0 4px 14px rgba(10,35,66,0.07); transition:transform 0.2s; }
+  .study-card:hover { transform:translateY(-2px); }
+  .study-card .sc-top { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; }
+  .sc-icon { font-size:26px; flex-shrink:0; }
+  .sc-head h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .sc-head .sc-en { font-size:11px; color:var(--text-light); font-weight:600; }
+  .study-card p { font-size:13px; color:var(--text-mid); margin-bottom:10px; }
+  .sc-bar { display:flex; gap:8px; flex-wrap:wrap; }
+  .sc-tag { font-size:10px; font-weight:700; padding:2px 9px; border-radius:8px; }
+
+  /* RCT explainer */
+  .rct-box { background:var(--white); border-radius:16px; border:1px solid var(--light-gray); overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); margin:24px 0; }
+  .rct-header { background:var(--navy); padding:14px 20px; color:var(--white); font-weight:800; font-size:15px; display:flex; align-items:center; gap:10px; }
+  .rct-body { padding:20px; }
+  .rct-flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; margin:16px 0; }
+  .rct-node { background:var(--off-white); border:2px solid var(--light-gray); border-radius:10px; padding:10px 14px; text-align:center; min-width:110px; }
+  .rct-node.active { border-color:var(--teal); background:#E8F5F3; }
+  .rct-node.gold { border-color:var(--gold); background:#FEF3C7; }
+  .rct-node h5 { font-size:12px; font-weight:800; color:var(--navy); margin-bottom:2px; }
+  .rct-node p { font-size:11px; color:var(--text-mid); margin:0; }
+  .rct-arrow { font-size:18px; color:var(--teal); padding:0 6px; font-weight:700; }
+  .rct-split { display:flex; flex-direction:column; align-items:center; padding:0 6px; }
+  .rct-split-line { width:2px; height:30px; background:var(--teal); }
+  .rct-branches { display:flex; gap:10px; }
+
+  /* Evidence generation cycle */
+  .cycle { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:24px 0; }
+  .cycle-step { background:var(--white); border-radius:12px; padding:18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); display:flex; gap:14px; }
+  .cs-num { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; color:var(--white); flex-shrink:0; }
+  .cs-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .cs-body p { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* RWE vs RCT table */
+  .compare-table { width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.09); font-size:13.5px; margin:20px 0; }
+  .compare-table th { padding:13px 16px; font-weight:800; text-align:center; }
+  .compare-table th:first-child { background:var(--navy); color:var(--gold); text-align:right; width:32%; }
+  .compare-table th:nth-child(2) { background:var(--teal); color:var(--white); }
+  .compare-table th:nth-child(3) { background:#5BA3A0; color:var(--white); }
+  .compare-table td { padding:12px 16px; border-bottom:1px solid var(--light-gray); text-align:center; vertical-align:middle; }
+  .compare-table td:first-child { background:#F8FAFC; font-weight:700; color:var(--navy); text-align:right; font-size:12px; }
+  .compare-table tr:nth-child(even) td { background:#F3F4F6; }
+  .compare-table tr:nth-child(even) td:first-child { background:#EFF2F5; }
+  .compare-table tr:last-child td { border-bottom:none; }
+
+  /* MSL role */
+  .msl-roles { display:flex; flex-direction:column; gap:12px; margin:20px 0; }
+  .msl-role-item { display:flex; gap:14px; align-items:flex-start; background:var(--white); border-radius:12px; padding:16px 18px; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .mri-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .mri-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .mri-body p { font-size:13px; color:var(--text-mid); margin:0; }
+  .mri-tag { display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:8px; margin-top:6px; }
+
+  /* Alert */
+  .alert-box { border-radius:14px; padding:20px 22px; margin:18px 0; display:flex; gap:14px; }
+  .alert-box .ab-icon { font-size:24px; flex-shrink:0; }
+  .alert-box h4 { font-size:14px; font-weight:800; margin-bottom:5px; }
+  .alert-box p { font-size:13.5px; margin:0; }
+  .alert-teal { background:#E8F5F3; border:1px solid #6EE7B7; }
+  .alert-teal h4 { color:var(--teal); } .alert-teal p { color:#065F46; }
+  .alert-gold { background:var(--orange-bg); border:1px solid #FCD34D; }
+  .alert-gold h4 { color:var(--orange); } .alert-gold p { color:#78350F; }
+  .alert-navy { background:var(--blue-bg); border:1px solid #93C5FD; }
+  .alert-navy h4 { color:var(--blue); } .alert-navy p { color:#1e3a8a; }
+
+  /* Highlight */
+  .highlight { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:16px; padding:28px 32px; margin:24px 0; color:var(--white); }
+  .highlight h3 { color:var(--gold-light); font-size:17px; margin-bottom:10px; }
+  .highlight p { color:#C8D8E8; font-size:14px; margin:0; }
+
+  /* ISS section */
+  .iss-steps { display:flex; flex-direction:column; gap:0; margin:20px 0; position:relative; }
+  .iss-steps::before { content:''; position:absolute; top:24px; right:23px; bottom:24px; width:2px; background:var(--light-gray); }
+  .iss-item { display:flex; gap:16px; padding-bottom:18px; position:relative; z-index:1; }
+  .iss-item:last-child { padding-bottom:0; }
+  .iss-dot { width:48px; height:48px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:var(--white); }
+  .iss-body { background:var(--white); border-radius:12px; padding:15px 18px; flex:1; border:1px solid var(--light-gray); box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .iss-body h4 { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:4px; }
+  .iss-body p { font-size:13px; color:var(--text-mid); margin:0; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:28px; border:2px solid var(--light-gray); margin:28px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:18px; font-size:19px; }
+  .quiz-q { margin-bottom:22px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:10px; font-size:14px; }
+  .quiz-option { display:flex; align-items:flex-start; gap:10px; padding:11px 14px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:7px; cursor:pointer; transition:all .2s; font-size:13.5px; color:var(--text-dark); }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+  .quiz-feedback { font-size:12.5px; padding:8px 12px; border-radius:8px; margin-top:6px; display:none; }
+  .quiz-feedback.show { display:block; }
+  .quiz-feedback.correct-fb { background:var(--green-bg); color:var(--green); }
+  .quiz-feedback.wrong-fb { background:var(--red-bg); color:var(--red-dark); }
+
+  @media(max-width:600px){
+    .hero,.section { padding:28px 18px; }
+    .cycle { grid-template-columns:1fr; }
+    .rct-flow { flex-direction:column; }
+    .rct-arrow { transform:rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🔬 توليد الأدلة</div>
+  <h1>فهم <span>توليد الأدلة العلمية</span></h1>
+  <div class="hero-accent"></div>
+  <p>كيف تُولَد الأدلة العلمية؟ وكيف يفهمها ويستخدمها MSL في تبادله العلمي مع الأطباء؟</p>
+  <div class="hero-meta">
+    <div class="meta-pill">⏱️ المدة: <span>45 دقيقة</span></div>
+    <div class="meta-pill">📊 المستوى: <span>مبتدئ</span></div>
+    <div class="meta-pill">🎯 الأسئلة: <span>٤ أسئلة</span></div>
+  </div>
+</div>
+
+<div class="section">
+
+  <!-- WHAT IS EVIDENCE -->
+  <div class="section-label"><div class="dot"></div><span>المفهوم</span></div>
+  <h2>ما هو توليد الأدلة العلمية؟</h2>
+  <p>توليد الأدلة (Evidence Generation) هو العملية المنهجية لإنتاج بيانات علمية موثوقة تثبت أو تنفي فاعلية الدواء وأمانه وقيمته الصحية. هذه الأدلة هي أساس كل قرار علاجي يتخذه الطبيب.</p>
+  <p>بالنسبة لـ MSL، فهم مصدر وجودة الأدلة يُحدد <strong>كيف يُقدّمها وكيف يُجيب على تساؤلات الأطباء</strong> حولها.</p>
+
+  <div class="alert-teal">
+    <span class="ab-icon">💡</span>
+    <div>
+      <h4>لماذا يهم هذا MSL؟</h4>
+      <p>الطبيب الكبير لن يقبل مجرد «دراساتنا تقول X». سيسأل: ما نوع الدراسة؟ كم حجم العينة؟ من موّلها؟ MSL الذي يعرف إجابات هذه الأسئلة يكسب الثقة العلمية — وهي العملة الوحيدة في هذا الدور.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EVIDENCE PYRAMID -->
+  <div class="section-label"><div class="dot"></div><span>هرم الأدلة</span></div>
+  <h2>هرم الأدلة العلمية — اضغط على كل مستوى للتفاصيل</h2>
+
+  <div class="pyramid-wrap">
+    <div class="pyr-level" style="background:var(--navy); max-width:100%;" onclick="togglePyr(this)">
+      <h4>🥇 Systematic Review & Meta-Analysis</h4>
+      <p>المراجعة المنهجية والتحليل التلوي</p>
+    </div>
+    <div class="pyr-detail">
+      <strong>ما هو:</strong> يجمع نتائج عشرات أو مئات الدراسات ويحللها إحصائياً للوصول لاستنتاج أقوى.<br><br>
+      <strong>مثال:</strong> مراجعة تجمع 42 دراسة RCT عن دواء X وتحسب تأثيره الإجمالي.<br><br>
+      <strong>نقطة ضعف:</strong> جودته تعتمد على جودة الدراسات المدرجة — «مراجعة ضعيفة لدراسات ضعيفة» لا تزال ضعيفة.<br><br>
+      <strong>كيف يستخدمه MSL:</strong> المرجع الأقوى في أي نقاش علمي مع KOL.
+    </div>
+
+    <div class="pyr-level" style="background:var(--teal); max-width:88%;" onclick="togglePyr(this)">
+      <h4>RCT — Randomized Controlled Trial</h4>
+      <p>التجربة العشوائية المضبوطة</p>
+    </div>
+    <div class="pyr-detail">
+      <strong>ما هو:</strong> يوزع المرضى عشوائياً بين مجموعة العلاج ومجموعة المقارنة لقياس تأثير التدخل بدقة.<br><br>
+      <strong>أنواع:</strong> مزدوج التعمية (Double-blind) — أحادي التعمية — مفتوح.<br><br>
+      <strong>المعيار الذهبي لـ:</strong> إثبات الفعالية والسببية.<br><br>
+      <strong>نقطة ضعف:</strong> باهظ التكلفة، بيئة مصطنعة قد لا تعكس الواقع السريري الحقيقي.
+    </div>
+
+    <div class="pyr-level" style="background:var(--teal-light); max-width:76%;" onclick="togglePyr(this)">
+      <h4>Cohort & Case-Control Studies</h4>
+      <p>الدراسات التتبعية ودراسات الحالة والشاهد</p>
+    </div>
+    <div class="pyr-detail">
+      <strong>Cohort:</strong> يتابع مجموعة عبر الزمن لرصد من يُصاب بالمرض ومن لا يُصاب.<br><br>
+      <strong>Case-Control:</strong> يقارن مجموعة مرضى بمجموعة سليمة للبحث عن عوامل الخطر.<br><br>
+      <strong>ميزة:</strong> مفيدة لدراسة الأمراض النادرة أو الأمراض التي تستغرق سنوات للتطور.<br><br>
+      <strong>نقطة ضعف:</strong> عرضة لتحيزات الانتقاء والتحيز الزمني.
+    </div>
+
+    <div class="pyr-level" style="background:#5BA3A0; max-width:64%;" onclick="togglePyr(this)">
+      <h4>Cross-Sectional Studies</h4>
+      <p>الدراسات المقطعية</p>
+    </div>
+    <div class="pyr-detail">
+      <strong>ما هو:</strong> يأخذ «لقطة» لمجموعة في نقطة زمنية واحدة لقياس انتشار المرض أو العلاقة بين متغيرين.<br><br>
+      <strong>مثال:</strong> قياس نسبة مرضى السكري الذين يستخدمون دواء X في مستشفى معين.<br><br>
+      <strong>نقطة ضعف:</strong> لا تثبت السببية — فقط الارتباط في لحظة واحدة.
+    </div>
+
+    <div class="pyr-level" style="background:var(--text-mid); max-width:52%;" onclick="togglePyr(this)">
+      <h4>Case Reports & Expert Opinion</h4>
+      <p>تقارير الحالات وآراء الخبراء</p>
+    </div>
+    <div class="pyr-detail">
+      <strong>Case Reports:</strong> توثيق حالة مريض واحد أو مجموعة صغيرة — مفيدة لاكتشاف الأحداث النادرة.<br><br>
+      <strong>Expert Opinion:</strong> رأي خبراء بناءً على تجربتهم السريرية — أدنى مستوى دليل رسمي.<br><br>
+      <strong>متى تُستخدم:</strong> لتوليد فرضيات تُدرس لاحقاً بمنهجية أعلى.<br><br>
+      <strong>تنبيه MSL:</strong> لا تستند لآراء الخبراء وحدها في النقاشات العلمية مع KOL.
+    </div>
+
+    <div class="pyr-labels">
+      <span>← أدنى مستوى دليل</span>
+      <span>أعلى مستوى دليل →</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STUDY DESIGN TYPES -->
+  <div class="section-label"><div class="dot"></div><span>تصاميم الدراسات</span></div>
+  <h2>أنواع الدراسات السريرية التي يواجهها MSL</h2>
+
+  <div class="study-grid">
+    <div class="study-card">
+      <div class="sc-top">
+        <span class="sc-icon">🧪</span>
+        <div class="sc-head">
+          <h4>Phase I — II — III — IV</h4>
+          <div class="sc-en">Clinical Trial Phases</div>
+        </div>
+      </div>
+      <p>مراحل التطوير السريري: من السلامة الأولى على البشر (Phase I) حتى مراقبة ما بعد التسويق (Phase IV).</p>
+      <div class="sc-bar">
+        <span class="sc-tag" style="background:#E8F5F3;color:var(--teal);">Phase I: السلامة</span>
+        <span class="sc-tag" style="background:var(--orange-bg);color:var(--orange);">Phase III: الفعالية</span>
+        <span class="sc-tag" style="background:var(--blue-bg);color:var(--blue);">Phase IV: ما بعد التسويق</span>
+      </div>
+    </div>
+
+    <div class="study-card">
+      <div class="sc-top">
+        <span class="sc-icon">🌍</span>
+        <div class="sc-head">
+          <h4>Real-World Evidence (RWE)</h4>
+          <div class="sc-en">أدلة الواقع الحقيقي</div>
+        </div>
+      </div>
+      <p>بيانات تُجمع من الممارسة السريرية الفعلية خارج بيئة التجارب المضبوطة — تعكس أداء الدواء في «الحياة الحقيقية».</p>
+      <div class="sc-bar">
+        <span class="sc-tag" style="background:var(--green-bg);color:var(--green);">واقعي أكثر</span>
+        <span class="sc-tag" style="background:var(--red-bg);color:var(--red-dark);">تحيزات أكثر</span>
+      </div>
+    </div>
+
+    <div class="study-card">
+      <div class="sc-top">
+        <span class="sc-icon">🔬</span>
+        <div class="sc-head">
+          <h4>Investigator-Sponsored Studies (ISS)</h4>
+          <div class="sc-en">الدراسات التي يبادر بها الباحثون</div>
+        </div>
+      </div>
+      <p>دراسات يقترحها ويُديرها الأطباء بأنفسهم بدعم من الشركة — تُولّد أدلة مستقلة وموثوقة من منظور أكاديمي.</p>
+      <div class="sc-bar">
+        <span class="sc-tag" style="background:var(--purple-bg);color:var(--purple);">دور MSL محوري</span>
+        <span class="sc-tag" style="background:var(--blue-bg);color:var(--blue);">مصداقية عالية</span>
+      </div>
+    </div>
+
+    <div class="study-card">
+      <div class="sc-top">
+        <span class="sc-icon">📊</span>
+        <div class="sc-head">
+          <h4>Health Economics Studies (HEOR)</h4>
+          <div class="sc-en">دراسات الاقتصاد الصحي</div>
+        </div>
+      </div>
+      <p>تقيس الجدوى الاقتصادية للدواء — تكلفة العلاج مقابل الفائدة الصحية (Cost-Effectiveness) لتبرير التغطية التأمينية.</p>
+      <div class="sc-bar">
+        <span class="sc-tag" style="background:var(--orange-bg);color:var(--orange);">للجهات التأمينية</span>
+        <span class="sc-tag" style="background:var(--light-gray);color:var(--text-mid);">صانعو القرار</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RCT EXPLAINER -->
+  <div class="section-label"><div class="dot"></div><span>المعيار الذهبي</span></div>
+  <h2>كيف تعمل التجربة العشوائية المضبوطة (RCT)؟</h2>
+
+  <div class="rct-box">
+    <div class="rct-header">🧪 بنية RCT — المعيار الذهبي لإثبات الفعالية</div>
+    <div class="rct-body">
+      <div class="rct-flow">
+        <div class="rct-node active"><h5>🏥 مجموعة المرضى</h5><p>معايير إدراج وإقصاء دقيقة</p></div>
+        <div class="rct-arrow">←</div>
+        <div class="rct-node gold"><h5>🎲 التوزيع العشوائي</h5><p>Randomization</p></div>
+        <div class="rct-arrow">←</div>
+        <div class="rct-split">
+          <div class="rct-branches">
+            <div class="rct-node active"><h5>💊 مجموعة الدواء</h5><p>Treatment Arm</p></div>
+            <div class="rct-node"><h5>💉 مجموعة المقارنة</h5><p>Control / Placebo</p></div>
+          </div>
+        </div>
+        <div class="rct-arrow">←</div>
+        <div class="rct-node gold"><h5>📊 قياس النتائج</h5><p>Primary Endpoint</p></div>
+      </div>
+      <div style="margin-top:16px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;">
+        <div style="background:var(--off-white); border-radius:8px; padding:12px; text-align:center;">
+          <div style="font-size:20px; margin-bottom:4px;">🙈</div>
+          <div style="font-size:12px; font-weight:700; color:var(--navy);">Single-Blind</div>
+          <div style="font-size:11px; color:var(--text-mid);">المريض لا يعلم</div>
+        </div>
+        <div style="background:#E8F5F3; border-radius:8px; padding:12px; text-align:center; border:1px solid #6EE7B7;">
+          <div style="font-size:20px; margin-bottom:4px;">🙈🙈</div>
+          <div style="font-size:12px; font-weight:800; color:var(--teal);">Double-Blind ✦</div>
+          <div style="font-size:11px; color:var(--text-mid);">المريض والطبيب لا يعلمان</div>
+        </div>
+        <div style="background:var(--off-white); border-radius:8px; padding:12px; text-align:center;">
+          <div style="font-size:20px; margin-bottom:4px;">👁️</div>
+          <div style="font-size:12px; font-weight:700; color:var(--navy);">Open-Label</div>
+          <div style="font-size:11px; color:var(--text-mid);">الجميع يعلم</div>
+        </div>
+      </div>
+      <p style="font-size:12px; color:var(--text-light); text-align:center; margin-top:8px; margin-bottom:0;">✦ Double-Blind هو الأقوى في تقليل التحيز</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RWE vs RCT -->
+  <div class="section-label"><div class="dot"></div><span>RCT مقابل RWE</span></div>
+  <h2>RCT مقابل Real-World Evidence — متى تستخدم كلاً منهما؟</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>المعيار</th>
+        <th>RCT</th>
+        <th>Real-World Evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>البيئة</td><td>مضبوطة واصطناعية</td><td>الممارسة الفعلية</td></tr>
+      <tr><td>قوة الدليل على السببية</td><td>عالية جداً ✅</td><td>متوسطة</td></tr>
+      <tr><td>تعكس الواقع السريري</td><td>محدود</td><td>عالية جداً ✅</td></tr>
+      <tr><td>التكلفة</td><td>مرتفعة جداً</td><td>منخفضة نسبياً</td></tr>
+      <tr><td>حجم العينة</td><td>محدود ومقيّد</td><td>كبير جداً</td></tr>
+      <tr><td>التحيزات</td><td>مضبوطة جيداً</td><td>صعبة الضبط</td></tr>
+      <tr><td>المجموعات الخاصة</td><td>كثيراً ما تُستبعد</td><td>تُدرج طبيعياً ✅</td></tr>
+      <tr><td>الاستخدام الأمثل</td><td>إثبات الفعالية الأولية</td><td>تأكيد الفعالية في الواقع</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert-gold">
+    <span class="ab-icon">📌</span>
+    <div>
+      <h4>كيف يستخدم MSL كلاً منهما؟</h4>
+      <p>RCT لإثبات «هل يعمل الدواء؟» في بيئة مثالية — RWE لإجابة «هل يعمل في مرضاي الفعليين؟» MSL الذكي يربط الاثنين معاً في حواره مع الطبيب.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- EVIDENCE GENERATION CYCLE -->
+  <div class="section-label"><div class="dot"></div><span>دورة توليد الأدلة</span></div>
+  <h2>دورة توليد الأدلة — من الفكرة إلى التغيير السريري</h2>
+
+  <div class="cycle">
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--navy);">١</div>
+      <div class="cs-body"><h4>تحديد الفجوة المعرفية</h4><p>ما السؤال الطبي غير المُجاب؟ ما الجانب غير الواضح في فعالية الدواء؟</p></div>
+    </div>
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--teal);">٢</div>
+      <div class="cs-body"><h4>تصميم الدراسة المناسبة</h4><p>اختيار نوع الدراسة الأنسب (RCT, RWE, ISS) بناءً على السؤال والموارد المتاحة.</p></div>
+    </div>
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--purple);">٣</div>
+      <div class="cs-body"><h4>جمع البيانات وتحليلها</h4><p>إجراء الدراسة، جمع البيانات، التحليل الإحصائي الموضوعي بما فيه النتائج السلبية.</p></div>
+    </div>
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--gold); color:var(--navy);">٤</div>
+      <div class="cs-body"><h4>النشر في مجلات محكّمة</h4><p>تقديم البيانات للمجتمع العلمي عبر Peer-Review لضمان الجودة والموضوعية.</p></div>
+    </div>
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--teal-light);">٥</div>
+      <div class="cs-body"><h4>التبادل العلمي مع MSL</h4><p>يُترجم MSL النتائج لحوارات علمية مع الأطباء ويجمع ردود فعلهم من الواقع السريري.</p></div>
+    </div>
+    <div class="cycle-step">
+      <div class="cs-num" style="background:var(--red-dark);">٦</div>
+      <div class="cs-body"><h4>التأثير على الممارسة السريرية</h4><p>تُغيّر الأدلة الإرشادات العلاجية، قرارات الأطباء، وفي النهاية نتائج المرضى.</p></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ISS -->
+  <div class="section-label"><div class="dot"></div><span>دور MSL في ISS</span></div>
+  <h2>دور MSL في الدراسات التي يبادر بها الباحثون (ISS)</h2>
+  <p>ISS — Investigator-Sponsored Studies — هي من أهم الأدوار الاستراتيجية لـ MSL في توليد الأدلة.</p>
+
+  <div class="iss-steps">
+    <div class="iss-item">
+      <div class="iss-dot" style="background:var(--teal);">١</div>
+      <div class="iss-body"><h4>تحديد الباحث المهتم</h4><p>يرصد MSL خلال زياراته أطباء لديهم سؤال بحثي مرتبط بمجال الشركة ولديهم القدرة على إجراء دراسة.</p></div>
+    </div>
+    <div class="iss-item">
+      <div class="iss-dot" style="background:var(--navy);">٢</div>
+      <div class="iss-body"><h4>تقييم الجدوى العلمية</h4><p>يناقش MSL الفكرة مع فريق Medical Affairs الداخلي لتقييم ما إذا كانت تتوافق مع الأهداف العلمية للشركة وتُضيف قيمة حقيقية.</p></div>
+    </div>
+    <div class="iss-item">
+      <div class="iss-dot" style="background:var(--purple);">٣</div>
+      <div class="iss-body"><h4>تسهيل عملية الاعتماد</h4><p>يُسهّل MSL مرور الطلب عبر اللجان الداخلية للموافقة على تمويل الدراسة أو توفير الدواء أو الدعم اللوجستي.</p></div>
+    </div>
+    <div class="iss-item">
+      <div class="iss-dot" style="background:var(--gold); color:var(--navy);">٤</div>
+      <div class="iss-body"><h4>المتابعة طوال الدراسة</h4><p>يبقى MSL على تواصل مع الباحث طوال الدراسة — يُقدم الدعم العلمي دون التدخل في الاستقلالية البحثية.</p></div>
+    </div>
+    <div class="iss-item">
+      <div class="iss-dot" style="background:var(--teal-light);">٥</div>
+      <div class="iss-body"><h4>مشاركة النتائج</h4><p>بعد النشر، يُستخدم MSL النتائج في التبادل العلمي مع KOL آخرين — مع الحرص على تقديم النتائج السلبية أيضاً بشفافية.</p></div>
+    </div>
+  </div>
+
+  <div class="alert-navy">
+    <span class="ab-icon">⚠️</span>
+    <div>
+      <h4>قاعدة أساسية: الاستقلالية البحثية مقدسة</h4>
+      <p>لا يحق لـ MSL أو للشركة التأثير على نتائج ISS أو طريقة التحليل. أي تدخل في الاستقلالية البحثية يُفسد القيمة العلمية للدراسة بالكامل.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MSL ROLE SUMMARY -->
+  <div class="section-label"><div class="dot"></div><span>دور MSL في الأدلة</span></div>
+  <h2>كيف يستخدم MSL الأدلة العلمية؟</h2>
+
+  <div class="msl-roles">
+    <div class="msl-role-item">
+      <span class="mri-icon">📖</span>
+      <div class="mri-body">
+        <h4>قراءة وتقييم الأبحاث</h4>
+        <p>يقرأ MSL الورقة البحثية بعين ناقدة — يحدد القوة والضعف في التصميم، يتحقق من إطار PICO، ويقيّم الأهمية السريرية مقابل الإحصائية.</p>
+        <span class="mri-tag" style="background:#E8F5F3;color:var(--teal);">مهارة أساسية يومية</span>
+      </div>
+    </div>
+    <div class="msl-role-item">
+      <span class="mri-icon">💬</span>
+      <div class="mri-body">
+        <h4>تبسيط الأدلة للأطباء</h4>
+        <p>يُترجم الأرقام والإحصاءات إلى معنى سريري مفهوم — «هذا يعني أن 1 من كل 12 مريضاً سيتجنب حدثاً قلبياً بفضل هذا العلاج».</p>
+        <span class="mri-tag" style="background:var(--orange-bg);color:var(--orange);">تميّز MSL عن غيره</span>
+      </div>
+    </div>
+    <div class="msl-role-item">
+      <span class="mri-icon">🔍</span>
+      <div class="mri-body">
+        <h4>تحديد فجوات الأدلة</h4>
+        <p>من خلال حواراته مع الأطباء، يرصد MSL الأسئلة غير المُجابة والفجوات المعرفية — يُرسلها للفريق الداخلي لتوجيه أبحاث المستقبل.</p>
+        <span class="mri-tag" style="background:var(--purple-bg);color:var(--purple);">يُشكّل مستقبل الأدلة</span>
+      </div>
+    </div>
+    <div class="msl-role-item">
+      <span class="mri-icon">⚖️</span>
+      <div class="mri-body">
+        <h4>الموضوعية الكاملة</h4>
+        <p>يُقدّم الأدلة بشكل متوازن — بما فيها الدراسات التي تُظهر نتائج سلبية أو حدوداً لمنتج شركته. هذه الموضوعية هي ما يبني الثقة.</p>
+        <span class="mri-tag" style="background:var(--green-bg);color:var(--green);">أساس المصداقية</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3>🌟 MSL = مُترجم الأدلة العلمية</h3>
+    <p>الورقة البحثية وحدها لا تُغيّر الممارسة السريرية. MSL هو من يجعل هذه الأدلة حيّة في ذهن الطبيب — يربطها بمرضاه الفعليين، ويُجيب على التساؤلات، ويفتح حواراً علمياً حقيقياً. هذا هو الفرق بين نشر بحث وتغيير واقع طبي.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <h3>🎯 اختبر فهمك</h3>
+
+    <div class="quiz-q" id="q1">
+      <p>١. ما أعلى مستوى في هرم الأدلة العلمية؟</p>
+      <div class="quiz-option" onclick="answer('q1','a','d')">أ. RCT — التجربة العشوائية المضبوطة</div>
+      <div class="quiz-option" onclick="answer('q1','b','d')">ب. آراء الخبراء السريريين</div>
+      <div class="quiz-option" onclick="answer('q1','c','d')">ج. Real-World Evidence</div>
+      <div class="quiz-option" onclick="answer('q1','d','d')">د. Systematic Review & Meta-Analysis — المراجعة المنهجية والتحليل التلوي</div>
+      <div class="quiz-feedback" id="fb-q1-c">✅ صحيح! المراجعة المنهجية والتحليل التلوي تجمع وتحلل نتائج عشرات الدراسات — مما يجعلها أقوى دليل علمي متاح.</div>
+      <div class="quiz-feedback" id="fb-q1-w">❌ الأعلى هو Systematic Review & Meta-Analysis لأنه يجمع ويحلل نتائج عشرات الدراسات معاً.</div>
+    </div>
+
+    <div class="quiz-q" id="q2">
+      <p>٢. ما الفرق الرئيسي بين RCT وReal-World Evidence؟</p>
+      <div class="quiz-option" onclick="answer('q2','a','b')">أ. RCT أرخص وأسهل تنفيذاً من RWE</div>
+      <div class="quiz-option" onclick="answer('q2','b','b')">ب. RCT يُجرى في بيئة مضبوطة ويُثبت السببية، بينما RWE يعكس الممارسة السريرية الفعلية</div>
+      <div class="quiz-option" onclick="answer('q2','c','b')">ج. RWE أقوى من RCT في إثبات فعالية الدواء</div>
+      <div class="quiz-option" onclick="answer('q2','d','b')">د. لا فرق بينهما في القيمة العلمية</div>
+      <div class="quiz-feedback" id="fb-q2-c">✅ ممتاز! RCT يثبت «هل يعمل الدواء في بيئة مثالية؟» بينما RWE يُجيب «هل يعمل في المرضى الحقيقيين؟» — وكلاهما ضروري.</div>
+      <div class="quiz-feedback" id="fb-q2-w">❌ RCT يُجرى في بيئة مضبوطة ويُثبت السببية بشكل أقوى، بينما RWE يعكس الواقع السريري بشكل أكثر دقة.</div>
+    </div>
+
+    <div class="quiz-q" id="q3">
+      <p>٣. ما دور MSL في الدراسات التي يبادر بها الباحثون (ISS)؟</p>
+      <div class="quiz-option" onclick="answer('q3','a','c')">أ. تصميم الدراسة وإدارتها بالكامل نيابةً عن الطبيب</div>
+      <div class="quiz-option" onclick="answer('q3','b','c')">ب. منع الطبيب من نشر النتائج السلبية</div>
+      <div class="quiz-option" onclick="answer('q3','c','c')">ج. تحديد الباحثين المهتمين وتسهيل الدعم دون التدخل في الاستقلالية البحثية</div>
+      <div class="quiz-option" onclick="answer('q3','d','c')">د. تمويل الدراسة مقابل الحصول على نتائج إيجابية مضمونة</div>
+      <div class="quiz-feedback" id="fb-q3-c">✅ تماماً! MSL يُسهّل ويدعم لكن لا يتدخل في الاستقلالية البحثية — هذا هو جوهر مصداقية ISS.</div>
+      <div class="quiz-feedback" id="fb-q3-w">❌ دور MSL في ISS هو التسهيل والدعم فقط — الاستقلالية البحثية للطبيب مقدسة ولا يجوز التدخل فيها.</div>
+    </div>
+
+    <div class="quiz-q" id="q4">
+      <p>٤. طبيب سألك: «دراسة شركتك أظهرت خفضاً نسبياً (RRR) بنسبة 50% — هل هذا مهم سريرياً؟» ما إجابة MSL المتمكن؟</p>
+      <div class="quiz-option" onclick="answer('q4','a','c')">أ. «نعم، 50% خفض عظيم جداً ويستحق الوصف فوراً»</div>
+      <div class="quiz-option" onclick="answer('q4','b','c')">ب. «سأحتاج الرجوع للشركة للإجابة على هذا»</div>
+      <div class="quiz-option" onclick="answer('q4','c','c')">ج. «دعنا ننظر للخفض المطلق (ARR) والـ NNT أيضاً — فالـ RRR وحده قد يكون مضللاً بدون السياق الكامل»</div>
+      <div class="quiz-option" onclick="answer('q4','d','c')">د. «هذا يعتمد على رأي الطبيب المعالج وليس من اختصاصي»</div>
+      <div class="quiz-feedback" id="fb-q4-c">✅ ممتاز! MSL المتمكن يعرف أن RRR بدون ARR وNNT قد يكون مضللاً. هذا النوع من الشفافية العلمية هو ما يميزه.</div>
+      <div class="quiz-feedback" id="fb-q4-w">❌ الإجابة الصحيحة هي طلب الصورة الكاملة: ARR + NNT + RRR معاً. الـ RRR وحده بدون سياقه الكامل قد يُضلل.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="highlight">
+    <h3>🎓 ما تعلمته في هذا الدرس</h3>
+    <p>فهمت هرم الأدلة العلمية وأنواع الدراسات التي يواجهها MSL، عرفت الفرق بين RCT وRWE وISS، وتعلمت كيف يُترجم MSL الأدلة إلى حوار علمي حقيقي مع الأطباء. الأدلة هي سلاح MSL — ومعرفة نقاط قوتها وضعفها هي ما يُميّزه.</p>
+  </div>
+
+</div>
+
+<script>
+function togglePyr(el) {
+  const next = el.nextElementSibling;
+  const isOpen = next.classList.contains('open');
+  document.querySelectorAll('.pyr-detail').forEach(d => d.classList.remove('open'));
+  if (!isOpen) next.classList.add('open');
+}
+function answer(qId, chosen, correct) {
+  const opts = document.querySelectorAll(`#${qId} .quiz-option`);
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  const letters = ['a','b','c','d'];
+  const idx = letters.indexOf(chosen);
+  if (idx > -1) opts[idx].classList.add(chosen === correct ? 'correct' : 'wrong');
+  document.querySelectorAll(`[id^="fb-${qId}"]`).forEach(f => { f.classList.remove('show','correct-fb','wrong-fb'); f.style.display='none'; });
+  const fb = document.getElementById(`fb-${qId}-${chosen === correct ? 'c' : 'w'}`);
+  if (fb) { fb.style.display='block'; fb.classList.add('show', chosen === correct ? 'correct-fb' : 'wrong-fb'); }
+}
+</script>
+</body>
+</html>

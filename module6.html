@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الوحدة ٦ – مسيرة الانتقال المهني</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --navy:#0A2342; --teal:#0D7377; --teal-light:#14A085; --gold:#F0A500; --purple:#7D3C98; --white:#FFFFFF; --off-white:#F5F7FA; --light-gray:#E8EDF2; --text-dark:#1A2B3C; --text-mid:#4A6080; --text-light:#8A9BB0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Cairo',sans-serif; background:var(--off-white); color:var(--text-dark); direction:rtl; line-height:1.7; }
+  .progress-bar { background:var(--teal); height:5px; }
+  .progress-fill { height:100%; background:var(--gold); width:100%; }
+  .hero { background:var(--navy); padding:60px 40px 50px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; right:-40px; width:300px; height:300px; border-radius:50%; background:var(--purple); opacity:0.1; }
+  .hero-badge { display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:12px; padding:5px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { color:var(--white); font-size:clamp(24px,5vw,40px); font-weight:900; margin-bottom:12px; }
+  .hero h1 span { color:var(--gold); }
+  .hero-accent { width:60px; height:4px; background:var(--teal); border-radius:2px; margin:16px 0; }
+  .hero p { color:#8A9BB0; font-size:16px; max-width:640px; }
+  .section { padding:50px 40px; max-width:900px; margin:0 auto; }
+  .section-label { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .section-label .dot { width:10px; height:10px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .section-label span { font-size:12px; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:26px; font-weight:800; color:var(--navy); margin-bottom:24px; }
+  h3 { font-size:18px; font-weight:700; color:var(--navy); margin-bottom:10px; }
+  p { color:var(--text-mid); margin-bottom:16px; font-size:15.5px; }
+  .divider { height:1px; background:var(--light-gray); margin:40px 0; }
+
+  /* Qualifications grid */
+  .quals-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:24px 0; }
+  .qual-card { background:var(--white); border-radius:14px; padding:22px; border:1px solid var(--light-gray); box-shadow:0 2px 10px rgba(10,35,66,0.06); overflow:hidden; position:relative; }
+  .qual-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+  .qual-card.q1::before { background:var(--navy); }
+  .qual-card.q2::before { background:var(--teal); }
+  .qual-card.q3::before { background:var(--gold); }
+  .qual-card.q4::before { background:var(--purple); }
+  .qual-card h4 { font-size:14px; font-weight:800; color:var(--navy); margin-bottom:10px; margin-top:4px; }
+  .qual-card ul { list-style:none; }
+  .qual-card li { font-size:13px; color:var(--text-mid); padding:5px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:8px; align-items:flex-start; }
+  .qual-card li:last-child { border-bottom:none; }
+  .qual-card li::before { content:'◆'; font-size:8px; color:var(--teal); margin-top:5px; flex-shrink:0; }
+
+  /* Roadmap */
+  .roadmap { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin:24px 0; }
+  .phase { background:var(--white); border-radius:14px; overflow:hidden; box-shadow:0 4px 16px rgba(10,35,66,0.08); }
+  .phase-header { padding:16px 20px; }
+  .phase-header .phase-num { font-size:11px; font-weight:800; opacity:0.8; margin-bottom:2px; }
+  .phase-header h4 { font-size:15px; font-weight:800; color:var(--white); }
+  .phase-header .phase-months { font-size:12px; color:rgba(255,255,255,0.75); margin-top:2px; }
+  .phase-body { padding:16px 20px; }
+  .phase-body ul { list-style:none; }
+  .phase-body li { font-size:13.5px; color:var(--text-dark); padding:7px 0; border-bottom:1px solid var(--light-gray); display:flex; gap:8px; align-items:flex-start; }
+  .phase-body li:last-child { border-bottom:none; }
+  .phase-body li::before { content:'→'; color:var(--teal); font-weight:700; flex-shrink:0; }
+
+  /* Interview prep */
+  .interview-qs { display:flex; flex-direction:column; gap:14px; margin:24px 0; }
+  .iq-item { background:var(--white); border-radius:12px; border:1px solid var(--light-gray); overflow:hidden; box-shadow:0 2px 8px rgba(10,35,66,0.05); }
+  .iq-question { padding:16px 20px; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-size:14px; font-weight:600; color:var(--navy); }
+  .iq-question:hover { background:#F8FAFC; }
+  .iq-answer { padding:0 20px 16px; font-size:13.5px; color:var(--text-mid); display:none; border-top:1px solid var(--light-gray); padding-top:12px; }
+  .iq-answer.open { display:block; }
+  .iq-toggle { font-size:18px; color:var(--teal); font-weight:700; }
+
+  /* CV tips */
+  .cv-tips { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+  .cv-do { background:#F0FDF4; border:1px solid #86EFAC; border-radius:12px; padding:20px; }
+  .cv-dont { background:#FEF2F2; border:1px solid #FCA5A5; border-radius:12px; padding:20px; }
+  .cv-do h4 { color:#166534; font-size:14px; margin-bottom:10px; }
+  .cv-dont h4 { color:#991B1B; font-size:14px; margin-bottom:10px; }
+  .cv-do li, .cv-dont li { font-size:13px; padding:4px 0; color:var(--text-mid); }
+  .cv-do li::before { content:'✓ '; color:#166534; font-weight:700; }
+  .cv-dont li::before { content:'✗ '; color:#991B1B; font-weight:700; }
+  .cv-do ul, .cv-dont ul { list-style:none; }
+
+  /* Closing banner */
+  .closing { background:linear-gradient(135deg,var(--navy),#1A3A5C); border-radius:20px; padding:40px; margin:30px 0; text-align:center; color:var(--white); position:relative; overflow:hidden; }
+  .closing::before { content:'🚀'; position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-size:120px; opacity:0.05; }
+  .closing h2 { color:var(--gold); font-size:28px; margin-bottom:12px; }
+  .closing p { color:#C8D8E8; font-size:16px; max-width:600px; margin:0 auto 24px; }
+  .closing-steps { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+  .closing-step { background:rgba(255,255,255,0.1); border-radius:12px; padding:14px 20px; font-size:14px; color:var(--white); font-weight:600; min-width:140px; }
+
+  /* Quiz */
+  .quiz-section { background:var(--white); border-radius:16px; padding:32px; border:2px solid var(--light-gray); margin:30px 0; }
+  .quiz-section h3 { color:var(--teal); margin-bottom:20px; font-size:20px; }
+  .quiz-q { margin-bottom:24px; }
+  .quiz-q p { font-weight:600; color:var(--text-dark); margin-bottom:12px; }
+  .quiz-option { display:flex; align-items:center; gap:10px; padding:12px 16px; border-radius:10px; border:2px solid var(--light-gray); margin-bottom:8px; cursor:pointer; transition:all .2s; font-size:14px; }
+  .quiz-option:hover { border-color:var(--teal); background:#f0faf9; }
+  .quiz-option.correct { border-color:#22c55e; background:#f0fdf4; color:#166534; }
+  .quiz-option.wrong { border-color:#ef4444; background:#fef2f2; color:#991b1b; }
+
+  .lesson-nav { display:flex; justify-content:space-between; align-items:center; padding:28px 40px; background:var(--white); border-top:1px solid var(--light-gray); max-width:900px; margin:0 auto; flex-wrap:wrap; gap:16px; }
+  .nav-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:10px; font-family:'Cairo',sans-serif; font-size:15px; font-weight:700; cursor:pointer; border:none; text-decoration:none; transition:all .2s; }
+  .btn-primary { background:var(--gold); color:var(--navy); }
+  .btn-primary:hover { background:var(--gold-light); }
+  .btn-secondary { background:var(--light-gray); color:var(--text-dark); }
+
+  @media(max-width:600px) { .quals-grid,.roadmap,.cv-tips{grid-template-columns:1fr;} .hero,.section{padding:32px 20px;} .lesson-nav{padding:20px;} }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill"></div></div>
+
+<div class="hero">
+  <div class="hero-badge">الوحدة السادسة والأخيرة · Module 6</div>
+  <h1>مسيرة <span>الانتقال المهني</span></h1>
+  <div class="hero-accent"></div>
+  <p>من كادر صحي إلى MSL — خارطة طريق عملية خطوة بخطوة تبدأ اليوم</p>
+</div>
+
+<div class="section">
+
+  <div class="section-label"><div class="dot"></div><span>المؤهلات</span></div>
+  <h2>ماذا تحتاج لتصبح MSL؟</h2>
+
+  <div class="quals-grid">
+    <div class="qual-card q1">
+      <h4>🎓 المؤهل الأكاديمي</h4>
+      <ul>
+        <li>دكتوراه في الطب (MD) — ميزة كبرى</li>
+        <li>صيدلة سريرية (PharmD)</li>
+        <li>ماجستير علوم حياتية ذي صلة</li>
+        <li>PhD في تخصص مرتبط بالمنتج</li>
+      </ul>
+    </div>
+    <div class="qual-card q2">
+      <h4>💼 الخبرة المفضّلة</h4>
+      <ul>
+        <li>2-5 سنوات خبرة سريرية أو بحثية</li>
+        <li>تجربة في التعليم الطبي أو العرض العلمي</li>
+        <li>حضور مؤتمرات طبية وشبكة علاقات</li>
+        <li>أي خبرة في صناعة الأدوية ميزة إضافية</li>
+      </ul>
+    </div>
+    <div class="qual-card q3">
+      <h4>🌟 المهارات الشخصية</h4>
+      <ul>
+        <li>تواصل علمي واضح ومقنع</li>
+        <li>عرض وتقديم بمستوى عالٍ</li>
+        <li>مرونة التنقل والسفر (ضروري)</li>
+        <li>إدارة الوقت والأولويات</li>
+      </ul>
+    </div>
+    <div class="qual-card q4">
+      <h4>🖥️ الأدوات والمعرفة التقنية</h4>
+      <ul>
+        <li>إتقان الإنجليزية الطبية (أساسي)</li>
+        <li>PowerPoint ومهارات العرض</li>
+        <li>قواعد بيانات: PubMed, UpToDate</li>
+        <li>نظام CRM (Veeva/Salesforce)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>خارطة الطريق</span></div>
+  <h2>خارطة طريق 12 شهراً</h2>
+
+  <div class="roadmap">
+    <div class="phase">
+      <div class="phase-header" style="background:var(--teal);">
+        <div class="phase-num">المرحلة الأولى</div>
+        <h4>الاستعداد العلمي</h4>
+        <div class="phase-months">الشهور ١ — ٣</div>
+      </div>
+      <div class="phase-body">
+        <ul>
+          <li>احصل على شهادة BCMAS أو CTM</li>
+          <li>اقرأ 20+ دراسة في تخصصك المستهدف</li>
+          <li>احضر مؤتمراً طبياً واحداً</li>
+          <li>ابدأ متابعة مجلات طبية محكّمة</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-header" style="background:var(--navy);">
+        <div class="phase-num">المرحلة الثانية</div>
+        <h4>بناء العلامة الشخصية</h4>
+        <div class="phase-months">الشهور ٤ — ٦</div>
+      </div>
+      <div class="phase-body">
+        <ul>
+          <li>حدّث LinkedIn لتعكس توجهك نحو MSL</li>
+          <li>انشر مقالات علمية باللغتين</li>
+          <li>انضم لمجموعات MSL على LinkedIn</li>
+          <li>ابدأ التواصل مع MSLs حاليين</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-header" style="background:var(--purple);">
+        <div class="phase-num">المرحلة الثالثة</div>
+        <h4>الشبكة والتواصل</h4>
+        <div class="phase-months">الشهور ٧ — ٩</div>
+      </div>
+      <div class="phase-body">
+        <ul>
+          <li>اطلب Informational Interviews من MSLs</li>
+          <li>تواصل مع مديري Medical Affairs</li>
+          <li>احضر فعاليات MSL Society</li>
+          <li>ابحث عن منتور في الصناعة</li>
+        </ul>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="phase-header" style="background:var(--gold);">
+        <div class="phase-num">المرحلة الرابعة</div>
+        <h4 style="color:var(--navy);">التقديم والمقابلات</h4>
+        <div class="phase-months" style="color:rgba(10,35,66,0.7);">الشهور ١٠ — ١٢</div>
+      </div>
+      <div class="phase-body">
+        <ul>
+          <li>قدّم لشركات Big Pharma المحلية</li>
+          <li>جهّز Scientific Presentation كاملاً</li>
+          <li>مارس سيناريوهات KOL engagement</li>
+          <li>حضّر قصتك المهنية بوضوح</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>المقابلة الوظيفية</span></div>
+  <h2>الأسئلة الشائعة في مقابلة MSL</h2>
+
+  <div class="interview-qs">
+    <div class="iq-item">
+      <div class="iq-question" onclick="toggleIQ(this)">
+        <span>«لماذا تريد أن تترك الطب السريري وتعمل في صناعة الأدوية؟»</span>
+        <span class="iq-toggle">+</span>
+      </div>
+      <div class="iq-answer">تحدث بصدق عن رغبتك في التأثير على مستوى أوسع من المرضى، وليس فرداً واحداً في كل مرة. MSL يؤثر على ممارسة مئات الأطباء، مما يعني تأثيراً على آلاف المرضى. اربط ذلك بشغفك العلمي البحثي.</div>
+    </div>
+    <div class="iq-item">
+      <div class="iq-question" onclick="toggleIQ(this)">
+        <span>«كيف ستتعامل مع KOL يرفض منتج شركتك بناءً على تجربة شخصية سلبية؟»</span>
+        <span class="iq-toggle">+</span>
+      </div>
+      <div class="iq-answer">أستمع بعناية لتجربته السلبية، أعترف بها وأقدّرها، ثم أسأل عن تفاصيل الحالة لفهمها. لاحقاً، أشاركه البيانات الكاملة من الدراسات بموضوعية، بما فيها حالات مشابهة. الهدف ليس الإقناع بالقوة بل فتح حوار علمي صادق.</div>
+    </div>
+    <div class="iq-item">
+      <div class="iq-question" onclick="toggleIQ(this)">
+        <span>«هل يمكنك تقديم ملخص علمي لتخصصك في 5 دقائق؟»</span>
+        <span class="iq-toggle">+</span>
+      </div>
+      <div class="iq-answer">هذا اختبار أساسي. استعد لتقديم ملخص علمي لمجالك يغطي: آخر الأبحاث، التحديات غير المحلولة، الأدوية الرائدة، والتوجهات المستقبلية — بأسلوب أكاديمي واضح ومنظم.</div>
+    </div>
+    <div class="iq-item">
+      <div class="iq-question" onclick="toggleIQ(this)">
+        <span>«كيف ستتعامل مع طبيب يطلب منك معلومات Off-Label؟»</span>
+        <span class="iq-toggle">+</span>
+      </div>
+      <div class="iq-answer">أولاً، أتأكد أن الطلب جاء بشكل صريح وغير محرَّض من الطبيب. ثانياً، أوثق الطلب فوراً في نظام CRM. ثالثاً، أقدم البيانات العلمية المتاحة بشكل متوازن مع ذكر الحدود والمخاطر بصراحة. رابعاً، أُشرك فريق Medical Information إذا تجاوز الأمر خبرتي.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-label"><div class="dot"></div><span>السيرة الذاتية</span></div>
+  <h2>نصائح تحسين CV لمنصب MSL</h2>
+
+  <div class="cv-tips">
+    <div class="cv-do">
+      <h4>✅ أضف هذا</h4>
+      <ul>
+        <li>أي تجربة تعليم طبي أو محاضرات</li>
+        <li>مشاركة في أبحاث أو دراسات سريرية</li>
+        <li>منشورات أو ملصقات في مؤتمرات</li>
+        <li>شهادات BCMAS أو CTM</li>
+        <li>مهارات قراءة الأوراق البحثية</li>
+        <li>لغات (الإنجليزية أساسية)</li>
+      </ul>
+    </div>
+    <div class="cv-dont">
+      <h4>❌ تجنب هذا</h4>
+      <ul>
+        <li>التركيز على الإجراءات الطبية فقط</li>
+        <li>عدد المرضى بدون سياق علمي</li>
+        <li>CV طويل جداً بدون تركيز</li>
+        <li>غياب objective statement واضح</li>
+        <li>عدم ذكر أي خبرة في العرض</li>
+        <li>إرسال CV عام لكل الوظائف</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="closing">
+    <h2>أنت مستعد لبدء رحلتك 🚀</h2>
+    <p>دور الـ MSL يجمع بين شغفك العلمي وتأثيرك على منظومة الرعاية الصحية. المجال بحاجة لكوادر طبية متميزة مثلك.</p>
+    <div class="closing-steps">
+      <div class="closing-step">✅ فهمت دور MSL</div>
+      <div class="closing-step">✅ تعلمت الفروقات</div>
+      <div class="closing-step">✅ استعدت للمقابلة</div>
+      <div class="closing-step">✅ لديك خارطة طريق</div>
+    </div>
+  </div>
+
+  <div class="quiz-section">
+    <h3>🎯 الاختبار الختامي</h3>
+    <div class="quiz-q">
+      <p>١. أي شهادة ترتبط مباشرة بالتأهل لدور MSL؟</p>
+      <label class="quiz-option"><input type="radio" name="q1" value="a"> شهادة ACLS في الإنعاش القلبي</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="b"> شهادة BCMAS في الشؤون الطبية</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="c"> شهادة PMP في إدارة المشاريع</label>
+      <label class="quiz-option"><input type="radio" name="q1" value="d"> شهادة MBA في إدارة الأعمال</label>
+    </div>
+    <div class="quiz-q">
+      <p>٢. ما الهدف الرئيسي من طلب Informational Interview مع MSL حالي؟</p>
+      <label class="quiz-option"><input type="radio" name="q2" value="a"> طلب وظيفة منه مباشرة</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="b"> فهم الواقع الفعلي للدور واستشارته حول الانتقال المهني</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="c"> الحصول على مواد تسويقية من شركته</label>
+      <label class="quiz-option"><input type="radio" name="q2" value="d"> معرفة راتبه تحديداً</label>
+    </div>
+  </div>
+
+</div>
+
+<div class="lesson-nav">
+  <a class="nav-btn btn-secondary" href="module5.html">→ الوحدة السابقة</a>
+  <div style="color:var(--text-light); font-size:14px;">🎉 اكتملت الدورة!</div>
+  <a class="nav-btn btn-primary" href="module1.html">إعادة الدورة من البداية ←</a>
+</div>
+
+<script>
+function toggleIQ(el) {
+  const answer = el.nextElementSibling;
+  const toggle = el.querySelector('.iq-toggle');
+  answer.classList.toggle('open');
+  toggle.textContent = answer.classList.contains('open') ? '−' : '+';
+}
+const correct = {q1:'b', q2:'b'};
+document.querySelectorAll('.quiz-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const radio = this.querySelector('input[type=radio]');
+    const name = radio.name;
+    document.querySelectorAll(`input[name=${name}]`).forEach(inp => inp.closest('.quiz-option').classList.remove('correct','wrong'));
+    this.classList.add(radio.value === correct[name] ? 'correct' : 'wrong');
+  });
+});
+</script>
+</body>
+</html>
