@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ما هو MSL؟ — دورة MSL المهنية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0A0F1E;
+  --cream: #FAF7F2;
+  --gold: #C9A84C;
+  --gold-light: #F0D080;
+  --teal: #0B7B74;
+  --teal-glow: #14B8A6;
+  --white: #FFFFFF;
+  --muted: #6B7A99;
+  --border: rgba(201,168,76,0.2);
+  --card-bg: rgba(255,255,255,0.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--ink);
+  color: var(--white);
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(11,123,116,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 80%, rgba(201,168,76,0.15) 0%, transparent 50%),
+    linear-gradient(170deg, #060912 0%, #0A0F1E 50%, #071A18 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 80px 24px 60px; position: relative; overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.free-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+  border: 1px solid var(--gold);
+  color: var(--gold-light); font-size: 12px; font-weight: 700;
+  padding: 7px 20px; border-radius: 50px; margin-bottom: 32px;
+  letter-spacing: 1px; text-transform: uppercase;
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-eyebrow {
+  font-size: 13px; font-weight: 600; color: var(--teal-glow);
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px;
+  animation: fadeUp 0.7s ease 0.1s both;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 7vw, 72px); font-weight: 900; line-height: 1.1;
+  margin-bottom: 24px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--teal-glow));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2.5vw, 20px); color: rgba(255,255,255,0.65);
+  max-width: 600px; line-height: 1.8; margin-bottom: 48px;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--teal), #0A9B93);
+  color: white; font-weight: 700; font-size: 16px;
+  padding: 16px 36px; border-radius: 50px; cursor: pointer;
+  border: none; text-decoration: none;
+  box-shadow: 0 8px 32px rgba(11,123,116,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.8s ease 0.4s both;
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(11,123,116,0.5); }
+
+.scroll-hint {
+  position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px;
+  animation: bounce 2s infinite;
+}
+.scroll-hint::after { content: '↓'; font-size: 18px; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-8px)} }
+
+/* ── SECTIONS ── */
+.section { padding: 80px 24px; max-width: 860px; margin: 0 auto; }
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; color: var(--teal-glow);
+  text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px;
+}
+.section-tag::before { content:''; width:24px; height:2px; background:var(--teal-glow); }
+
+h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
+h2 .g { color: var(--gold); }
+
+.lead { font-size: 17px; color: rgba(255,255,255,0.7); line-height: 1.9; margin-bottom: 40px; }
+
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 60px 0; }
+
+/* ── WHAT IS MSL VISUAL ── */
+.definition-box {
+  background: linear-gradient(135deg, rgba(11,123,116,0.12), rgba(201,168,76,0.06));
+  border: 1px solid rgba(11,123,116,0.3);
+  border-radius: 20px; padding: 40px; margin: 32px 0; position: relative;
+}
+.definition-box::before {
+  content: '"';
+  position: absolute; top: -20px; right: 32px;
+  font-size: 120px; color: var(--teal); opacity: 0.2; line-height: 1;
+  font-family: 'Playfair Display', serif;
+}
+.definition-box p { font-size: 20px; font-weight: 600; color: var(--white); line-height: 1.8; }
+.definition-box .source { font-size: 12px; color: var(--muted); margin-top: 16px; }
+
+/* ── BRIDGE VISUAL ── */
+.bridge-visual {
+  display: flex; align-items: center; gap: 0; margin: 40px 0;
+  background: rgba(255,255,255,0.03); border-radius: 20px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.bridge-side {
+  flex: 1; padding: 32px 24px; text-align: center;
+}
+.bridge-side .bs-icon { font-size: 36px; margin-bottom: 12px; }
+.bridge-side h4 { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+.bridge-side p { font-size: 12px; color: var(--muted); }
+.bridge-mid {
+  padding: 24px 16px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, rgba(11,123,116,0.2), rgba(201,168,76,0.1));
+  border-right: 1px solid rgba(255,255,255,0.06);
+  border-left: 1px solid rgba(255,255,255,0.06);
+}
+.bridge-mid .bm-icon { font-size: 28px; }
+.bridge-mid span { font-size: 11px; font-weight: 800; color: var(--gold); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ── DAY IN LIFE ── */
+.day-timeline { margin: 32px 0; }
+.day-item {
+  display: flex; gap: 20px; margin-bottom: 24px; position: relative;
+}
+.day-item::before {
+  content: ''; position: absolute;
+  top: 48px; right: 24px; bottom: -24px; width: 1px;
+  background: linear-gradient(180deg, var(--border), transparent);
+}
+.day-item:last-child::before { display: none; }
+.day-time {
+  width: 48px; height: 48px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(11,123,116,0.3), rgba(11,123,116,0.1));
+  border: 1px solid rgba(11,123,116,0.4);
+  border-radius: 12px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: var(--teal-glow); line-height: 1.2;
+}
+.day-body {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px; padding: 16px 20px; flex: 1;
+}
+.day-body h4 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+.day-body p { font-size: 13px; color: rgba(255,255,255,0.6); margin: 0; }
+.day-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 10px; border-radius: 20px; margin-top: 8px;
+}
+
+/* ── GAIN CARDS ── */
+.gains { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 16px; margin: 32px 0; }
+.gain-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px; padding: 28px 24px;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.gain-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.3); }
+.gain-card::before {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, var(--accent, rgba(11,123,116,0.2)), transparent 70%);
+}
+.gain-icon { font-size: 32px; margin-bottom: 14px; }
+.gain-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: var(--white); }
+.gain-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; margin: 0; }
+.gain-num {
+  position: absolute; bottom: 20px; left: 20px;
+  font-size: 48px; font-weight: 900; opacity: 0.05; line-height: 1;
+  font-family: 'Playfair Display', serif;
+}
+
+/* ── SALARY COMPARISON ── */
+.salary-compare {
+  background: rgba(255,255,255,0.02); border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.07); overflow: hidden; margin: 32px 0;
+}
+.sc-header {
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(11,123,116,0.08));
+  padding: 20px 28px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-weight: 700; font-size: 14px; color: var(--gold);
+}
+.sc-row {
+  display: flex; align-items: center; padding: 16px 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.04); gap: 16px;
+}
+.sc-row:last-child { border-bottom: none; }
+.sc-role { flex: 1; font-size: 13px; font-weight: 600; }
+.sc-bar-wrap { flex: 2; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+.sc-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+.sc-val { font-size: 13px; font-weight: 800; color: var(--gold-light); min-width: 100px; text-align: left; }
+
+/* ── TRANSFORMATION STORY ── */
+.story-card {
+  background: linear-gradient(135deg, rgba(11,123,116,0.1), rgba(201,168,76,0.05));
+  border: 1px solid rgba(11,123,116,0.25);
+  border-radius: 20px; padding: 36px; margin: 16px 0; position: relative;
+}
+.story-card::before {
+  content: attr(data-emoji);
+  position: absolute; top: -16px; right: 28px;
+  font-size: 32px; background: var(--ink);
+  padding: 0 8px;
+}
+.story-person {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.story-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  background: linear-gradient(135deg, rgba(11,123,116,0.3), rgba(201,168,76,0.15));
+  border: 2px solid rgba(11,123,116,0.4);
+}
+.story-info h4 { font-size: 15px; font-weight: 800; }
+.story-info span { font-size: 12px; color: var(--muted); }
+.story-text { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+.story-result {
+  display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap;
+}
+.sr-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(11,123,116,0.15); border: 1px solid rgba(11,123,116,0.3);
+  border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 700;
+  color: var(--teal-glow);
+}
+
+/* ── WHO IS MSL ── */
+.who-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 12px; margin: 24px 0; }
+.who-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; padding: 20px; text-align: center;
+  transition: all 0.2s;
+}
+.who-card:hover { background: rgba(11,123,116,0.08); border-color: rgba(11,123,116,0.3); }
+.who-card .wc-icon { font-size: 28px; margin-bottom: 8px; }
+.who-card h4 { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+.who-card p { font-size: 11px; color: var(--muted); margin: 0; }
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: linear-gradient(135deg, rgba(11,123,116,0.15), rgba(201,168,76,0.08));
+  border: 1px solid rgba(11,123,116,0.25);
+  border-radius: 24px; padding: 56px 40px; text-align: center; margin: 40px 0;
+}
+.cta-section h2 { font-size: clamp(22px,4vw,34px); margin-bottom: 14px; }
+.cta-section p { color: rgba(255,255,255,0.65); font-size: 16px; margin-bottom: 32px; max-width: 500px; margin-right: auto; margin-left: auto; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), #B8903C);
+  color: var(--ink); font-weight: 900; font-size: 16px;
+  padding: 16px 40px; border-radius: 50px; text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(201,168,76,0.4); }
+
+/* ── ALERT ── */
+.alert {
+  display: flex; gap: 14px; border-radius: 14px; padding: 20px 22px; margin: 20px 0;
+}
+.alert-icon { font-size: 22px; flex-shrink: 0; }
+.alert h4 { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+.alert p { font-size: 13px; margin: 0; }
+.alert-teal { background: rgba(11,123,116,0.1); border: 1px solid rgba(11,123,116,0.3); }
+.alert-teal h4 { color: var(--teal-glow); } .alert-teal p { color: rgba(255,255,255,0.65); }
+.alert-gold { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.25); }
+.alert-gold h4 { color: var(--gold-light); } .alert-gold p { color: rgba(255,255,255,0.65); }
+
+@media(max-width:600px){
+  .bridge-visual { flex-direction: column; }
+  .sc-row { flex-wrap: wrap; }
+  .cta-section { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero">
+  <div class="free-badge">✦ مجاني — الدرس الأول</div>
+  <div class="hero-eyebrow">دورة MSL المهنية</div>
+  <h1>ما هو <span class="highlight">MSL</span>؟<br>الدور الذي لا يعرفه أحد<br>لكنه يُغيّر كل شيء</h1>
+  <p class="hero-sub">طبيب، صيدلاني، أو ممارس صحي تعبت من السقف الزجاجي في مسيرتك — هذا الدرس يفتح لك باباً لم تكن تعرف بوجوده.</p>
+  <a class="hero-cta" href="#start">ابدأ الآن ↓</a>
+  <div class="scroll-hint">اسحب للأسفل</div>
+</div>
+
+<!-- ══════════ SECTION 1: التعريف ══════════ -->
+<div class="section" id="start">
+  <div class="section-tag">التعريف</div>
+  <h2>MSL — <span class="g">من هو هذا الشخص؟</span></h2>
+  <p class="lead">MSL اختصار لـ Medical Science Liaison. لكن هذا المسمى الوظيفي الجاف لا يعكس الحقيقة — MSL هو الشخص الذي تتصل به شركات الأدوية الكبرى حين تحتاج شخصاً يتحدث لغة الأطباء بعمق، ويُترجم الأبحاث العلمية المعقدة إلى حوارات حقيقية ذات قيمة.</p>
+
+  <div class="definition-box">
+    <p>MSL هو متخصص علمي يعمل في صناعة الأدوية والأجهزة الطبية — مهمته بناء علاقات علمية موثوقة مع أبرز الأطباء والباحثين، وتبادل المعرفة الطبية المتقدمة بدون أي أهداف مبيعات.</p>
+    <div class="source">— تعريف Medical Science Liaison Society (MSLS)</div>
+  </div>
+
+  <div class="bridge-visual">
+    <div class="bridge-side">
+      <div class="bs-icon">🏥</div>
+      <h4>الأطباء والباحثون</h4>
+      <p>يحتاجون معرفة علمية متقدمة ومحدّثة</p>
+    </div>
+    <div class="bridge-mid">
+      <div class="bm-icon">🌉</div>
+      <span>MSL<br>الجسر</span>
+    </div>
+    <div class="bridge-side">
+      <div class="bs-icon">🧬</div>
+      <h4>شركات الأدوية</h4>
+      <p>تمتلك أبحاثاً وبيانات علمية ضخمة</p>
+    </div>
+  </div>
+
+  <div class="alert alert-gold">
+    <span class="alert-icon">💡</span>
+    <div>
+      <h4>الفرق الجوهري — ليس مندوب مبيعات</h4>
+      <p>MSL لا يبيع — يُعلّم ويبحث ويبني علاقات. هدفه اليومي هو إثراء الحوار العلمي مع الطبيب، وليس إقناعه بشراء دواء. هذا الفرق هو سبب احترام الأطباء لهم وثقتهم بهم.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ SECTION 2: يوم في حياة MSL ══════════ -->
+<div class="section">
+  <div class="section-tag">يوم في الحياة</div>
+  <h2>كيف يبدو <span class="g">يوم MSL</span> فعلاً؟</h2>
+  <p class="lead">لا مكتب ثابت، لا روتين رتيب — يوم MSL مزيج من العلم والإنسان والاستراتيجية.</p>
+
+  <div class="day-timeline">
+    <div class="day-item">
+      <div class="day-time">8<br>صباحاً</div>
+      <div class="day-body">
+        <h4>مراجعة الأدبيات الطبية</h4>
+        <p>يقرأ أحدث الدراسات المنشورة في مجال تخصصه — يُحضّر نقاط محادثة علمية لزياراته اليوم.</p>
+        <span class="day-tag" style="background:rgba(11,123,116,0.15);color:#14B8A6;">علمي</span>
+      </div>
+    </div>
+    <div class="day-item">
+      <div class="day-time">10<br>صباحاً</div>
+      <div class="day-body">
+        <h4>لقاء مع استشاري أورام في مستشفى رئيسي</h4>
+        <p>حوار علمي عميق حول بروتوكول علاج جديد — الطبيب يطرح أسئلة، MSL يُجيب ببيانات ويستمع لتجربة الطبيب.</p>
+        <span class="day-tag" style="background:rgba(201,168,76,0.12);color:#F0D080;">KOL Meeting</span>
+      </div>
+    </div>
+    <div class="day-item">
+      <div class="day-time">1<br>ظهراً</div>
+      <div class="day-body">
+        <h4>غداء عمل مع باحث أكاديمي</h4>
+        <p>نقاش حول دراسة بحثية مقترحة — MSL يربط الباحث بموارد الشركة لدعم بحثه المستقل.</p>
+        <span class="day-tag" style="background:rgba(91,33,182,0.15);color:#C4B5FD;">ISS</span>
+      </div>
+    </div>
+    <div class="day-item">
+      <div class="day-time">3<br>عصراً</div>
+      <div class="day-body">
+        <h4>تقرير الرؤى الميدانية</h4>
+        <p>يُسجّل ما سمعه من الأطباء اليوم — أسئلة، مخاوف، ملاحظات — ويرفعها للفريق الداخلي لتُشكّل استراتيجية الشركة.</p>
+        <span class="day-tag" style="background:rgba(30,64,175,0.15);color:#93C5FD;">Insights</span>
+      </div>
+    </div>
+    <div class="day-item">
+      <div class="day-time">5<br>مساءً</div>
+      <div class="day-body">
+        <h4>تحضير عرض في مؤتمر طبي</h4>
+        <p>يُجهّز مواد علمية لجلسة غداً — يُراجعها مع فريق Medical Affairs للتأكد من دقتها ومطابقتها للوائح.</p>
+        <span class="day-tag" style="background:rgba(14,116,144,0.15);color:#67E8F9;">Congress</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ SECTION 3: من يصبح MSL ══════════ -->
+<div class="section">
+  <div class="section-tag">من يؤهّل؟</div>
+  <h2>من <span class="g">يصبح MSL</span>؟</h2>
+  <p class="lead">MSL يأتي من خلفيات صحية وعلمية متنوعة — القاسم المشترك هو العمق العلمي والشغف بالتواصل الإنساني.</p>
+
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="wc-icon">👨‍⚕️</div>
+      <h4>أطباء</h4>
+      <p>MD, MBBS — أكثر الخلفيات شيوعاً في الأورام وأمراض القلب</p>
+    </div>
+    <div class="who-card">
+      <div class="wc-icon">💊</div>
+      <h4>صيادلة</h4>
+      <p>PharmD, BSc Pharmacy — الأوسع انتشاراً في معظم تخصصات MSL</p>
+    </div>
+    <div class="who-card">
+      <div class="wc-icon">🔬</div>
+      <h4>علماء أحياء</h4>
+      <p>PhD Biomedical Sciences — قوة في المجالات البحثية المتخصصة</p>
+    </div>
+    <div class="who-card">
+      <div class="wc-icon">🩺</div>
+      <h4>ممرضون متخصصون</h4>
+      <p>NP, Clinical Nurse Specialist — ينمو حضورهم بسرعة</p>
+    </div>
+    <div class="who-card">
+      <div class="wc-icon">🧬</div>
+      <h4>علماء الجينوم</h4>
+      <p>متخصصو Precision Medicine — طلب متزايد في الأورام</p>
+    </div>
+    <div class="who-card">
+      <div class="wc-icon">🏋️</div>
+      <h4>فيزيوتيرابيست وغيرهم</h4>
+      <p>تخصصات محددة كأمراض العظام والتأهيل</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ SECTION 4: ماذا تكسب؟ ══════════ -->
+<div class="section">
+  <div class="section-tag">ماذا تكسب؟</div>
+  <h2>ماذا <span class="g">يكسب الممارس الصحي</span><br>حين يصبح MSL؟</h2>
+  <p class="lead">ليس فقط راتباً أعلى — بل نوعية حياة مختلفة كلياً، وتأثير مختلف، وهوية مهنية أوسع.</p>
+
+  <!-- Salary -->
+  <div class="salary-compare">
+    <div class="sc-header">💰 مقارنة الدخل المتوقع (منطقة الخليج والشرق الأوسط)</div>
+    <div class="sc-row">
+      <div class="sc-role">صيدلاني سريري — مستشفى حكومي</div>
+      <div class="sc-bar-wrap"><div class="sc-bar" style="width:35%;background:linear-gradient(90deg,#374151,#4B5563);"></div></div>
+      <div class="sc-val">8,000–12,000 ريال</div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-role">طبيب مقيم أو عام</div>
+      <div class="sc-bar-wrap"><div class="sc-bar" style="width:45%;background:linear-gradient(90deg,#374151,#4B5563);"></div></div>
+      <div class="sc-val">12,000–18,000 ريال</div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-role">MSL — مستوى مبتدئ</div>
+      <div class="sc-bar-wrap"><div class="sc-bar" style="width:65%;background:linear-gradient(90deg,#0B7B74,#14B8A6);"></div></div>
+      <div class="sc-val">18,000–25,000 ريال</div>
+    </div>
+    <div class="sc-row">
+      <div class="sc-role">MSL — مستوى متقدم (Senior)</div>
+      <div class="sc-bar-wrap"><div class="sc-bar" style="width:85%;background:linear-gradient(90deg,#C9A84C,#F0D080);"></div></div>
+      <div class="sc-val">28,000–40,000+ ريال</div>
+    </div>
+  </div>
+
+  <!-- Gain cards -->
+  <div class="gains">
+    <div class="gain-card" style="--accent:rgba(11,123,116,0.25);">
+      <div class="gain-icon">🌍</div>
+      <h4>حرية جغرافية حقيقية</h4>
+      <p>MSL يعمل ميدانياً — لا مكتب يومي إجباري. عمله في المستشفيات والمؤتمرات والمختبرات. وكثير من الشركات تُقدّم خيار العمل من المنزل جزئياً.</p>
+      <div class="gain-num">1</div>
+    </div>
+    <div class="gain-card" style="--accent:rgba(201,168,76,0.2);">
+      <div class="gain-icon">🧠</div>
+      <h4>نمو علمي لا ينتهي</h4>
+      <p>أنت تتابع أحدث الأبحاث كجزء من عملك — مؤتمرات دولية، دراسات حديثة، حوارات مع أبرز العقول في مجالك. تعلم يُدفع له.</p>
+      <div class="gain-num">2</div>
+    </div>
+    <div class="gain-card" style="--accent:rgba(91,33,182,0.2);">
+      <div class="gain-icon">🤝</div>
+      <h4>شبكة علاقات استثنائية</h4>
+      <p>تعرف على أبرز الأطباء والباحثين والقادة الطبيين في منطقتك وعالمياً — شبكة تفتح أبواباً لا تُحصى مستقبلاً.</p>
+      <div class="gain-num">3</div>
+    </div>
+    <div class="gain-card" style="--accent:rgba(30,64,175,0.2);">
+      <div class="gain-icon">⚖️</div>
+      <h4>توازن حياة–عمل</h4>
+      <p>لا مناوبات ليلية، لا طوارئ. جدول زمني يُمكنك التحكم فيه إلى حد بعيد مع احترام كامل لوقتك الشخصي.</p>
+      <div class="gain-num">4</div>
+    </div>
+    <div class="gain-card" style="--accent:rgba(157,23,77,0.2);">
+      <div class="gain-icon">📈</div>
+      <h4>مسار مهني واضح وصاعد</h4>
+      <p>من MSL → Senior MSL → Regional Manager → Medical Director. كل خطوة أوضح ومدفوعة أكثر من السابقة.</p>
+      <div class="gain-num">5</div>
+    </div>
+    <div class="gain-card" style="--accent:rgba(11,123,116,0.2);">
+      <div class="gain-icon">✨</div>
+      <h4>تأثير حقيقي بلا ضغط مبيعات</h4>
+      <p>تُساهم في تحسين رعاية المرضى عبر الأطباء الذين تُثقّفهم — بدون ضغط الأهداف البيعية اليومية.</p>
+      <div class="gain-num">6</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ SECTION 5: قصص حقيقية ══════════ -->
+<div class="section">
+  <div class="section-tag">قصص حقيقية</div>
+  <h2>ممارسون صحيون <span class="g">صنعوا التحول</span></h2>
+  <p class="lead">هؤلاء ليسوا استثناءات — هم نماذج لما يحدث حين يقرر ممارس صحي أن يُوظّف علمه بشكل مختلف.</p>
+
+  <div class="story-card" data-emoji="💊">
+    <div class="story-person">
+      <div class="story-avatar">👩‍⚕️</div>
+      <div class="story-info">
+        <h4>سارة — صيدلانية سريرية سابقة</h4>
+        <span>7 سنوات في مستشفى حكومي ← MSL في شركة أدوية متعددة الجنسيات</span>
+      </div>
+    </div>
+    <p class="story-text">«كنت أصرف الأدوية وأُجيب على أسئلة الأطباء يومياً — لكن شعرت أن علمي يستحق أكثر. اليوم أزور أبرز أطباء الأورام في المنطقة، أُناقشهم في أحدث البروتوكولات، وأحضر مؤتمرات ASCO وESMO كجزء من عملي. الفرق؟ تدريب ٦ أشهر وقرار واحد.»</p>
+    <div class="story-result">
+      <span class="sr-pill">⬆️ الراتب ضعف ونصف</span>
+      <span class="sr-pill">✈️ مؤتمرات دولية سنوياً</span>
+      <span class="sr-pill">🎓 تعلم مستمر مدفوع</span>
+    </div>
+  </div>
+
+  <div class="story-card" data-emoji="🩺" style="border-color:rgba(201,168,76,0.25);background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(11,123,116,0.05));">
+    <div class="story-person">
+      <div class="story-avatar">👨‍🔬</div>
+      <div class="story-info">
+        <h4>خالد — طبيب عام سابق</h4>
+        <span>5 سنوات في عيادة خاصة ← MSL في تخصص أمراض القلب</span>
+      </div>
+    </div>
+    <p class="story-text">«الطب العام يُرهقني جسدياً وعاطفياً — أرى مئة مريض يومياً دون أن أبني علاقة حقيقية مع أي منهم. كـ MSL، أزور ١٠ أطباء أسبوعياً وأبني معهم علاقات علمية عميقة تمتد لسنوات. أشعر أن لكل لقاء قيمة حقيقية.»</p>
+    <div class="story-result">
+      <span class="sr-pill" style="background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);color:#F0D080;">🕐 لا مناوبات</span>
+      <span class="sr-pill" style="background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);color:#F0D080;">🌐 تأثير إقليمي</span>
+      <span class="sr-pill" style="background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);color:#F0D080;">💡 علم يتجدد</span>
+    </div>
+  </div>
+
+  <div class="alert alert-teal" style="margin-top:32px;">
+    <span class="alert-icon">🎯</span>
+    <div>
+      <h4>القاسم المشترك بين كل من نجح في التحول</h4>
+      <p>لم يكن الأذكى، ولم يكن لديه اتصالات خاصة. فقط أخذ الوقت الكافي ليفهم الدور بعمق، ويُعدّ نفسه بالأدوات الصحيحة. هذا بالضبط ما تبنيه هذه الدورة.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════ CTA ══════════ -->
+<div class="section">
+  <div class="cta-section">
+    <h2>جاهز للخطوة التالية؟<br><span style="color:var(--gold);">الدرس القادم ينتظرك</span></h2>
+    <p>في الدرس الثاني ستكتشف الفرق الجوهري بين MSL ومندوب المبيعات — وهو الفرق الذي يُغيّر كل شيء في كيفية تعامل الأطباء معك.</p>
+    <a class="cta-btn" href="#">انتقل للدرس الثاني ←</a>
+  </div>
+</div>
+
+</body>
+</html>
